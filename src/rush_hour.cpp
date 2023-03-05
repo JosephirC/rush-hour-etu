@@ -15,35 +15,33 @@ int main(int argc, char** argv){
 
     Plateau p;
 
-    /* Initialisation simple */
-    if (SDL_Init(SDL_INIT_VIDEO) != 0 )
-    {
-        fprintf(stdout,"Échec de l'initialisation de la SDL (%s)\n",SDL_GetError());
-        return -1;
-    }
+    // /* Initialisation simple */
+    // if (SDL_Init(SDL_INIT_VIDEO) != 0 )
+    // {
+    //     fprintf(stdout,"Échec de l'initialisation de la SDL (%s)\n",SDL_GetError());
+    //     return -1;
+    // }
 
     
-        SDL_Window* pWindow = NULL;
-        pWindow = SDL_CreateWindow("RushHour",SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
+    //     SDL_Window* pWindow = NULL;
+    //     pWindow = SDL_CreateWindow("RushHour",SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, SDL_WINDOW_SHOWN);
 
-        if(pWindow)
-        {
-            while(quit == false) {
-                while( SDL_PollEvent(&event)) {
-                    if(event.type==SDL_QUIT) {
-                        quit = true;
-                    }    
-                }
-            }
-        }
+    //     if(pWindow)
+    //     {
+    //         while(quit == false) {
+    //             while( SDL_PollEvent(&event)) {
+    //                 if(event.type==SDL_QUIT) {
+    //                     quit = true;
+    //                 }    
+    //             }
+    //         }
+    //     }
 
     p.afficherPlateau();
 
     SDL sj;
 	sj.sdlBoucle();
-	return 0;
 
-   
 
     return 0;
 }

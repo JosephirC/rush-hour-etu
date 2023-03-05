@@ -1,92 +1,193 @@
 # Projet Rush Hour
 
+Le but de ce projet est d'écrire un programme permettant de trouver une
+solution au jeu *Rush Hour*.
 
+## Règles du jeu
 
-## Getting started
+Le jeu Rush Hour se joue seul sur une grille carrée de six cases de côté. Sur
+cette grille sont répartis des véhicules d'une case de largeur, et de deux ou
+trois cases de longueur. Ces véhicules peuvent être placés horizontalement ou
+verticalement. Chaque véhicule peut être déplacé en avant ou en arrière, mais
+pas latéralement, tant qu'il n'entre pas en collision avec un autre véhicule.
+Le but du jeu est de faire sortir l'un des véhicules par une sortie placée sur
+le bord du plateau. L'image ci dessous illustre un exemple de partie.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+![Exemple Rush Hour](Sujet/rush_hour.gif)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Chaque déplacement de véhicule compte pour un coup, quelle que soit la longueur
+du déplacement. La qualité de votre solution dépend donc du nombre de coups
+nécessaires depuis la situation initiale pour faire sortir le véhicule.
 
-## Add your files
+## Modélisation
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+La recherche d'une solution au jeu Rush Hour peut être modélisée sous la forme
+d'un parcours de graphe. Dans ce graphe, les sommets sont des situations de jeu.
+Les arêtes sont des coups. Les deux images qui suivent représentent deux
+situations de jeu, et donc deux sommets du graphe. Il est possible de passer
+d'une situation à l'autre en déplaçant le long véhicule du haut, elles sont donc
+reliées par une arête dans le graphe.
+
+![Situation depart](Sujet/rush_hour_situation_start.png)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+![Situation fin](Sujet/rush_hour_situation_end.png)
+
+Votre première tâche pour ce projet consiste à élaborer une structure de données
+sous la forme d'une classe pour représenter les situations de jeu, munies de 
+méthodes pour accéder de façon pratique aux situations de jeu adjacentes.
+
+Il ne s'agit pas ici de *construire le graphe complet* ni de le *stocker*, mais
+simplement de pouvoir le *parcourir*.
+
+Pour vous aider dans l'élaboration de votre structure de données, vous pourrez
+utiliser le fait que :
+
+* les véhicules ne sont que de taille deux ou trois
+* il n'y a jamais plus de 16 véhicules
+* il n'y a toujours qu'un véhicule à sortir
+
+La situation initiale du problème résolu plus haut :
+
+![Situation initiale](Sujet/rush_hour_initial.png)
+
+pourra être décrite par [le fichier suivant](Sujet/puzzle.txt) :
 
 ```
-cd existing_repo
-git remote add origin https://forge.univ-lyon1.fr/p2024398/projet-rush-hour.git
-git branch -M main
-git push -uf origin main
+2 5
+2 0 2 1
+0 0 2 0
+0 2 3 0
+0 3 3 1
+1 3 2 0
+1 4 2 1
+2 5 2 0
+3 0 2 1
+4 0 2 0
+4 3 2 0
+4 4 2 0
+4 5 2 0
+5 1 2 1
 ```
+La première ligne correspond à la position de la sortie (ligne 2 colonne 5, on
+commence la numérotation à 0), la seconde ligne est la position du véhicule à
+sortir (ligne 2, colonne 0, longueur 2, horizontal), les lignes suivantes sont
+les autres véhicules, toujours avec le format ligne, colonne, longueur,
+horizontal (1) ou vertical (0). Dans le cas d'un véhicule horizontal, la
+position donnée est celle de la case la plus à gauche, dans le cas d'un véhicule
+vertical, la position donnée est celle de la case la plus haute.
 
-## Integrate with your tools
+Pour favoriser les échanges, vous pouvez munir votre classe d'un constructeur
+prenant un fichier en paramètre, au format décrit ci-dessus, ainsi que d'une
+fonction pour exporter votre situation de jeu sous la forme d'un fichier
+similaire.
 
-- [ ] [Set up project integrations](https://forge.univ-lyon1.fr/p2024398/projet-rush-hour/-/settings/integrations)
+## Parcours
 
-## Collaborate with your team
+Une fois les situations de jeu représentables, il s'agit maintenant d'instancier
+la situation de jeu initiale, et de parcourir le graphe pour trouver une
+situation de jeu gagnante, ainsi que les coups permettant de l'atteindre.
+Idéalement, le nombre de coups à jouer pour atteindre cette situation de jeu
+gagnante devra être minimal. Dans le cas de l'exemple fourni ci-dessus, le code
+de votre responsable d'UE a donné une solution en 14 coups. Il est nécessaire de
+réaliser un parcours de graphe bien choisi. Il n'est pas ici nécessaire de
+générer tout le graphe, mais seulement de partir de la situation de départ, de
+lister les situations atteignables en déplaçant des véhicules, et de les ajouter
+à votre structure de données gérant les situations de jeu encore à traiter,
+selon le type de parcours choisi.
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+Les situations de jeu sont donc découvertes petit à petit, attention cependant à
+faire en sorte que votre exploration n'étudie qu'une fois chaque situation de
+jeu, et se rendre compte que certaines situations ont déjà été explorées. Sans
+cette attention, votre exploration risquera de tourner en rond entre des
+situations de jeu, ou d'en explorer beaucoup trop.
 
-## Test and Deploy
+## Élaboration de nouveaux puzzles
 
-Use the built-in continuous integration in GitLab.
+Une fois la résolution programmée, et le parcours du graphe compris,
+consacrez-vous à la création de nouveaux puzzles. Cette fois, il s'agit de
+fournir une situation de départ qui soit intéressante à jouer. La difficulté du
+puzzle correspondra au nombre de coups minimal pour le résoudre, et votre but
+sera ici de trouver des stratégies pour créer les puzzles les plus difficiles
+possibles.
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## Conditions de rendu
 
-***
+Le travail est a réaliser autant que possible en binôme. Les monômes ne seront
+acceptés qu'exceptionnellement, à discuter avec votre encadrant de TP. Les
+membres du binôme devront être dans le même groupe de TP, et seront évalués par
+leur encadrant de TP. Le travail doit être rendu pour la dernière séance de TP
+de l'année qui aura lieu le mercredi 10 avril. Cette dernière séance de TP sera
+intégralement dédiée à votre évaluation.
 
-# Editing this README
+Vous devrez rendre votre travail sous la forme d'une archive `zip` ou `tar.gz`.
+Si vous utilisez d'autres formats d'archives, vous le faites à vos risques et
+périls. Dans cette archive, un fichier readme devra indiquer la procédure pour
+compiler votre code si elle n'est pas standard, et le fonctionnement des
+exécutables générés. Pour simplifier le travail de vos examinateurs, supposez
+qu'ils sont incompétents dans l'utilisation de vos outils (cmake, codeblocks,
+visual studio, ...). Fournissez une archive munie d'un `Makefile`. Si vous
+utilisez des dépendances autres que la librairie standard, mentionnez les
+clairement, et assurez vous qu'elle ne seront pas compliquées à installer.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Le code que vous rendrez devra être votre production propre. Si vous reprenez
+des portions de code, quelle qu'en soit la source et la taille (vos camarades,
+stackoverflow ou autre site d'entraide), vous devrez en mentionner la provenance
+précise, faute de quoi votre travail sera considéré comme une fraude. Notez que
+lors du rendu, l'ensemble des codes seront analysés par des outils permettant de
+détecter des similarités, et qu'il ne suffit pas de renommer les variables pour
+les berner.
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Vous êtes autorisés à utilisé l'intégralité de la librairie standard, en
+particulier les conteneurs (`vector`, `list`, `stack`, `queue`,
+`priority_queue`, `set`, `map`, `unordered_set`, `unordered_map`, ...) et les
+algorithmes (`sort`, `shuffle`, `binary_search`, ...).
 
-## Name
-Choose a self-explaining name for your project.
+## Évaluation
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+L'évaluation se passera en deux temps, un oral, puis une relecture de votre
+travail.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+### Oral
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Le jour du rendu, en séance avec votre encadrant, il vous fournira un horaire de
+passage pour un oral de démonstration.  Pendant cet oral, vous ferez brièvement
+la démonstration de vos résultats, puis vous serez interrogés sur le code que
+vous avez rendu. Votre correcteur aura ici plusieurs objectifs :
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+* déterminer à quel point vous avez compris le sujet
+* déterminer jusqu'où vous avez abordé le sujet
+* déterminer si vous êtes capables de commenter vos choix et de les analyser
+* déterminer si vous êtes bien l'auteur du code rendu
+* déterminer si les contributions dans le binôme sont équilibrées
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+### Relecture
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+La relecture de votre code sera ensuite faite sans vous. Chaque correcteur sera
+muni d'une grille pour évaluer les points suivants :
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+* votre code compile facilement
+* les exécutables, lancés selon les instructions du readme, sont fonctionnels
+* les exécutables permettent de tester l'intégralité de votre code
+* les exécutables permettent de tester les points d'évaluation qui suivent
+* le programme permet de charger une situation de jeu initiale
+* le programme permet de trouver une solution 
+* la solution trouvée est la plus courte
+* le parcours de graphe est réalisé correctement
+* les structures de données sont pertinentes en terme d'espace mémoire
+* les fonctions et méthodes sont pertinentes en terme d'espace et de complexité
+* la gestion de la mémoire est propre et sans fuites
+  * un outil de détection de type valgrind a été utilisé pour s'en assurer
+  * si des problèmes persistent, ils sont identifiés dans le readme
+  * les problèmes sont mentionnés lors de l'oral et discutés
+* le code est clair et bien structuré
+  * nommage clair des fonctions et variables
+  * bon découpage des fonctions pour éviter la duplication de code
+  * pas de fonctions trop longues
+  * pas de lignes de code trop longues
+  * indentation claire
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Il est toujours difficile de donner un barème précis a priori, sans se bloquer
+ensuite la possibilité de pouvoir adapter la notation en fonction des travaux
+rendus et de la difficulté perçue du sujet. Il est néanmoins possible d'affirmer
+que pour obtenir la moyenne, il sera nécessaire d'avoir au moins abordé la
+partie résolution.

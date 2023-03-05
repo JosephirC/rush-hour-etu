@@ -16,6 +16,8 @@ int main(){
     Plateau p;
 
     p.afficherPlateau();
+
+    cout << "testtt";
    
 
     return 0;

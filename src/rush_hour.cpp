@@ -33,6 +33,7 @@ int main(int argc, char** argv)
                 }
             }
 
+<<<<<<< HEAD
             SDL_DestroyWindow(pWindow);
         }
         else
@@ -42,6 +43,12 @@ int main(int argc, char** argv)
     }
 
     SDL_Quit();
+=======
+    p.afficherPlateau();
+
+    cout << "testtt";
+   
+>>>>>>> 4424556a2e65187b829f449977564532303fb9a9
 
     return 0;
 }

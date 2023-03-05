@@ -1,4 +1,4 @@
-#include "Plateau.hpp"
+#include "plateau.hpp"
 #include <iostream>
 
 using namespace std;

@@ -1,8 +1,5 @@
-#include "voiture.hpp"
-#include "plateau.hpp"
 #include "sdl.hpp"
 #include <iostream>
-#include <fstream>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
@@ -12,33 +9,7 @@
 SDL_Event event;
 bool quit = false;
 
-int main(int argc, char** argv){
-
-    Plateau p(6,6);
-    //Voiture v(0, 0, 2, 1, 0);
-
-    p.initPlateauVide();
-    //p.ajouterVoiture(v);
-    p.ChargerDonnees("./Sujet/puzzle.txt");
-
-
-    cout << "Je display les pos de sortie X : " << p.getSortieX() << " Y : " << p.getSortieY() << endl; 
-    p.affichageTabVoiture();
-
-    p.HeaderSVG();
-    p.RectangleSVG();
-    p.FooterSVG();
-
-    //Creation du .svg ---> Il faut faire une fonction pour cela !
-    ofstream file("image.svg");
-    file << p.HeaderSVG() << p.RectangleSVG() << p.FooterSVG(); 
-
-
-
-
-    /**************NE PAS DECOMMENTER****************/
-            //p.ToSVG(v, p, "image1.svg");
-    /************************************************/
+int main(){
 
     // /* Initialisation simple */
     // if (SDL_Init(SDL_INIT_VIDEO) != 0 )
@@ -64,9 +35,10 @@ int main(int argc, char** argv){
 
 
 
-    // SDL sj;
-	// sj.sdlBoucle();
-
+    SDL sj;
+	sj.sdlBoucle();
 
     return 0;
+
+
 }

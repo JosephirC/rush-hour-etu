@@ -1,4 +1,5 @@
 #include "plateau.hpp"
+#include "voiture.hpp"
 #include <fstream>
 #include <sstream>
 #include <exception>

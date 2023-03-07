@@ -2,11 +2,10 @@
 #include <time.h>
 #include "sdl.hpp"
 #include <stdlib.h>
+#include "plateau.hpp"
 
 #include <iostream>
 using namespace std;
-
-const int TAILLE_SPRITE = 32;
 
 float temps () {
     return float(SDL_GetTicks()) / CLOCKS_PER_SEC;  // conversion des ms en secondes en divisant par 1000
@@ -91,8 +90,40 @@ void Image::setSurface(SDL_Surface * surf) {m_surface = surf;}
 
 
 
-// Variables globales images
+// Voitures verticales
+
 Image im_car2_main;
+Image im_car2_yellow;
+Image im_car2_police;
+Image im_car2_ambulance;
+Image im_car2_grey;
+Image im_car2_rose;
+Image im_car2_orange;
+Image im_car2_black;
+Image im_car2_white;
+Image im_car2_blue;
+Image im_car3_black;
+Image im_car3_grey;
+Image im_car3_white;
+Image im_car3_firetruck;
+
+// Voitures horizontales 
+Image im_car2_main90;
+Image im_car2_yellow90;
+Image im_car2_police90;
+Image im_car2_ambulance90;
+Image im_car2_grey90;
+Image im_car2_rose90;
+Image im_car2_orange90;
+Image im_car2_black90;
+Image im_car2_white90;
+Image im_car2_blue90;
+Image im_car3_black90;
+Image im_car3_grey90;
+Image im_car3_white90;
+Image im_car3_firetruck90;
+
+Case tabCase[6][6]; // Tableau qui pour chaque case contient sa position (x,y) en pixel sur l'image
 
 
 // ============= CLASS SDLJEU =============== //
@@ -140,6 +171,34 @@ SDL::SDL (){
 
     // IMAGES
     im_car2_main.loadFromFile("images/car2_main.png", renderer);
+    im_car2_yellow.loadFromFile("images/car2_yellow.png", renderer);
+    im_car2_police.loadFromFile("images/car2_police.png", renderer);
+    im_car2_ambulance.loadFromFile("images/car2_ambulance.png", renderer);
+    im_car2_grey.loadFromFile("images/car2_grey.png", renderer);
+    im_car2_rose.loadFromFile("images/car2_rose.png", renderer);
+    im_car2_orange.loadFromFile("images/car2_orange.png", renderer);
+    im_car2_black.loadFromFile("images/car2_black.png", renderer);
+    im_car2_white.loadFromFile("images/car2_white.png", renderer);
+    im_car2_blue.loadFromFile("images/car2_blue.png", renderer);
+    im_car3_black.loadFromFile("images/car3_black.png", renderer);
+    im_car3_grey.loadFromFile("images/car3_grey.png", renderer);
+    im_car3_white.loadFromFile("images/car3_white.png", renderer);
+    im_car3_firetruck.loadFromFile("images/car3_firetruck.png", renderer);
+
+    im_car2_main90.loadFromFile("images/car2_main90.png", renderer);
+    im_car2_yellow90.loadFromFile("images/car2_yellow90.png", renderer);
+    im_car2_police90.loadFromFile("images/car2_police90.png", renderer);
+    im_car2_ambulance90.loadFromFile("images/car2_ambulance90.png", renderer);
+    im_car2_grey90.loadFromFile("images/car2_grey90.png", renderer);
+    im_car2_rose90.loadFromFile("images/car2_rose90.png", renderer);
+    im_car2_orange90.loadFromFile("images/car2_orange90.png", renderer);
+    im_car2_black90.loadFromFile("images/car2_black90.png", renderer);
+    im_car2_white90.loadFromFile("images/car2_white90.png", renderer);
+    im_car2_blue90.loadFromFile("images/car2_blue90.png", renderer);
+    im_car3_black90.loadFromFile("images/car3_black90.png", renderer);
+    im_car3_grey90.loadFromFile("images/car3_grey90.png", renderer);
+    im_car3_white90.loadFromFile("images/car3_white90.png", renderer);
+    im_car3_firetruck90.loadFromFile("images/car3_firetruck90.png", renderer);
     
 
     // FONTS
@@ -167,6 +226,19 @@ SDL::SDL (){
         //         exit(1);
         // }
     }
+
+    // Initialisation du tableau des positions des cases en pixels
+    int x = 48;
+    int y = 76;
+    for (int i=0; i<6; i++) {
+        for (int j=0; j<6; j++) {
+            tabCase[j][i].x = x;
+            tabCase[j][i].y = y;
+            y += 84; 
+        }
+        y = 76;
+        x += 84;
+    } 
 }
 
 SDL::~SDL () {
@@ -194,23 +266,24 @@ void SDL::drawMultipleVerLines(SDL_Renderer * renderer, int x, int y, int color,
     }
 }
 
+void SDL::copierTableau(vector<Voiture> tab) {
+    tabVoitureGraphique = tab;
+}
+
 void SDL::sdlAff () {
 	//Remplir l'écran de blanc
     SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
     SDL_RenderClear(renderer);
 
     // Grille
-    int x, y;
-
-    x = 132;
+    int x = 132;
+    int y = 160;
     for (int i =0; i<6; i++) {
-        drawMultipleVerLines(renderer,x,76,60,84);
+        drawMultipleVerLines(renderer,x,76,40,84);
         x += 84;
     }  
-
-    y = 160;
     for (int i =0; i<6; i++) {
-        drawMultipleHorLines(renderer,48,y,60,84);
+        drawMultipleHorLines(renderer,48,y,40,84);
         y += 84;
     }
 
@@ -220,8 +293,36 @@ void SDL::sdlAff () {
     drawMultipleVerLines(renderer,48,76,255,84);
     drawMultipleVerLines(renderer,552,76,255,84);
 
-
-    im_car2_main.draw(renderer, 216, 160, 83, 166);
+    // Affichage des voitures
+    for (int i = 0; i < tabVoitureGraphique.size(); i++) {
+        int x = tabVoitureGraphique[i].getPosX();
+        int y = tabVoitureGraphique[i].getPosY();
+        int random;
+        if (tabVoitureGraphique[i].getId() == 0) {
+            if (tabVoitureGraphique[i].getDirection() == 1){
+                im_car2_main90.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 166, 83);
+            }
+            else if (tabVoitureGraphique[i].getDirection() == 0) {
+                im_car2_main.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 83, 166);
+            }
+        }
+        else if (tabVoitureGraphique[i].getTaille() == 3 || tabVoitureGraphique[i].getTaille() == 3) {
+            if (tabVoitureGraphique[i].getDirection() == 1){
+                im_car3_firetruck90.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 250, 83);
+            }
+            else if (tabVoitureGraphique[i].getDirection() == 0) {
+                im_car3_black.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 83, 250);
+            }
+        }
+        else {
+            if (tabVoitureGraphique[i].getDirection() == 1) {
+                im_car2_orange90.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 166, 83);
+            }
+            else if (tabVoitureGraphique[i].getDirection() == 0) {
+                im_car2_white.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 83, 166);
+            }
+        }
+    }
 
     // Ecrire un titre par dessus
     SDL_Rect positionTitre = {250,25,100,30};

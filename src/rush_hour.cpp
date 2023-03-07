@@ -24,10 +24,12 @@ int main(int argc, char** argv){
     cout << "Je display les pos de sortie X : " << p.getSortieX() << " Y : " << p.getSortieY() << endl; 
     p.affichageTabVoiture();
 
+    p.afficherPlateau();
+
     p.HeaderSVG(p);
     p.RectangleSVG(p);
     p.FooterSVG();
-
+    
 
 
     /**************NE PAS DECOMMENTER****************/
@@ -56,10 +58,9 @@ int main(int argc, char** argv){
     //         }
     //     }
 
-
-
-    // SDL sj;
-	// sj.sdlBoucle();
+    SDL sj;
+    sj.copierTableau(p.getTabVoiture());
+	sj.sdlBoucle();
 
 
     return 0;

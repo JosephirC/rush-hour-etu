@@ -24,8 +24,8 @@ int main(int argc, char** argv){
 
     p.afficherPlateau();
 
-    p.HeaderSVG(p);
-    p.RectangleSVG(p);
+    p.HeaderSVG();
+    p.RectangleSVG();
     p.FooterSVG();
     
 

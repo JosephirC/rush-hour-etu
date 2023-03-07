@@ -76,15 +76,15 @@ void Plateau::ChargerDonnees(const string& filename){
     
 }
 
-string Plateau::HeaderSVG(const Plateau& p) const{
+string Plateau::HeaderSVG() const{
     stringstream ss;
-    ss << "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 width=\"" 
-        << p.sizeX << " height=\"" << p.sizeY << "\">" << endl;
+    ss << "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 \" width=\"" 
+        << sizeX << "\" height=\"" << sizeY << "\">" << endl;
 
     return ss.str();
 }
 
-string Plateau::RectangleSVG(const Plateau& p) const{
+string Plateau::RectangleSVG() const{
     stringstream ss;
     for (int i = 0; i < tabVoiture.size(); i++) {
         ss << "<rect x=\"" << tabVoiture[i].getPosX() << "\" y=\"" << tabVoiture[i].getPosY()
@@ -99,6 +99,8 @@ string Plateau::FooterSVG() const{
     ss << "</svg>" << endl;
     return ss.str();
 }
+
+
 //Utiliser ofstream ou string stream ??? Difference ?
 //reponse : utiliser un string stream pour pouvoir forger les differents svg
 

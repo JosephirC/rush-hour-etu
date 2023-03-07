@@ -14,6 +14,25 @@ bool quit = false;
 int main(int argc, char** argv){
 
     Plateau p(6,6);
+    //Voiture v(0, 0, 2, 1, 0);
+
+    p.initPlateauVide();
+    //p.ajouterVoiture(v);
+    p.ChargerDonnees("./Sujet/puzzle.txt");
+
+
+    cout << "Je display les pos de sortie X : " << p.getSortieX() << " Y : " << p.getSortieY() << endl; 
+    p.affichageTabVoiture();
+
+    p.HeaderSVG(p);
+    p.RectangleSVG(p);
+    p.FooterSVG();
+
+
+
+    /**************NE PAS DECOMMENTER****************/
+            //p.ToSVG(v, p, "image1.svg");
+    /************************************************/
 
     // /* Initialisation simple */
     // if (SDL_Init(SDL_INIT_VIDEO) != 0 )
@@ -37,10 +56,10 @@ int main(int argc, char** argv){
     //         }
     //     }
 
-    p.initPlateauVide();
 
-    SDL sj;
-	sj.sdlBoucle();
+
+    // SDL sj;
+	// sj.sdlBoucle();
 
 
     return 0;

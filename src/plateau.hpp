@@ -42,9 +42,9 @@ class Plateau {
 
     void ChargerDonnees(const string& filename);
     
-    string HeaderSVG(const Plateau& p) const;
+    string HeaderSVG() const;
 
-    string RectangleSVG(const Plateau& p) const;
+    string RectangleSVG() const;
     
     string FooterSVG() const;
 };

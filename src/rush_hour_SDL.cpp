@@ -1,5 +1,3 @@
-#include "voiture.hpp"
-#include "plateau.hpp"
 #include "sdl.hpp"
 #include <iostream>
 
@@ -64,4 +62,6 @@ int main(int argc, char** argv){
 
 
     return 0;
+
+
 }

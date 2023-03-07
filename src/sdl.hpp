@@ -63,6 +63,9 @@ class SDL {
         ~SDL ();
         void sdlBoucle ();
         void sdlAff ();
+        void drawMultipleHorLines(SDL_Renderer * renderer, int x, int y, int color, int gapSize);
+        void drawMultipleVerLines(SDL_Renderer * renderer, int x, int y, int color, int gapSize);
+
 
 };
 

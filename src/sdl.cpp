@@ -91,9 +91,8 @@ void Image::setSurface(SDL_Surface * surf) {m_surface = surf;}
 
 
 
-
-
-
+// Variables globales images
+Image im_car2_main;
 
 
 // ============= CLASS SDLJEU =============== //
@@ -128,14 +127,9 @@ SDL::SDL (){
     }
     else withSound = true;
 
-	int dimx, dimy;
-	//dimx = jeu.getConstTerrain().getDimX();
-	//dimy = jeu.getConstTerrain().getDimY();
-	dimx = dimx * TAILLE_SPRITE;
-	dimy = dimy * TAILLE_SPRITE;
 
     // Creation de la fenetre
-    window = SDL_CreateWindow("Pacman", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1000, 1000, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("RushHour", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 600, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == nullptr) {
         cout << "Erreur lors de la creation de la fenetre : " << SDL_GetError() << endl; 
         SDL_Quit(); 
@@ -145,10 +139,7 @@ SDL::SDL (){
     renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
 
     // IMAGES
-    // im_pacman.loadFromFile("data/pacman.png",renderer);
-    // im_mur.loadFromFile("data/mur.png",renderer);
-    // im_pastille.loadFromFile("data/pastille.png",renderer);
-    // im_fantome.loadFromFile("data/fantome.png",renderer);
+    im_car2_main.loadFromFile("images/car2_main.png", renderer);
     
 
     // FONTS
@@ -160,8 +151,8 @@ SDL::SDL (){
             SDL_Quit(); 
             exit(1);
 	}
-	font_color.r = 50;font_color.g = 50;font_color.b = 255;
-	font_im.setSurface(TTF_RenderText_Solid(font,"Pacman",font_color));
+    font_color = {250,250,250};
+	font_im.setSurface(TTF_RenderText_Solid(font,"Niveau 1",font_color));
 	font_im.loadFromCurrentSurface(renderer);
 
     // SONS
@@ -187,34 +178,53 @@ SDL::~SDL () {
     SDL_Quit();
 }
 
+void SDL::drawMultipleHorLines(SDL_Renderer * renderer, int x, int y, int color, int gapSize) {
+    SDL_SetRenderDrawColor(renderer, color, color, color, 255);
+    for (int i =0; i<6; i++) {
+        SDL_RenderDrawLine(renderer,x,y,x+gapSize,y);
+        x += gapSize;
+    }
+}
+
+void SDL::drawMultipleVerLines(SDL_Renderer * renderer, int x, int y, int color, int gapSize) {
+    SDL_SetRenderDrawColor(renderer, color, color, color, 255);
+    for (int i =0; i<6; i++) {
+        SDL_RenderDrawLine(renderer,x,y,x,y+gapSize);
+        y += gapSize;
+    }
+}
+
 void SDL::sdlAff () {
 	//Remplir l'écran de blanc
-    SDL_SetRenderDrawColor(renderer, 230, 240, 255, 255);
+    SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
     SDL_RenderClear(renderer);
 
-	int x,y;
-	//const Terrain& ter = jeu.getConstTerrain();
-	//const Pacman& pac = jeu.getConstPacman();
-	//const Fantome& fan = jeu.getConstFantome();
+    // Grille
+    int x, y;
 
-    // Afficher les sprites des murs et des pastilles
-	// for (x=0;x<ter.getDimX();++x)
-	// 	for (y=0;y<ter.getDimY();++y)
-	// 		if (ter.getXY(x,y)=='#')
-	// 			im_mur.draw(renderer,x*TAILLE_SPRITE,y*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
-	// 		else if (ter.getXY(x,y)=='.')
-	// 			im_pastille.draw(renderer,x*TAILLE_SPRITE,y*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
+    x = 132;
+    for (int i =0; i<6; i++) {
+        drawMultipleVerLines(renderer,x,76,60,84);
+        x += 84;
+    }  
 
-	// Afficher le sprite de Pacman
-	//im_pacman.draw(renderer,pac.getX()*TAILLE_SPRITE,pac.getY()*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
-    //im_voiture.draw(renderer, 10, 10, 16, 16);
+    y = 160;
+    for (int i =0; i<6; i++) {
+        drawMultipleHorLines(renderer,48,y,60,84);
+        y += 84;
+    }
 
-	// Afficher le sprite du Fantome
-	//im_fantome.draw(renderer,fan.getX()*TAILLE_SPRITE,fan.getY()*TAILLE_SPRITE,TAILLE_SPRITE,TAILLE_SPRITE);
+    // Bordures
+    drawMultipleHorLines(renderer,48,76,255,84);
+    drawMultipleHorLines(renderer,48,580,255,84);
+    drawMultipleVerLines(renderer,48,76,255,84);
+    drawMultipleVerLines(renderer,552,76,255,84);
+
+
+    im_car2_main.draw(renderer, 216, 160, 83, 166);
 
     // Ecrire un titre par dessus
-    SDL_Rect positionTitre;
-    positionTitre.x = 270;positionTitre.y = 49;positionTitre.w = 100;positionTitre.h = 30;
+    SDL_Rect positionTitre = {250,25,100,30};
     SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
 
 }
@@ -243,17 +253,7 @@ void SDL::sdlBoucle () {
 				case SDL_SCANCODE_UP:
 					//mangePastille = jeu.actionClavier('b');    // car Y inverse
 					break;
-				case SDL_SCANCODE_DOWN:
-					//mangePastille = jeu.actionClavier('h');     // car Y inverse
-					break;
-				case SDL_SCANCODE_LEFT:
-					//mangePastille = jeu.actionClavier('g');
-					break;
-				case SDL_SCANCODE_RIGHT:
-					//mangePastille = jeu.actionClavier('d');
-					break;
                 case SDL_SCANCODE_ESCAPE:
-                case SDL_SCANCODE_Q:
                     quit = true;
                     break;
 				default: break;

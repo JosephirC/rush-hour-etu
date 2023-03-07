@@ -1,5 +1,5 @@
-#ifndef _SDLJEU_H
-#define _SDLJEU_H
+#ifndef _SDL_HPP
+#define _SDL_HPP
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>

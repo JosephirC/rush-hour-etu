@@ -13,7 +13,7 @@ bool quit = false;
 
 int main(int argc, char** argv){
 
-    Plateau p;
+    Plateau p(6,6);
 
     // /* Initialisation simple */
     // if (SDL_Init(SDL_INIT_VIDEO) != 0 )
@@ -37,7 +37,7 @@ int main(int argc, char** argv){
     //         }
     //     }
 
-    p.afficherPlateau();
+    p.initPlateauVide();
 
     SDL sj;
 	sj.sdlBoucle();

@@ -3,11 +3,15 @@
 
 using namespace std;
 
-Plateau::Plateau(){
-
+Plateau::Plateau(int sX, int sY) :
+sizeX(6),
+sizeY(6)
+{
+    sizeX = sX;
+    sizeY = sY;
 }
 
-void Plateau::afficherPlateau(){
+void Plateau:: initPlateauVide(){
     
     for(int i = 0; i < sizeX; i++){
         for(int j = 0; j < sizeY; j++){
@@ -15,4 +19,12 @@ void Plateau::afficherPlateau(){
         } cout << endl;
     }
     cout << endl;
+}
+
+void Plateau::ajouterVoiture(const Voiture& v){
+    tabVoiture.push_back(v);
+}
+
+string Plateau:: ToSVG() const {
+    return " ";
 }

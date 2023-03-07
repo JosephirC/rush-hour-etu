@@ -1,3 +1,6 @@
+#ifndef _VOITURE_HPP
+#define _VOITURE_HPP
+
 class Voiture {
     private:
         int posX;
@@ -5,3 +8,4 @@ class Voiture {
         int size;
         int id;
 };
+#endif

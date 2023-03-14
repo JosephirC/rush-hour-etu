@@ -1,21 +1,21 @@
 #include "voiture.hpp"
-#include "plateau.hpp"
+#include "grid.hpp"
 #include "sdl.hpp"
 #include <iostream>
 #include <fstream>
 
 int main(int argc, char** argv){
 
-    Plateau p(6,6);
+    Grid p(6,6);
     //Voiture v(0, 0, 2, 1, 0);
 
-    p.initPlateauVide();
+    p.initEmptyGrid();
     //p.ajouterVoiture(v);
-    p.ChargerDonnees("./Sujet/puzzle.txt");
+    p.loadData("./Sujet/puzzle.txt");
 
 
-    cout << "Je display les pos de sortie X : " << p.getSortieX() << " Y : " << p.getSortieY() << endl; 
-    p.affichageTabVoiture();
+    cout << "Je display les pos de sortie X : " << p.getEndX() << " Y : " << p.getEndY() << endl; 
+    p.displayCarArray();
 
     p.HeaderSVG();
     p.RectangleSVG();

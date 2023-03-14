@@ -2,7 +2,7 @@
 #include <time.h>
 #include "sdl.hpp"
 #include <stdlib.h>
-#include "plateau.hpp"
+#include "grid.hpp"
 
 #include <iostream>
 using namespace std;
@@ -306,7 +306,7 @@ void SDL::sdlAff () {
                 im_car2_main.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 83, 166);
             }
         }
-        else if (tabVoitureGraphique[i].getTaille() == 3 || tabVoitureGraphique[i].getTaille() == 3) {
+        else if (tabVoitureGraphique[i].getSize() == 3 || tabVoitureGraphique[i].getSize() == 3) {
             if (tabVoitureGraphique[i].getDirection() == 1){
                 im_car3_firetruck90.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 250, 83);
             }

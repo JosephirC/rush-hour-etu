@@ -24,40 +24,40 @@ FONCTION POUR DEPLACER LES VOITURE(QUI PEUVENT SE DEPLACER) DE UN SEUL COUP
 */
 
 
-class Plateau {
+class Grid {
     private:
         const int MARGE = 20;
         const int TAILLE_CASE = 100;
         
-        int largeur = 6;
-        int longueur = 6;
-        int sortiePosX, sortiePosY;
-        vector<Voiture> tabVoiture;
-        int grilleIDVoiture[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
+        int width = 6;
+        int length = 6;
+        int endPosX, endPosY;
+        vector<Voiture> carArray;
+        int grilleIDCar[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
 
     public : 
 
-    Plateau();
+    Grid();
 
-    Plateau(int sX, int sY);
+    Grid(int sX, int sY);
     
-    void initPlateauVide();
+    void initEmptyGrid();
 
-    void afficherPlateau();
+    void displayGrid();
 
-    void ajouterVoiture(const Voiture& v);
+    void addCar(const Voiture& v);
 
-    int getSortieX() const;
-    int getSortieY() const;
-    int getTailleX();
-    int getTailleY();
-    vector<Voiture> getTabVoiture();
+    int getEndX() const;
+    int getEndY() const;
+    int getSizeX();
+    int getSizeY();
+    vector<Voiture> getCarArray();
 
-    void affichageTabVoiture();
+    void displayCarArray();
 
     //Utiliser ofstream ou string stream ??? Difference ?
     //reponse : utiliser un string stream pour pouvoir forger les differents svg
-    void ChargerDonnees(const string& filename);
+    void loadData(const string& filename);
     
     string HeaderSVG() const;
 
@@ -65,6 +65,6 @@ class Plateau {
     
     string FooterSVG() const;
 
-    void ajouterSituationsJeu();
+    void addGameSituation();
 };
 #endif

@@ -14,9 +14,24 @@ longueur(6)
 
 void Plateau::initPlateauVide(){
     
-    for(int i = 0; i < largeur; i++){
-        for(int j = 0; j < longueur; j++){
-            cout << ".";
+    for(int i = 0; i < longueur; i++){
+        for(int j = 0; j < largeur; j++){
+            cout << ". ";
+        } cout << endl;
+    }
+    cout << endl;
+    
+    for(int i = 0; i < longueur; i++){
+        for(int j = 0; j < largeur; j++){
+            grilleIDVoiture[i][j] = -1; // -1 = case vide
+        }
+    }
+}
+
+void Plateau::afficherPlateau(){
+    for(int i = 0; i < longueur; i++){
+        for(int j = 0; j < largeur; j++){
+            cout << grilleIDVoiture[i][j] << " ";
         } cout << endl;
     }
     cout << endl;
@@ -24,6 +39,19 @@ void Plateau::initPlateauVide(){
 
 void Plateau::ajouterVoiture(const Voiture& v){
     tabVoiture.push_back(v);
+    int posX = v.getPosX();
+    int posY = v.getPosY();
+    grilleIDVoiture[posX][posY] = v.getId();
+    if (v.getDirection() == 0) {
+        for (int i=1; i< v.getTaille(); i++) {
+            grilleIDVoiture[posX+i][posY] = v.getId();
+        }
+    }
+    else {
+        for (int i=1; i< v.getTaille(); i++) {
+            grilleIDVoiture[posX][posY+i] = v.getId();
+        }
+    }
 }
 
 int Plateau::getSortieX() const{
@@ -32,6 +60,18 @@ int Plateau::getSortieX() const{
 
 int Plateau::getSortieY() const{
     return sortiePosY;
+}
+
+int Plateau::getTailleX() {
+    return longueur;
+}
+
+int Plateau::getTailleY() {
+    return largeur;
+}
+
+vector<Voiture> Plateau::getTabVoiture() {
+    return tabVoiture;
 }
 
 void Plateau::affichageTabVoiture(){
@@ -68,7 +108,7 @@ void Plateau::ChargerDonnees(const string& filename){
         while(file >> pX >> pY >> t >> dir){
             
             Voiture v(pX, pY, t, dir, id);
-            tabVoiture.push_back(v);
+            ajouterVoiture(v);
             id++;
         }
     }

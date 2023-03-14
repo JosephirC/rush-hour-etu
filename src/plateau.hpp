@@ -17,18 +17,25 @@ class Plateau {
         int longueur = 6;
         int sortiePosX, sortiePosY;
         vector<Voiture> tabVoiture;
+        int grilleIDVoiture[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
 
     public : 
+
+    Plateau();
 
     Plateau(int sX, int sY);
     
     void initPlateauVide();
 
+    void afficherPlateau();
+
     void ajouterVoiture(const Voiture& v);
 
     int getSortieX() const;
-    
     int getSortieY() const;
+    int getTailleX();
+    int getTailleY();
+    vector<Voiture> getTabVoiture();
 
     void affichageTabVoiture();
 

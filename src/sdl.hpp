@@ -5,6 +5,12 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
+#include "plateau.hpp"
+
+struct Case {
+    int x;
+    int y;
+};
 
 //! \brief Pour gérer une image avec SDL2
 class Image {
@@ -53,6 +59,7 @@ class SDL {
         // Image im_fantome;
         Image im_voiture;
 
+        vector<Voiture> tabVoitureGraphique;
 
         bool souris;
         bool touche;
@@ -65,7 +72,7 @@ class SDL {
         void sdlAff ();
         void drawMultipleHorLines(SDL_Renderer * renderer, int x, int y, int color, int gapSize);
         void drawMultipleVerLines(SDL_Renderer * renderer, int x, int y, int color, int gapSize);
-
+        void copierTableau(vector<Voiture> tab);
 
 };
 

@@ -18,21 +18,12 @@ int main(int argc, char** argv){
     p.loadData("./Sujet/puzzle.txt");
 
 
-    cout << "Je display les pos de sortie X : " << p.getEndX() << " Y : " << p.getEndY() << endl; 
+    cout << "Je display les pos de sortie X : " << p.getExitX() << " Y : " << p.getExitY() << endl; 
     p.displayCarArray();
 
-    p.displayGrid();
+    p.displayGridId();
 
-    p.HeaderSVG();
-    p.RectangleSVG();
-    p.FooterSVG();
     
-
-
-    /**************NE PAS DECOMMENTER****************/
-            //p.ToSVG(v, p, "image1.svg");
-    /************************************************/
-
     // /* Initialisation simple */
     // if (SDL_Init(SDL_INIT_VIDEO) != 0 )
     // {

@@ -17,7 +17,7 @@ int Car::getPosY() const {
 }
     
 
-int Car::getSize() const{
+int Car::getCarSize() const{
     return size;
 }
 

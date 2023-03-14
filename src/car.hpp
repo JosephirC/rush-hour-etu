@@ -17,7 +17,7 @@ class Car {
 
         int getPosY() const;
         
-        int getSize() const;
+        int getCarSize() const;
         
         int getDirection() const;
         

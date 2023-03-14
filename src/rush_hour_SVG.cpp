@@ -14,20 +14,14 @@ int main(int argc, char** argv){
     p.loadData("./Sujet/puzzle.txt");
 
 
-    cout << "Je display les pos de sortie X : " << p.getEndX() << " Y : " << p.getEndY() << endl; 
+    cout << "Je display les pos de sortie X : " << p.getExitX() << " Y : " << p.getExitY() << endl; 
     p.displayCarArray();
-
-    p.HeaderSVG();
-    p.RectangleSVG();
-    p.FooterSVG();
+    p.displayGridId();
 
     //Creation du .svg ---> Il faut faire une fonction pour cela !
     ofstream file("./images_svg/image.svg");
-    file << p.HeaderSVG() << p.RectangleSVG() << p.FooterSVG(); 
+    file << p.svgHeader() << p.svgRectangle() << p.svgFooter(); 
 
-    /**************NE PAS DECOMMENTER****************/
-            //p.ToSVG(v, p, "image1.svg");
-    /************************************************/
 
     return 0;
 }

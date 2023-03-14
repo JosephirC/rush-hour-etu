@@ -30,41 +30,47 @@ class Grid {
         const int TAILLE_CASE = 100;
         
         int width = 6;
-        int length = 6;
-        int endPosX, endPosY;
+        int height = 6;
+        int exitPosX, exitPosY;
         vector<Car> carArray;
-        int grilleIDCar[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
+        int gridCarId[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
 
     public : 
 
-    Grid();
+        Grid();
 
-    Grid(int sX, int sY);
-    
-    void initEmptyGrid();
+        Grid(int sX, int sY);
+        
+        void initEmptyGrid();
 
-    void displayGrid();
+        void addCar(const Car& v);
 
-    void addCar(const Car& v);
+        void displayGridId();
 
-    int getEndX() const;
-    int getEndY() const;
-    int getSizeX();
-    int getSizeY();
-    vector<Car> getCarArray();
+        int getExitX() const;
 
-    void displayCarArray();
+        int getExitY() const;
 
-    //Utiliser ofstream ou string stream ??? Difference ?
-    //reponse : utiliser un string stream pour pouvoir forger les differents svg
-    void loadData(const string& filename);
-    
-    string HeaderSVG() const;
+        int getSizeX() const;
 
-    string RectangleSVG() const;
-    
-    string FooterSVG() const;
+        int getSizeY() const;
 
-    void addGameSituation();
+        vector<Car> getCarArray();
+
+        void displayCarArray();
+
+        //Utiliser ofstream ou string stream ??? Difference ?
+        //reponse : utiliser un string stream pour pouvoir forger les differents svg
+        void loadData(const string& filename);
+        
+        string svgHeader() const;
+
+        string svgRectangle() const;
+        
+        string svgFooter() const;
+
+        void addGameSituation();
+
+        
 };
 #endif

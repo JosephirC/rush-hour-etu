@@ -4,70 +4,75 @@
 #include <sstream>
 #include <exception>
 
-Grid::Grid(int _width, int _length) :
+Grid::Grid(int _width, int _height) :
 width(6),
-length(6)
+height(6)
 {
     width = _width;
-    length = _length;
+    height = _height;
 }
 
 void Grid::initEmptyGrid(){
-    
-    for(int i = 0; i < length; i++){
-        for(int j = 0; j < width; j++){
-            cout << ". ";
-        } cout << endl;
-    }
-    cout << endl;
-    
-    for(int i = 0; i < length; i++){
-        for(int j = 0; j < width; j++){
-            grilleIDCar[i][j] = -1; // -1 = case vide
+
+    for(int i = 0; i < width; i++){
+        for(int j = 0; j < height; j++){
+            gridCarId[i][j] = -1; // -1 = case vide
         }
     }
-}
 
-void Grid::displayGrid(){
-    for(int i = 0; i < length; i++){
-        for(int j = 0; j < width; j++){
-            cout << grilleIDCar[i][j] << " ";
+    //Display empty grid
+    cout << endl << "initEmptyGrid" << endl;
+    for(int i = 0; i < width; i++){
+        for(int j = 0; j < height; j++){
+            cout << " " << gridCarId[i][j] << " ";
         } cout << endl;
     }
     cout << endl;
+
 }
 
-void Grid::addCar(const Car& v){
-    carArray.push_back(v);
-    int posX = v.getPosX();
-    int posY = v.getPosY();
-    grilleIDCar[posX][posY] = v.getId();
-    if (v.getDirection() == 0) {
-        for (int i=1; i< v.getSize(); i++) {
-            grilleIDCar[posX+i][posY] = v.getId();
+void Grid::addCar(const Car& c){
+    carArray.push_back(c);
+    int posX = c.getPosX();
+    int posY = c.getPosY();
+    gridCarId[posX][posY] = c.getId();
+    if (c.getDirection() == 0) {
+        for (int i = 1; i< c.getCarSize(); i++) {
+            gridCarId[posX+i][posY] = c.getId();
         }
     }
     else {
-        for (int i=1; i< v.getSize(); i++) {
-            grilleIDCar[posX][posY+i] = v.getId();
+        for (int i = 1; i< c.getCarSize(); i++) {
+            gridCarId[posX][posY+i] = c.getId();
         }
     }
 }
 
-int Grid::getEndX() const{
-    return endPosX;
+void Grid::displayGridId(){
+    cout << endl << "displayGridId" << endl;
+    for(int i = 0; i < width; i++){
+        for(int j = 0; j < height; j++){
+            cout << "  " << gridCarId[i][j] << "  ";
+            //cout << gridCarId;
+        } cout << endl;
+    }
+    cout << endl;
 }
 
-int Grid::getEndY() const{
-    return endPosY;
+int Grid::getExitX() const{
+    return exitPosX;
 }
 
-int Grid::getSizeX() {
-    return length;
+int Grid::getExitY() const{
+    return exitPosY;
 }
 
-int Grid::getSizeY() {
+int Grid::getSizeX() const {
     return width;
+}
+
+int Grid::getSizeY() const {
+    return height;
 }
 
 vector<Car> Grid::getCarArray() {
@@ -75,9 +80,10 @@ vector<Car> Grid::getCarArray() {
 }
 
 void Grid::displayCarArray(){
+    cout << endl << "displayCarArray" << endl;
     for(int i = 0; i < carArray.size(); i++){
-        cout << "Car --> Id = " << carArray[i].getId() << " X = " << carArray[i].getPosX() << " Y = " << carArray[i].getPosY() 
-        << " Size = " << carArray[i].getSize() << " Direction " << carArray[i].getDirection() << endl; 
+        cout << "Car --> Id = " << carArray[i].getId() << "  X = " << carArray[i].getPosX() << "  Y = " << carArray[i].getPosY() 
+        << "  Size = " << carArray[i].getCarSize() << "  Direction " << carArray[i].getDirection() << endl; 
     }
 }
 
@@ -88,16 +94,16 @@ void Grid::loadData(const string& filename){
 
     if (file.good())
     {
-        int sortieX, sortieY;
+        int finishX, finishY;
         string premiereLine;
         //getline(file, premiereLine);
         
-        if(file >> sortieX >> sortieY){
-            endPosX = sortieX;
-            endPosY = sortieY;
+        if(file >> finishX >> finishY){
+            exitPosX = finishX;
+            exitPosY = finishY;
         }
         else{
-            throw length_error("Impossible de lire la sortie du plateau");
+            throw length_error("Impossible to read the grid exit");
         }
         
         int pX, pY; //position X et Y
@@ -152,28 +158,28 @@ const int STROKE_WIDTH = 1;
 const string STROKE_COLOR = "black";
 const string FILL_COLOR = "red";
 
-string Grid::HeaderSVG() const {
+string Grid::svgHeader() const {
     stringstream ss;
     ss << "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 " 
-       << width * TAILLE_CASE << " " << length * TAILLE_CASE 
+       << width * TAILLE_CASE << " " << height * TAILLE_CASE 
        << "\" width=\"" << width * TAILLE_CASE << "\" height=\"" 
-       << length * TAILLE_CASE << "\" stroke=\"" << STROKE_COLOR 
+       << height * TAILLE_CASE << "\" stroke=\"" << STROKE_COLOR 
        << "\" stroke-width=\"" << STROKE_WIDTH << "\" fill=\"none\">" << endl;
     ss << "<rect x=\"0\" y=\"0\" width=\"" << width * TAILLE_CASE 
-       << "\" height=\"" << length * TAILLE_CASE << "\" stroke=\"" 
+       << "\" height=\"" << height * TAILLE_CASE << "\" stroke=\"" 
        << STROKE_COLOR << "\" stroke-width=\"" << 15 * STROKE_WIDTH 
        << "\" fill=\"none\" />" << endl;
     return ss.str();
 }
 
-string Grid::RectangleSVG() const {
+string Grid::svgRectangle() const {
     stringstream ss;
     for (const auto& car : carArray) {
         const int x = car.getPosY() * TAILLE_CASE + MARGE;
         const int y = car.getPosX() * TAILLE_CASE + MARGE;
         const int width = (car.getDirection() == 0) ? TAILLE_CASE - 2 * MARGE : 
-                                                       car.getSize() * TAILLE_CASE - 2 * MARGE;
-        const int height = (car.getDirection() == 0) ? car.getSize() * TAILLE_CASE - 2 * MARGE : 
+                                                       car.getCarSize() * TAILLE_CASE - 2 * MARGE;
+        const int height = (car.getDirection() == 0) ? car.getCarSize() * TAILLE_CASE - 2 * MARGE : 
                                                         TAILLE_CASE - 2 * MARGE;
 
         if (car.getId() == 0) {
@@ -190,26 +196,26 @@ string Grid::RectangleSVG() const {
     return ss.str();
 }
 
-string Grid::FooterSVG() const {
+string Grid::svgFooter() const {
     return "</svg>";
 }
 
 void Grid::addGameSituation() {
     for (const auto& car : carArray) {
         if (car.getDirection() == 0) { // Verticale
-                if (grilleIDCar[car.getPosX() - 1][car.getPosY()] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
+                if (gridCarId[car.getPosX() - 1][car.getPosY()] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
                     // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
                 }
-                if (grilleIDCar[car.getPosX() + car.getSize()][car.getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+                if (gridCarId[car.getPosX() + car.getCarSize()][car.getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
                     // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
                 }
             } 
 
         if (car.getDirection() == 1) { // Verticale
-            if (grilleIDCar[car.getPosX()][car.getPosY() - 1] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
+            if (gridCarId[car.getPosX()][car.getPosY() - 1] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
                     // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
                 }
-                if (grilleIDCar[car.getPosX()][car.getPosY() + car.getSize()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+                if (gridCarId[car.getPosX()][car.getPosY() + car.getCarSize()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
                     // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
                 }
         }

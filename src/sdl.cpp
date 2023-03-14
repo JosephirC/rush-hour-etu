@@ -306,7 +306,7 @@ void SDL::sdlAff () {
                 im_car2_main.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 83, 166);
             }
         }
-        else if (graphicCarArray[i].getSize() == 3 || graphicCarArray[i].getSize() == 3) {
+        else if (graphicCarArray[i].getCarSize() == 3 || graphicCarArray[i].getCarSize() == 3) {
             if (graphicCarArray[i].getDirection() == 1){
                 im_car3_firetruck90.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 250, 83);
             }

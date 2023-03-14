@@ -57,9 +57,9 @@ class SDL {
         // Image im_mur;
         // Image im_pastille;
         // Image im_fantome;
-        Image im_voiture;
+        Image im_car;
 
-        vector<Voiture> tabVoitureGraphique;
+        vector<Car> graphicCarArray;
 
         bool souris;
         bool touche;
@@ -72,7 +72,7 @@ class SDL {
         void sdlAff ();
         void drawMultipleHorLines(SDL_Renderer * renderer, int x, int y, int color, int gapSize);
         void drawMultipleVerLines(SDL_Renderer * renderer, int x, int y, int color, int gapSize);
-        void copierTableau(vector<Voiture> tab);
+        void copierTableau(vector<Car> tab);
 
 };
 

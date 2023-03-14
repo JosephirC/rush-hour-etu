@@ -266,8 +266,8 @@ void SDL::drawMultipleVerLines(SDL_Renderer * renderer, int x, int y, int color,
     }
 }
 
-void SDL::copierTableau(vector<Voiture> tab) {
-    tabVoitureGraphique = tab;
+void SDL::copierTableau(vector<Car> tab) {
+    graphicCarArray = tab;
 }
 
 void SDL::sdlAff () {
@@ -294,31 +294,31 @@ void SDL::sdlAff () {
     drawMultipleVerLines(renderer,552,76,255,84);
 
     // Affichage des voitures
-    for (int i = 0; i < tabVoitureGraphique.size(); i++) {
-        int x = tabVoitureGraphique[i].getPosX();
-        int y = tabVoitureGraphique[i].getPosY();
+    for (int i = 0; i < graphicCarArray.size(); i++) {
+        int x = graphicCarArray[i].getPosX();
+        int y = graphicCarArray[i].getPosY();
         int random;
-        if (tabVoitureGraphique[i].getId() == 0) {
-            if (tabVoitureGraphique[i].getDirection() == 1){
+        if (graphicCarArray[i].getId() == 0) {
+            if (graphicCarArray[i].getDirection() == 1){
                 im_car2_main90.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 166, 83);
             }
-            else if (tabVoitureGraphique[i].getDirection() == 0) {
+            else if (graphicCarArray[i].getDirection() == 0) {
                 im_car2_main.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 83, 166);
             }
         }
-        else if (tabVoitureGraphique[i].getSize() == 3 || tabVoitureGraphique[i].getSize() == 3) {
-            if (tabVoitureGraphique[i].getDirection() == 1){
+        else if (graphicCarArray[i].getSize() == 3 || graphicCarArray[i].getSize() == 3) {
+            if (graphicCarArray[i].getDirection() == 1){
                 im_car3_firetruck90.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 250, 83);
             }
-            else if (tabVoitureGraphique[i].getDirection() == 0) {
+            else if (graphicCarArray[i].getDirection() == 0) {
                 im_car3_black.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 83, 250);
             }
         }
         else {
-            if (tabVoitureGraphique[i].getDirection() == 1) {
+            if (graphicCarArray[i].getDirection() == 1) {
                 im_car2_orange90.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 166, 83);
             }
-            else if (tabVoitureGraphique[i].getDirection() == 0) {
+            else if (graphicCarArray[i].getDirection() == 0) {
                 im_car2_white.draw(renderer, tabCase[x][y].x, tabCase[x][y].y, 83, 166);
             }
         }

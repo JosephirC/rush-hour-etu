@@ -1,7 +1,7 @@
 #ifndef _PLATEAU_HPP
 #define _PLATEAU_HPP
 
-#include "voiture.hpp"
+#include "car.hpp"
 #include <iostream>
 #include <vector>
 
@@ -32,7 +32,7 @@ class Grid {
         int width = 6;
         int length = 6;
         int endPosX, endPosY;
-        vector<Voiture> carArray;
+        vector<Car> carArray;
         int grilleIDCar[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
 
     public : 
@@ -45,13 +45,13 @@ class Grid {
 
     void displayGrid();
 
-    void addCar(const Voiture& v);
+    void addCar(const Car& v);
 
     int getEndX() const;
     int getEndY() const;
     int getSizeX();
     int getSizeY();
-    vector<Voiture> getCarArray();
+    vector<Car> getCarArray();
 
     void displayCarArray();
 

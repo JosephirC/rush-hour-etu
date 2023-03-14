@@ -1,7 +1,7 @@
-#ifndef _VOITURE_HPP
-#define _VOITURE_HPP
+#ifndef _Car_HPP
+#define _Car_HPP
 
-class Voiture {
+class Car {
     private:
         int posX;
         int posY;
@@ -11,7 +11,7 @@ class Voiture {
 
     public:
 
-        Voiture(int _posX, int _posY, int _size, int _direction, int _id);
+        Car(int _posX, int _posY, int _size, int _direction, int _id);
 
         int getPosX() const;
 

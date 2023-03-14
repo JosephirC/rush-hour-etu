@@ -1,5 +1,5 @@
 #include "grid.hpp"
-#include "voiture.hpp"
+#include "car.hpp"
 #include <fstream>
 #include <sstream>
 #include <exception>
@@ -37,7 +37,7 @@ void Grid::displayGrid(){
     cout << endl;
 }
 
-void Grid::addCar(const Voiture& v){
+void Grid::addCar(const Car& v){
     carArray.push_back(v);
     int posX = v.getPosX();
     int posY = v.getPosY();
@@ -70,14 +70,14 @@ int Grid::getSizeY() {
     return width;
 }
 
-vector<Voiture> Grid::getCarArray() {
+vector<Car> Grid::getCarArray() {
     return carArray;
 }
 
 void Grid::displayCarArray(){
     for(int i = 0; i < carArray.size(); i++){
-        cout << "Voiture --> Id = " << carArray[i].getId() << " X = " << carArray[i].getPosX() << " Y = " << carArray[i].getPosY() 
-        << " Taille = " << carArray[i].getSize() << " Direction " << carArray[i].getDirection() << endl; 
+        cout << "Car --> Id = " << carArray[i].getId() << " X = " << carArray[i].getPosX() << " Y = " << carArray[i].getPosY() 
+        << " Size = " << carArray[i].getSize() << " Direction " << carArray[i].getDirection() << endl; 
     }
 }
 
@@ -107,8 +107,8 @@ void Grid::loadData(const string& filename){
 
         while(file >> pX >> pY >> t >> dir){
             
-            Voiture v(pX, pY, t, dir, id);
-            addCar(v);
+            Car c(pX, pY, t, dir, id);
+            addCar(c);
             id++;
         }
     }

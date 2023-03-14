@@ -197,18 +197,21 @@ string Plateau::FooterSVG() const {
 void Plateau::ajouterSituationsJeu() {
     for (const auto& car : tabVoiture) {
         if (car.getDirection() == 0) { // Verticale
-            for (int i=0; i<longueur; i++) {
-                if (grilleIDVoiture[i][car.getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+                if (grilleIDVoiture[car.getPosX() - 1][car.getPosY()] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
+                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                }
+                if (grilleIDVoiture[car.getPosX() + 1][car.getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
                     // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
                 }
             } 
-        }
+
         if (car.getDirection() == 1) { // Verticale
-            for (int i=0; i<largeur; i++) {
-                if (grilleIDVoiture[car.getPosX()][i] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+            if (grilleIDVoiture[car.getPosX()][car.getPosY() - 1] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
                     // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
                 }
-            } 
+                if (grilleIDVoiture[car.getPosX()][car.getPosY() + 1] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                }
         }
     }
 }

@@ -1,9 +1,9 @@
 #include "voiture.hpp"
 
-Voiture:: Voiture(int _posX, int _posY, int _taille, int _direction, int _id){
+Voiture:: Voiture(int _posX, int _posY, int _size, int _direction, int _id){
     posX = _posX;
     posY = _posY;
-    taille = _taille;
+    size = _size;
     direction = _direction;
     id = _id;
 }
@@ -17,8 +17,8 @@ int Voiture::getPosY() const {
 }
     
 
-int Voiture::getTaille() const{
-    return taille;
+int Voiture::getSize() const{
+    return size;
 }
 
 int Voiture::getDirection() const{\

@@ -5,19 +5,19 @@ class Voiture {
     private:
         int posX;
         int posY;
-        int taille;
+        int size;
         int direction; // 1 -> horizontale || 0 -> verticale
         int id;
 
     public:
 
-        Voiture(int _posX, int _posY, int _taille, int _direction, int _id);
+        Voiture(int _posX, int _posY, int _size, int _direction, int _id);
 
         int getPosX() const;
 
         int getPosY() const;
         
-        int getTaille() const;
+        int getSize() const;
         
         int getDirection() const;
         

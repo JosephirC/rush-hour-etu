@@ -5,7 +5,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
-#include "plateau.hpp"
+#include "grid.hpp"
 
 struct Case {
     int x;

@@ -175,13 +175,43 @@ string Plateau::RectangleSVG() const {
                                                        car.getTaille() * TAILLE_CASE - 2 * MARGE;
         const int height = (car.getDirection() == 0) ? car.getTaille() * TAILLE_CASE - 2 * MARGE : 
                                                         TAILLE_CASE - 2 * MARGE;
-        ss << "<rect x=\"" << x << "\" y=\"" << y 
+
+        if (car.getId() == 0) {
+            ss << "<rect x=\"" << x << "\" y=\"" << y 
+           << "\" width=\"" << width << "\" height=\"" << height 
+           << "\" fill=\"" << "green" << "\" />" << endl;
+        }
+        else {
+            ss << "<rect x=\"" << x << "\" y=\"" << y 
            << "\" width=\"" << width << "\" height=\"" << height 
            << "\" fill=\"" << FILL_COLOR << "\" />" << endl;
+        }
     }
     return ss.str();
 }
 
 string Plateau::FooterSVG() const {
     return "</svg>";
+}
+
+void Plateau::ajouterSituationsJeu() {
+    for (const auto& car : tabVoiture) {
+        if (car.getDirection() == 0) { // Verticale
+                if (grilleIDVoiture[car.getPosX() - 1][car.getPosY()] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
+                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                }
+                if (grilleIDVoiture[car.getPosX() + 1][car.getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                }
+            } 
+
+        if (car.getDirection() == 1) { // Verticale
+            if (grilleIDVoiture[car.getPosX()][car.getPosY() - 1] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
+                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                }
+                if (grilleIDVoiture[car.getPosX()][car.getPosY() + 1] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                }
+        }
+    }
 }

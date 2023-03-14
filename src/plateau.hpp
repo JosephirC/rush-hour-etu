@@ -10,8 +10,11 @@ using namespace std;
 
 class Plateau {
     private:
-        int sizeX = 6;
-        int sizeY = 6;
+        const int MARGE = 20;
+        const int TAILLE_CASE = 100;
+        
+        int largeur = 6;
+        int longueur = 6;
         int sortiePosX, sortiePosY;
         vector<Voiture> tabVoiture;
 
@@ -29,10 +32,8 @@ class Plateau {
 
     void affichageTabVoiture();
 
-    void ToSVG(const Voiture& v, const Plateau& p, const char* filename);
-
-    string ToSVG(const Plateau& p, const Voiture& v) const;
-
+    //Utiliser ofstream ou string stream ??? Difference ?
+    //reponse : utiliser un string stream pour pouvoir forger les differents svg
     void ChargerDonnees(const string& filename);
     
     string HeaderSVG() const;

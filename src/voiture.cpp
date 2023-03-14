@@ -28,5 +28,3 @@ int Voiture::getDirection() const{\
 int Voiture::getId() const{
     return id;
 }
-
-    

@@ -4,18 +4,18 @@
 #include <sstream>
 #include <exception>
 
-Plateau::Plateau(int sX, int sY) :
-sizeX(6),
-sizeY(6)
+Plateau::Plateau(int _largeur, int _longueur) :
+largeur(6),
+longueur(6)
 {
-    sizeX = sX;
-    sizeY = sY;
+    largeur = _largeur;
+    longueur = _longueur;
 }
 
 void Plateau::initPlateauVide(){
     
-    for(int i = 0; i < sizeX; i++){
-        for(int j = 0; j < sizeY; j++){
+    for(int i = 0; i < largeur; i++){
+        for(int j = 0; j < longueur; j++){
             cout << ".";
         } cout << endl;
     }
@@ -77,47 +77,71 @@ void Plateau::ChargerDonnees(const string& filename){
     
 }
 
-string Plateau::HeaderSVG() const{
-    stringstream ss;
-    ss << "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 \" width=\"" 
-        << sizeX << "\" height=\"" << sizeY << "\">" << endl;
+// string Plateau::HeaderSVG() const{
+//     stringstream ss;
+//     ss << "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 \" width=\"" 
+//         << largeur * TAILLE_CASE << "\" height=\"" << longueur * TAILLE_CASE << "\" stroke=\"black\" stroke-width=\"1\" fill=\"none\" >" << endl
+//         << "<rect x=\"0""\" y=\"0""\" width=\"600""\" height=\"600""\" stroke=\"black""\" stroke-width=\"15""\" fill=\"none""\" />" << endl;
+//     return ss.str();
+// }
 
+// string Plateau::RectangleSVG() const{
+//     stringstream ss;
+//     for (int i = 0; i < tabVoiture.size(); i++) {
+//         if(tabVoiture[i].getDirection() == 0){
+//              ss << "<rect x=\"" << (tabVoiture[i].getPosY() * TAILLE_CASE) + MARGE << "\" y=\"" << (tabVoiture[i].getPosX() * TAILLE_CASE) + MARGE
+//             << "\" width=\"" << TAILLE_CASE - (MARGE * 2) << "\" height=\""
+//             << (tabVoiture[i].getTaille() * TAILLE_CASE) - (MARGE * 2) << "\" fill=\"red\" />" << endl;
+//         }
+//         else{
+//             ss << "<rect x=\"" << (tabVoiture[i].getPosY() * TAILLE_CASE) + MARGE << "\" y=\"" << (tabVoiture[i].getPosX() * TAILLE_CASE) + MARGE
+//             << "\" width=\"" << (tabVoiture[i].getTaille() * TAILLE_CASE) - (MARGE * 2) << "\" height=\""
+//             << TAILLE_CASE - (MARGE * 2) << "\" fill=\"red\" />" << endl;
+//         }
+//     }
+//     return ss.str();
+// }
+
+// string Plateau::FooterSVG() const{
+//     stringstream ss;
+//     ss << "</svg>";
+//     return ss.str();
+// }
+
+const int STROKE_WIDTH = 1;
+const string STROKE_COLOR = "black";
+const string FILL_COLOR = "red";
+
+string Plateau::HeaderSVG() const {
+    stringstream ss;
+    ss << "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 " 
+       << largeur * TAILLE_CASE << " " << longueur * TAILLE_CASE 
+       << "\" width=\"" << largeur * TAILLE_CASE << "\" height=\"" 
+       << longueur * TAILLE_CASE << "\" stroke=\"" << STROKE_COLOR 
+       << "\" stroke-width=\"" << STROKE_WIDTH << "\" fill=\"none\">" << endl;
+    ss << "<rect x=\"0\" y=\"0\" width=\"" << largeur * TAILLE_CASE 
+       << "\" height=\"" << longueur * TAILLE_CASE << "\" stroke=\"" 
+       << STROKE_COLOR << "\" stroke-width=\"" << 15 * STROKE_WIDTH 
+       << "\" fill=\"none\" />" << endl;
     return ss.str();
 }
 
-string Plateau::RectangleSVG() const{
+string Plateau::RectangleSVG() const {
     stringstream ss;
-    for (int i = 0; i < tabVoiture.size(); i++) {
-        ss << "<rect x=\"" << tabVoiture[i].getPosX() << "\" y=\"" << tabVoiture[i].getPosY()
-            << "\" width=\"" << tabVoiture[i].getTaille() << "\" height=\""
-            << tabVoiture[i].getTaille() << "\" fill=\"red\" />" << endl;
+    for (const auto& car : tabVoiture) {
+        const int x = car.getPosY() * TAILLE_CASE + MARGE;
+        const int y = car.getPosX() * TAILLE_CASE + MARGE;
+        const int width = (car.getDirection() == 0) ? TAILLE_CASE - 2 * MARGE : 
+                                                       car.getTaille() * TAILLE_CASE - 2 * MARGE;
+        const int height = (car.getDirection() == 0) ? car.getTaille() * TAILLE_CASE - 2 * MARGE : 
+                                                        TAILLE_CASE - 2 * MARGE;
+        ss << "<rect x=\"" << x << "\" y=\"" << y 
+           << "\" width=\"" << width << "\" height=\"" << height 
+           << "\" fill=\"" << FILL_COLOR << "\" />" << endl;
     }
     return ss.str();
 }
 
-string Plateau::FooterSVG() const{
-    stringstream ss;
-    ss << "</svg>" << endl;
-    return ss.str();
+string Plateau::FooterSVG() const {
+    return "</svg>";
 }
-
-
-//Utiliser ofstream ou string stream ??? Difference ?
-//reponse : utiliser un string stream pour pouvoir forger les differents svg
-
-//void Plateau:: ToSVG(const Voiture& v, const Plateau& p, const char* filename) {
-    /* ofstream file(filename);
-    if (!file) {
-        cerr << "Error: Unable to create file " << filename << endl;
-        return;
-    }
-
-    file << "<svg width=\"" << p.sizeX << "\" height=\"" << p.sizeY << "\">" << endl;
-    file << "<rect width=\"" << p.sizeX << "\" height=\"" << p.sizeY << "\" fill=\"white\"/>" << endl;
-    file << "<rect x=\"" << v.getPosX() << "\" y=\"" << v.getPosY() << "\" width=\"" << v.getTaille() << "\" height=\"" << v.getTaille() << "\" fill=\"blue\"/>" << endl;
-    file << "</svg>" << endl;
-
-    file.close(); */
-
-    
-//}

@@ -48,5 +48,7 @@ class Plateau {
     string RectangleSVG() const;
     
     string FooterSVG() const;
+
+    void ajouterSituationsJeu();
 };
 #endif

@@ -95,7 +95,7 @@ void Grid::loadData(const string& filename){
     if (file.good())
     {
         int finishX, finishY;
-        string premiereLine;
+        string firstLine;
         //getline(file, premiereLine);
         
         if(file >> finishX >> finishY){

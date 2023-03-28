@@ -12,6 +12,15 @@ height(6)
     height = _height;
 }
 
+Grid::Grid(const Grid* grid) {
+    width = grid->width;
+    height = grid->height;
+    exitPosX = grid->exitPosX;
+    exitPosY = grid->exitPosY;
+    carArray = grid->carArray;
+    //gridCarId = grid.gridCarId;
+}
+
 // fonction pour debug (visualiser dans la console)
 void Grid::initEmptyGrid(){
 
@@ -252,7 +261,10 @@ vector<Grid> Grid::getGridNeighbours() {
     for (const auto& car : carArray) {
         if (car.getDirection() == 0) { // Verticale
                 if (gridCarId[car.getPosX() - 1][car.getPosY()] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
-                    // faire une nouvelle grille qui est une copie la grille actuelle, avec juste la voiture qui a bougée
+                    Grid temp(this);
+                    // temp.setCarposblablabla //bouger la voiture dans la nouvelle grille
+                    temp.gridCarId;
+                    neighbours.push_back(temp);
                 }
                 if (gridCarId[car.getPosX() + car.getCarSize()][car.getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
                     // faire une nouvelle grille qui est une copie la grille actuelle, avec juste la voiture qui a bougée

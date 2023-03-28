@@ -34,11 +34,13 @@ class Grid {
         int height = 6;
         int exitPosX, exitPosY;
         vector<Car> carArray;
-        int gridCarId[6][6]; // (POUR DEBUG) grille avec pour chaque case l'id de la voiture qui l'occupe
+        int gridCarId[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
 
     public : 
 
         Grid();
+
+        Grid(const Grid* grid); // constructeur par copie
 
         Grid(int sX, int sY);
         
@@ -57,6 +59,8 @@ class Grid {
         int getSizeY() const;
 
         vector<Car> getCarArray();
+
+        //void setGridCarId()
 
         void displayCarArray();
 

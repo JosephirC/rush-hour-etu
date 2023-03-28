@@ -221,3 +221,32 @@ void Grid::addGameSituation() {
         }
     }
 }
+
+vector<int> Grid::getNeighborCars(int carId){
+    vector<int> neighbors;
+    Car car = carArray[carId];
+    int x = car.getPosX();
+    int y = car.getPosY();
+    int size = car.getCarSize();
+    int direction = car.getDirection();
+
+    //Direction horizontale
+    if(direction == 0){
+        if(x > 0 && gridCarId[x][y-1] != -1)
+            neighbors.push_back(gridCarId[x][y-1]);
+        
+        if(x + size < width && gridCarId[x][y+size] != -1)
+            neighbors.push_back(gridCarId[x][y+size]);
+    }
+
+    //Direction verticale
+    if(direction == 1){
+        if(y > 0 && gridCarId[x-1][y] != -1)
+            neighbors.push_back(gridCarId[x-1][y]);
+
+        if(y + size  < height && gridCarId[x+size][y] != -1)
+            neighbors.push_back(gridCarId[x+size][y]);
+    }
+
+    return neighbors;
+}

@@ -71,6 +71,8 @@ class Grid {
 
         void addGameSituation();
 
+        vector<int> getNeighborCars(int carId);
+
         
 };
 #endif

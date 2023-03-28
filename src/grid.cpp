@@ -31,6 +31,10 @@ void Grid::initEmptyGrid(){
 
 }
 
+Grid Grid::loadinitialGrid(initialGrid){
+
+}
+
 void Grid::addCar(const Car& c){
     carArray.push_back(c);
     int posX = c.getPosX();
@@ -263,3 +267,5 @@ vector<int> Grid::getNeighborCars(int carId){
    
     return neighbors;
 }
+
+

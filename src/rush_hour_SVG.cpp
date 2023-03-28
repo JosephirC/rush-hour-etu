@@ -24,7 +24,7 @@ int main(int argc, char** argv){
 
 
     //test neighbor function
-    vector<int> test = grid.getNeighborCars(4);
+    vector<int> test = grid.getNeighborCars(2);
 
     for(int i = 0; i <test.size(); i++){
         cout << "neighbor id is " << test[i] << endl;

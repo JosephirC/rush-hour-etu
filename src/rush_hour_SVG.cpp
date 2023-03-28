@@ -33,7 +33,7 @@ int main(int argc, char** argv){
 
     for(int i = 0; i < grid.getCarArray().size(); i++){
         cout << "Working on Car id : " << carId << endl;
-        test =  grid.getNeighborCars(carId);
+        test =  grid.getNeighboursCars(carId);
         carId++;
         cout << endl;
     }

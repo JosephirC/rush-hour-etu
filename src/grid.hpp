@@ -70,9 +70,9 @@ class Grid {
         
         string svgFooter() const;
 
-        vector<Grid> getGridNeighbor();
+        vector<Grid> getGridNeighbours();
 
-        vector<int> getNeighborCars(int carId);
+        vector<int> getNeighboursCars(int carId);
 
         
 };

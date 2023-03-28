@@ -203,7 +203,7 @@ string Grid::svgFooter() const {
     return "</svg>";
 }
 
-vector<int> Grid::getNeighborCars(int carId){
+vector<int> Grid::getNeighboursCars(int carId){
     vector<int> neighbors;
     Car car = carArray[carId];
     int x = car.getPosX();
@@ -246,29 +246,27 @@ vector<int> Grid::getNeighborCars(int carId){
 }
 
 
-vector<Grid> Grid::getGridNeighbor() {
+vector<Grid> Grid::getGridNeighbours() {
 
-    vector<Grid> temp;
-    
+    vector<Grid> neighbours;
     for (const auto& car : carArray) {
         if (car.getDirection() == 0) { // Verticale
                 if (gridCarId[car.getPosX() - 1][car.getPosY()] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
-                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                    // faire une nouvelle grille qui est une copie la grille actuelle, avec juste la voiture qui a bougée
                 }
                 if (gridCarId[car.getPosX() + car.getCarSize()][car.getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
-                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                    // faire une nouvelle grille qui est une copie la grille actuelle, avec juste la voiture qui a bougée
                 }
             } 
 
         if (car.getDirection() == 1) { // Verticale
             if (gridCarId[car.getPosX()][car.getPosY() - 1] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
-                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                    // faire une nouvelle grille qui est une copie la grille actuelle, avec juste la voiture qui a bougée
                 }
                 if (gridCarId[car.getPosX()][car.getPosY() + car.getCarSize()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
-                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                    // faire une nouvelle grille qui est une copie la grille actuelle, avec juste la voiture qui a bougée
                 }
         }
     }
-
-    return temp;
+    return neighbours;
 }

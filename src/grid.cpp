@@ -232,37 +232,28 @@ vector<int> Grid::getNeighborCars(int carId){
 
     //Direction verticale
     if(direction == 0){
-        if(x > 0 && gridCarId[x-1][y] != -1){
+        if(x > 0 && gridCarId[x-1][y] != -1)
             neighbors.push_back(gridCarId[x-1][y]);
-        }
-        else{
-            cout << "Car id : " << carId << " doesn't have a neighbor" << endl;
-        }
-            
-        if(x + size < width && gridCarId[x+size][y] != -1){
+
+        if(x + size < width && gridCarId[x+size][y] != -1)
             neighbors.push_back(gridCarId[x+size][y]);
-        }
-        else{
+
+        if(neighbors.size() == 0)
             cout << "Car id : " << carId << " doesn't have a neighbor" << endl;
-        }
     }
 
     //Direction horizontale
     if(direction == 1){
-        if(y > 0 && gridCarId[x][y-1] != -1){
+        if(y > 0 && gridCarId[x][y-1] != -1)
             neighbors.push_back(gridCarId[x][y-1]);
-        }
-        else{
-            cout << "Car id : " << carId << " doesn't have a neighbor" << endl;
-        }
          
-        if(y + size  < height && gridCarId[x][y+size] != -1){
+        if(y + size  < height && gridCarId[x][y+size] != -1)
             neighbors.push_back(gridCarId[x][y+size]);
-        }
-        else{
+
+        if(neighbors.size() == 0)
             cout << "Car id : " << carId << " doesn't have a neighbor" << endl;
-        }
     }
+   
 
     return neighbors;
 }

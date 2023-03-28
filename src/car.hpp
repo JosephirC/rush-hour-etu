@@ -22,5 +22,9 @@ class Car {
         int getDirection() const;
         
         int getId() const;
+
+        void setPosX(int x);
+
+        void setPosY(int y);
 };
 #endif

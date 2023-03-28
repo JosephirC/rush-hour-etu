@@ -28,3 +28,11 @@ int Car::getDirection() const{\
 int Car::getId() const{
     return id;
 }
+
+void Car::setPosX(int x){
+    posX = x;
+}
+
+void Car::setPosY(int y){
+    posY = y;
+}

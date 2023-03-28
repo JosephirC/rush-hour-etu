@@ -12,6 +12,7 @@ height(6)
     height = _height;
 }
 
+// fonction pour debug (visualiser dans la console)
 void Grid::initEmptyGrid(){
 
     for(int i = 0; i < width; i++){
@@ -117,6 +118,8 @@ void Grid::loadData(const string& filename){
             addCar(c);
             id++;
         }
+
+
     }
     else
         throw invalid_argument("Failed to open file...");
@@ -200,28 +203,6 @@ string Grid::svgFooter() const {
     return "</svg>";
 }
 
-void Grid::addGameSituation() {
-    for (const auto& car : carArray) {
-        if (car.getDirection() == 0) { // Verticale
-                if (gridCarId[car.getPosX() - 1][car.getPosY()] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
-                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
-                }
-                if (gridCarId[car.getPosX() + car.getCarSize()][car.getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
-                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
-                }
-            } 
-
-        if (car.getDirection() == 1) { // Verticale
-            if (gridCarId[car.getPosX()][car.getPosY() - 1] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
-                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
-                }
-                if (gridCarId[car.getPosX()][car.getPosY() + car.getCarSize()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
-                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
-                }
-        }
-    }
-}
-
 vector<int> Grid::getNeighborCars(int carId){
     vector<int> neighbors;
     Car car = carArray[carId];
@@ -262,4 +243,28 @@ vector<int> Grid::getNeighborCars(int carId){
     }
    
     return neighbors;
+}
+
+
+vector<Grid> getGridNeighbor() {
+    
+    for (const auto& car : carArray) {
+        if (car.getDirection() == 0) { // Verticale
+                if (gridCarId[car.getPosX() - 1][car.getPosY()] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
+                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                }
+                if (gridCarId[car.getPosX() + car.getCarSize()][car.getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                }
+            } 
+
+        if (car.getDirection() == 1) { // Verticale
+            if (gridCarId[car.getPosX()][car.getPosY() - 1] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
+                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                }
+                if (gridCarId[car.getPosX()][car.getPosY() + car.getCarSize()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+                    // ajouter une situation de jeu avec la voiture qui s'est déplacée sur la case vide
+                }
+        }
+    }
 }

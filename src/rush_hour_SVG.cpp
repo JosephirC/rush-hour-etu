@@ -4,6 +4,10 @@
 #include <iostream>
 #include <fstream>
 
+
+
+
+
 int main(int argc, char** argv){
 
     Grid grid(6,6);

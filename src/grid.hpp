@@ -24,6 +24,7 @@ FONCTION POUR DEPLACER LES VOITURE(QUI PEUVENT SE DEPLACER) DE UN SEUL COUP
 */
 
 
+
 class Grid {
     private:
         const int MARGE = 20;
@@ -33,8 +34,7 @@ class Grid {
         int height = 6;
         int exitPosX, exitPosY;
         vector<Car> carArray;
-        int gridCarId[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
-        Grid* grid; 
+        int gridCarId[6][6]; // (POUR DEBUG) grille avec pour chaque case l'id de la voiture qui l'occupe
 
     public : 
 
@@ -70,10 +70,12 @@ class Grid {
         
         string svgFooter() const;
 
-        void addGameSituation();
+        vector<Grid> getGridNeighbor();
 
         vector<int> getNeighborCars(int carId);
 
         
 };
+
+
 #endif

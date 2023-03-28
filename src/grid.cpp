@@ -232,28 +232,34 @@ vector<int> Grid::getNeighborCars(int carId){
 
     //Direction verticale
     if(direction == 0){
-        if(x > 0 && gridCarId[x-1][y] != -1)
+        if(x > 0 && gridCarId[x-1][y] != -1){
             neighbors.push_back(gridCarId[x-1][y]);
-
-        if(x + size < width && gridCarId[x+size][y] != -1)
+            cout << "Car id " << carId << " has vertical front neighbor: car id " << gridCarId[x-1][y] << endl;
+        }
+            
+        if(x + size < width && gridCarId[x+size][y] != -1){
             neighbors.push_back(gridCarId[x+size][y]);
+            cout << "Car id " << carId << " has vertical rear neighbor: car id " << gridCarId[x+size][y] << endl;
+        }
 
         if(neighbors.size() == 0)
-            cout << "Car id : " << carId << " doesn't have a neighbor" << endl;
+            cout << "Car id " << carId << " doesn't have a neighbor. Can advance vertically" << endl;
     }
 
     //Direction horizontale
     if(direction == 1){
-        if(y > 0 && gridCarId[x][y-1] != -1)
+        if(y > 0 && gridCarId[x][y-1] != -1){   
             neighbors.push_back(gridCarId[x][y-1]);
-         
-        if(y + size  < height && gridCarId[x][y+size] != -1)
+            cout << "Car id " << carId << " has horizontal rear neighbor: car id " << gridCarId[x][y-1] << endl;
+        }
+        if(y + size  < height && gridCarId[x][y+size] != -1){
             neighbors.push_back(gridCarId[x][y+size]);
+            cout << "Car id " << carId << " has horizontal front neighbor: car id " << gridCarId[x-1][y+size] << endl;
+        }
 
         if(neighbors.size() == 0)
-            cout << "Car id : " << carId << " doesn't have a neighbor" << endl;
+            cout << "Car id " << carId << " doesn't have a neighbor. Can advance horizontally" << endl;
     }
    
-
     return neighbors;
 }

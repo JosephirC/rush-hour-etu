@@ -24,12 +24,15 @@ int main(int argc, char** argv){
 
 
     //test neighbor function
-    vector<int> test = grid.getNeighborCars(2);
+    int carId = 0;
+    vector<int> test;
 
-    for(int i = 0; i <test.size(); i++){
-        cout << "neighbor id is " << test[i] << endl;
+    for(int i = 0; i < grid.getCarArray().size(); i++){
+        cout << "Working on Car id : " << carId << endl;
+        test =  grid.getNeighborCars(carId);
+        carId++;
+        cout << endl;
     }
-
-
+    
     return 0;
 }

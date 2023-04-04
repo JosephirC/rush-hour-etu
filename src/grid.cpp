@@ -226,12 +226,12 @@ vector<int> Grid::getNeighboursCars(int carId){
 
     //Direction verticale
     if(direction == 0){
-        if(x > 0 && gridCarId[x-1][y] != -1){
+        if(x > 0 && gridCarId[x-1][y] != -1){ // reculer
             neighbors.push_back(gridCarId[x-1][y]);
             cout << "Car id " << carId << " has vertical front neighbor: car id " << gridCarId[x-1][y] << endl;
         }
             
-        if(x + size < width && gridCarId[x+size][y] != -1){
+        if(x + size < width && gridCarId[x+size][y] != -1){ //avancer
             neighbors.push_back(gridCarId[x+size][y]);
             cout << "Car id " << carId << " has vertical rear neighbor: car id " << gridCarId[x+size][y] << endl;
         }
@@ -260,14 +260,11 @@ vector<int> Grid::getNeighboursCars(int carId){
 
 bool Grid::operator==(const Grid& other) const {
     
-    if(this->width != other.width && this->height != other.height){
+    if(this->width != other.width && this->height != other.height)
         return false;
-    }
 
-    if(this->exitPosX != other.exitPosX && this->exitPosY != other.exitPosY){
+    if(this->exitPosX != other.exitPosX && this->exitPosY != other.exitPosY)
         return false;
-    }
-
 
     for(int i = 0; i < this->carArray.size(); i++){
         if(this->carArray[i].getPosX() != other.carArray[i].getPosX() && this->carArray[i].getPosY() != other.carArray[i].getPosY() 
@@ -279,9 +276,8 @@ bool Grid::operator==(const Grid& other) const {
 
     for(int i = 0; i < this->width; i++){
         for(int j = 0; j < this->height; j++){
-            if(this->gridCarId[i][j] != other.gridCarId[i][j]){
+            if(this->gridCarId[i][j] != other.gridCarId[i][j])
                 return false;
-            }
         }
     }
 
@@ -308,7 +304,7 @@ vector<Grid> Grid::getGridNeighbours() {
                 Grid temp(*this);
                 temp.carArray[i].setPosX(carArray[i].getPosX() - 1); //bouger la voiture dans la nouvelle grille
                 temp.carArray[i].setPosY(carArray[i].getPosY());
-
+    
                 if (!isInNeighbours(temp)) {
                     neighbours.push_back(temp);
                 }

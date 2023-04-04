@@ -14,6 +14,13 @@ int main(int argc, char** argv){
     //g.ajouterVoiture(v);
     grid.loadData("./Sujet/puzzle.txt");
 
+    Grid grid1(grid);
+
+    if(grid1 == grid){
+        cout <<"nous sommes egale" << endl;
+    }
+
+
     cout << "Je display les pos de sortie X : " << grid.getExitX() << " Y : " << grid.getExitY() << endl; 
     grid.displayCarArray();
     std::cout << "grille originale :" << std::endl;

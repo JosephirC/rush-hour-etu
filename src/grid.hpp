@@ -34,6 +34,8 @@ class Grid {
         int exitPosX, exitPosY;
         vector<Car> carArray;
         int gridCarId[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
+        Grid* parent;
+
         vector<Grid> neighbours;
 
     public : 

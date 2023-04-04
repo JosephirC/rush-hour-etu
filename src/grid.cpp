@@ -128,43 +128,12 @@ void Grid::loadData(const string& filename){
             id++;
         }
 
-
     }
     else
         throw invalid_argument("Failed to open file...");
     
 }
 
-// string Grid::HeaderSVG() const{
-//     stringstream ss;
-//     ss << "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 \" width=\"" 
-//         << width * TAILLE_CASE << "\" height=\"" << length * TAILLE_CASE << "\" stroke=\"black\" stroke-width=\"1\" fill=\"none\" >" << endl
-//         << "<rect x=\"0""\" y=\"0""\" width=\"600""\" height=\"600""\" stroke=\"black""\" stroke-width=\"15""\" fill=\"none""\" />" << endl;
-//     return ss.str();
-// }
-
-// string Grid::RectangleSVG() const{
-//     stringstream ss;
-//     for (int i = 0; i < carArray.size(); i++) {
-//         if(carArray[i].getDirection() == 0){
-//              ss << "<rect x=\"" << (carArray[i].getPosY() * TAILLE_CASE) + MARGE << "\" y=\"" << (carArray[i].getPosX() * TAILLE_CASE) + MARGE
-//             << "\" width=\"" << TAILLE_CASE - (MARGE * 2) << "\" height=\""
-//             << (carArray[i].getTaille() * TAILLE_CASE) - (MARGE * 2) << "\" fill=\"red\" />" << endl;
-//         }
-//         else{
-//             ss << "<rect x=\"" << (carArray[i].getPosY() * TAILLE_CASE) + MARGE << "\" y=\"" << (carArray[i].getPosX() * TAILLE_CASE) + MARGE
-//             << "\" width=\"" << (carArray[i].getTaille() * TAILLE_CASE) - (MARGE * 2) << "\" height=\""
-//             << TAILLE_CASE - (MARGE * 2) << "\" fill=\"red\" />" << endl;
-//         }
-//     }
-//     return ss.str();
-// }
-
-// string Grid::FooterSVG() const{
-//     stringstream ss;
-//     ss << "</svg>";
-//     return ss.str();
-// }
 
 const int STROKE_WIDTH = 1;
 const string STROKE_COLOR = "black";
@@ -258,27 +227,50 @@ vector<int> Grid::getNeighboursCars(int carId){
 vector<Grid> Grid::getGridNeighbours() {
 
     vector<Grid> neighbours;
-    for (const auto& car : carArray) {
-        if (car.getDirection() == 0) { // Verticale
-                if (gridCarId[car.getPosX() - 1][car.getPosY()] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
-                    Grid temp(this);
-                    // temp.setCarposblablabla //bouger la voiture dans la nouvelle grille
-                    temp.gridCarId;
-                    neighbours.push_back(temp);
-                }
-                if (gridCarId[car.getPosX() + car.getCarSize()][car.getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
-                    // faire une nouvelle grille qui est une copie la grille actuelle, avec juste la voiture qui a bougée
-                }
-            } 
+    for (int i=0; i<carArray.size(); i++) {
+        if (carArray[i].getDirection() == 1) { // Horizontal
+            if (gridCarId[carArray[i].getPosX() - 1][carArray[i].getPosY()] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
+                Grid temp(this);
+                temp.carArray[i].setPosX(carArray[i].getPosX() - 1); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosY(carArray[i].getPosY());
 
-        if (car.getDirection() == 1) { // Verticale
-            if (gridCarId[car.getPosX()][car.getPosY() - 1] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
-                    // faire une nouvelle grille qui est une copie la grille actuelle, avec juste la voiture qui a bougée
-                }
-                if (gridCarId[car.getPosX()][car.getPosY() + car.getCarSize()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
-                    // faire une nouvelle grille qui est une copie la grille actuelle, avec juste la voiture qui a bougée
-                }
-        }
+                // stocker l'itération actuelle ?
+
+                // verifier si la situation de jeu n'existe pas deja
+
+                neighbours.push_back(temp);
+            }
+            if (gridCarId[car.getPosX() + car.getCarSize()][car.getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+                Grid temp(this);
+                temp.carArray[i].setPosX(car.getPosX() + car.getCarSize()); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosY(carArray[i].getPosY());
+
+                // verifier si la situation de jeu n'existe pas deja
+
+                neighbours.push_back(temp);
+            }
+        } 
+
+        if (carArray[i].getDirection() == 0) { // Vertical
+            if (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() - 1] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
+                Grid temp(this);
+                temp.carArray[i].setPosX(carArray[i].getPosX()); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosY(carArray[i].getPosY() - 1);
+
+                // verifier si la situation de jeu n'existe pas deja
+
+                neighbours.push_back(temp);
+            }
+            if (gridCarId[car.getPosX()][car.getPosY() + car.getCarSize()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+                Grid temp(this);
+                temp.carArray[i].setPosX(car.getPosX()); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosY(carArray[i].getPosY() + car.getCarSize());
+
+                // verifier si la situation de jeu n'existe pas deja
+
+                neighbours.push_back(temp);
+            }
+        } 
     }
     return neighbours;
 }

@@ -29,20 +29,23 @@ class Grid {
     private:
         const int MARGE = 20;
         const int TAILLE_CASE = 100;
-        
-        int width = 6;
-        int height = 6;
+        int width;
+        int height;
         int exitPosX, exitPosY;
         vector<Car> carArray;
         int gridCarId[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
+<<<<<<< HEAD
         Grid* parent;
 
+=======
+        vector<Grid> neighbours;
+>>>>>>> ac5d5bac0f3a563a437cf2807a7f3d8403c9c584
 
     public : 
 
         Grid();
 
-        Grid(const Grid* grid); // constructeur par copie
+        Grid(const Grid& grid); // constructeur par copie
 
         Grid(int sX, int sY);
         
@@ -60,11 +63,11 @@ class Grid {
 
         int getSizeY() const;
 
-        vector<Car> getCarArray();
+        vector<Car> getCarArray() const;
 
         //void setGridCarId()
 
-        void displayCarArray();
+        void displayCarArray() const;
 
         //Utiliser ofstream ou string stream ??? Difference ?
         //reponse : utiliser un string stream pour pouvoir forger les differents svg
@@ -80,7 +83,9 @@ class Grid {
 
         vector<int> getNeighboursCars(int carId);
 
-        bool operator==(const Grid& other);
+        bool operator==(const Grid& other) const;
+
+        bool isInNeighbours(const Grid& grid) const;
 
         
 };

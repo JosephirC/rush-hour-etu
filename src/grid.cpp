@@ -10,17 +10,19 @@ height(6)
 {
     width = _width;
     height = _height;
+    neighbours.push_back(*this);
 }
 
-Grid::Grid(const Grid* grid) { //constructeur par copie
-    width = grid->width;
-    height = grid->height;
-    exitPosX = grid->exitPosX;
-    exitPosY = grid->exitPosY;
-    carArray = grid->carArray;
+Grid::Grid(const Grid& grid) { //constructeur par copie
+    width = grid.width;
+    height = grid.height;
+    exitPosX = grid.exitPosX;
+    exitPosY = grid.exitPosY;
+    carArray = grid.carArray;
+    // faire boucle for copier neighbours
     for(int i = 0; i < width; i++){
         for(int j = 0; j < height; j++){
-            gridCarId[i][j] = grid->gridCarId[i][j];
+            gridCarId[i][j] = grid.gridCarId[i][j];
         }
     }
 }
@@ -89,11 +91,11 @@ int Grid::getSizeY() const {
     return height;
 }
 
-vector<Car> Grid::getCarArray() {
+vector<Car> Grid::getCarArray() const {
     return carArray;
 }
 
-void Grid::displayCarArray(){
+void Grid::displayCarArray() const {
     cout << endl << "displayCarArray" << endl;
     for(int i = 0; i < carArray.size(); i++){
         cout << "Car --> Id = " << carArray[i].getId() << "  X = " << carArray[i].getPosX() << "  Y = " << carArray[i].getPosY() 
@@ -132,43 +134,12 @@ void Grid::loadData(const string& filename){
             id++;
         }
 
-
     }
     else
         throw invalid_argument("Failed to open file...");
     
 }
 
-// string Grid::HeaderSVG() const{
-//     stringstream ss;
-//     ss << "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 \" width=\"" 
-//         << width * TAILLE_CASE << "\" height=\"" << length * TAILLE_CASE << "\" stroke=\"black\" stroke-width=\"1\" fill=\"none\" >" << endl
-//         << "<rect x=\"0""\" y=\"0""\" width=\"600""\" height=\"600""\" stroke=\"black""\" stroke-width=\"15""\" fill=\"none""\" />" << endl;
-//     return ss.str();
-// }
-
-// string Grid::RectangleSVG() const{
-//     stringstream ss;
-//     for (int i = 0; i < carArray.size(); i++) {
-//         if(carArray[i].getDirection() == 0){
-//              ss << "<rect x=\"" << (carArray[i].getPosY() * TAILLE_CASE) + MARGE << "\" y=\"" << (carArray[i].getPosX() * TAILLE_CASE) + MARGE
-//             << "\" width=\"" << TAILLE_CASE - (MARGE * 2) << "\" height=\""
-//             << (carArray[i].getTaille() * TAILLE_CASE) - (MARGE * 2) << "\" fill=\"red\" />" << endl;
-//         }
-//         else{
-//             ss << "<rect x=\"" << (carArray[i].getPosY() * TAILLE_CASE) + MARGE << "\" y=\"" << (carArray[i].getPosX() * TAILLE_CASE) + MARGE
-//             << "\" width=\"" << (carArray[i].getTaille() * TAILLE_CASE) - (MARGE * 2) << "\" height=\""
-//             << TAILLE_CASE - (MARGE * 2) << "\" fill=\"red\" />" << endl;
-//         }
-//     }
-//     return ss.str();
-// }
-
-// string Grid::FooterSVG() const{
-//     stringstream ss;
-//     ss << "</svg>";
-//     return ss.str();
-// }
 
 const int STROKE_WIDTH = 1;
 const string STROKE_COLOR = "black";
@@ -258,35 +229,7 @@ vector<int> Grid::getNeighboursCars(int carId){
     return neighbors;
 }
 
-vector<Grid> Grid::getGridNeighbours() {
-
-    vector<Grid> neighbours;
-    for (const auto& car : carArray) {
-        if (car.getDirection() == 0) { // Verticale
-                if (gridCarId[car.getPosX() - 1][car.getPosY()] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
-                    Grid temp(this);
-                    // temp.setCarposblablabla //bouger la voiture dans la nouvelle grille
-                    temp.gridCarId;
-                    neighbours.push_back(temp);
-                }
-                if (gridCarId[car.getPosX() + car.getCarSize()][car.getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
-                    // faire une nouvelle grille qui est une copie la grille actuelle, avec juste la voiture qui a bougée
-                }
-            } 
-
-        if (car.getDirection() == 1) { // Verticale
-            if (gridCarId[car.getPosX()][car.getPosY() - 1] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
-                    // faire une nouvelle grille qui est une copie la grille actuelle, avec juste la voiture qui a bougée
-                }
-                if (gridCarId[car.getPosX()][car.getPosY() + car.getCarSize()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
-                    // faire une nouvelle grille qui est une copie la grille actuelle, avec juste la voiture qui a bougée
-                }
-        }
-    }
-    return neighbours;
-}
-
-bool Grid::operator==(const Grid& other){
+bool Grid::operator==(const Grid& other) const {
     
     if(this->width != other.width && this->height != other.height)
         return false;
@@ -311,3 +254,63 @@ bool Grid::operator==(const Grid& other){
 
     return true;
 }
+
+bool Grid::isInNeighbours(const Grid& grid) const {
+    for (int i=0; i<neighbours.size(); i++) {
+        if (grid == neighbours[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+vector<Grid> Grid::getGridNeighbours() {
+
+    for (int i=0; i<carArray.size(); i++) {
+        if (carArray[i].getDirection() == 1) { // Horizontal
+            if (gridCarId[carArray[i].getPosX() - 1][carArray[i].getPosY()] == -1) { // Si la voiture a une case vide derrière elle, elle peut reculer
+                std::cout << "gfsdg" << std::endl;
+                Grid temp(*this);
+                temp.carArray[i].setPosX(carArray[i].getPosX() - 1); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosY(carArray[i].getPosY());
+
+                if (!isInNeighbours(temp)) {
+                    neighbours.push_back(temp);
+                }
+
+            }
+            else if (gridCarId[carArray[i].getPosX() + carArray[i].getCarSize()][carArray[i].getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+                Grid temp(*this);
+                temp.carArray[i].setPosX(carArray[i].getPosX() + carArray[i].getCarSize()); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosY(carArray[i].getPosY());
+
+                if (!isInNeighbours(temp)) {
+                    neighbours.push_back(temp);
+                }
+            }
+        } 
+
+        else if (carArray[i].getDirection() == 0) { // Vertical
+            if (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() - 1] == -1) { // Si la voiture a une case vide derrière elle, elle peut reculer
+                Grid temp(*this);
+                temp.carArray[i].setPosX(carArray[i].getPosX()); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosY(carArray[i].getPosY() - 1);
+
+                if (!isInNeighbours(temp)) {
+                    neighbours.push_back(temp);
+                }
+            }
+            else if (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() + carArray[i].getCarSize()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+                Grid temp(*this);
+                temp.carArray[i].setPosX(carArray[i].getPosX()); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosY(carArray[i].getPosY() + carArray[i].getCarSize());
+
+                if (!isInNeighbours(temp)) {
+                    neighbours.push_back(temp);
+                }
+            }
+        } 
+    }
+    return neighbours;
+}
+

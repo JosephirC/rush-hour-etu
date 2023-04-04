@@ -78,6 +78,8 @@ class Grid {
 
         vector<int> getNeighboursCars(int carId);
 
+        bool operator==(const Grid& other);
+
         
 };
 

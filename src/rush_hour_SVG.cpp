@@ -1,6 +1,6 @@
 #include "car.hpp"
 #include "grid.hpp"
-#include "sdl.hpp"
+//#include "sdl.hpp"
 #include <iostream>
 #include <fstream>
 
@@ -25,10 +25,10 @@ int main(int argc, char** argv){
 
     vector<Grid> test = grid.getGridNeighbours();
 
-    // for (int i=0; i<test.size(); i++) {
-    //     std::cout << "grille " << i << std::endl;
-    //     test[i].displayGridId();
-    // }
+    for (int i=0; i<test.size(); i++) {
+        std::cout << "grille " << i << std::endl;
+        test[i].displayGridId();
+    }
 
 
 

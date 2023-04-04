@@ -80,6 +80,8 @@ class Grid {
 
         bool operator==(const Grid& other) const;
 
+        Grid operator=(const Grid& grid);
+
         bool isInNeighbours(const Grid& grid) const;
 
         

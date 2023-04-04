@@ -240,9 +240,9 @@ vector<Grid> Grid::getGridNeighbours() {
 
                 neighbours.push_back(temp);
             }
-            if (gridCarId[car.getPosX() + car.getCarSize()][car.getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+            if (gridCarId[carArray[i].getPosX() + carArray[i].getCarSize()][carArray[i].getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
                 Grid temp(this);
-                temp.carArray[i].setPosX(car.getPosX() + car.getCarSize()); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosX(carArray[i].getPosX() + carArray[i].getCarSize()); //bouger la voiture dans la nouvelle grille
                 temp.carArray[i].setPosY(carArray[i].getPosY());
 
                 // verifier si la situation de jeu n'existe pas deja
@@ -261,10 +261,10 @@ vector<Grid> Grid::getGridNeighbours() {
 
                 neighbours.push_back(temp);
             }
-            if (gridCarId[car.getPosX()][car.getPosY() + car.getCarSize()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
+            if (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() + carArray[i].getCarSize()] == -1) { // Si la voiture a une case vide devant elle, elle peut avancer
                 Grid temp(this);
-                temp.carArray[i].setPosX(car.getPosX()); //bouger la voiture dans la nouvelle grille
-                temp.carArray[i].setPosY(carArray[i].getPosY() + car.getCarSize());
+                temp.carArray[i].setPosX(carArray[i].getPosX()); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosY(carArray[i].getPosY() + carArray[i].getCarSize());
 
                 // verifier si la situation de jeu n'existe pas deja
 

@@ -17,7 +17,6 @@ int main(int argc, char** argv){
     //g.ajouterVoiture(v);
     grid.loadData("./Sujet/puzzle.txt");
 
-
     cout << "Je display les pos de sortie X : " << grid.getExitX() << " Y : " << grid.getExitY() << endl; 
     grid.displayCarArray();
     grid.displayGridId();

@@ -242,7 +242,7 @@ bool Grid::operator==(const Grid& other) const {
             && this->carArray[i].getCarSize() != other.carArray[i].getCarSize() && this->carArray[i].getDirection() != other.carArray[i].getDirection() 
             && this->carArray[i].getId() != other.carArray[i].getId()){
                 return false;
-        }    
+        }   
     }
 
     for(int i = 0; i < this->width; i++){

@@ -1,12 +1,13 @@
 #include <vector>
 #include <queue>
+#include "solver.hpp"
 
-Solver::Solver(Grid grid) {
-    uncoveredGrids.push_back(grid);
+Solver::Solver(Grid* grid) {
+    uncoveredGrids.push(grid);
 }
 
-Solver::solve() {
-    while (uncoveredGrids.size > 0) {
+void Solver::solve() {
+    while (uncoveredGrids.size() > 0) {
         Grid* grid = uncoveredGrids.front();
         uncoveredGrids.pop();
         vector<Grid*> gridNeighbours = grid->getGridNeighbours();

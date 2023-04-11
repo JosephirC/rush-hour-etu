@@ -34,7 +34,8 @@ class Grid {
         int exitPosX, exitPosY;
         vector<Car> carArray;
         int gridCarId[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
-        vector<Grid> neighbours;
+        Grid* parent;
+        vector<Grid*> neighbours;
 
     public : 
 
@@ -48,6 +49,8 @@ class Grid {
 
         void addCar(const Car& v);
 
+        void updateGridCarId(const vector<Car>& carArray);
+
         void displayGridId();
 
         int getExitX() const;
@@ -57,6 +60,8 @@ class Grid {
         int getSizeX() const;
 
         int getSizeY() const;
+
+        void changeCarPosition(int id, int newPosX, int newPosY);
 
         vector<Car> getCarArray() const;
 
@@ -74,15 +79,13 @@ class Grid {
         
         string svgFooter() const;
 
-        vector<Grid> getGridNeighbours();
-
-        vector<int> getNeighboursCars(int carId);
+        vector<Grid*> getGridNeighbours();
 
         bool operator==(const Grid& other) const;
 
         Grid operator=(const Grid& grid);
 
-        bool isInNeighbours(const Grid& grid) const;
+        bool isInNeighbours(const Grid* grid) const;
 
         
 };

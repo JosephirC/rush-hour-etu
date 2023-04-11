@@ -28,14 +28,22 @@ int main(int argc, char** argv){
     }
     #endif
 
-    #ifdef GRID_DISPLAY
-    {
-        std::cout << "Je display les pos de sortie X : " << grid.getExitX() << " Y : " << grid.getExitY() << std::endl; 
-        grid.displayCarArray();
-        std::cout << "grille originale :" << std::endl;
-        grid.displayGridId();
+
+    cout << "Je display les pos de sortie X : " << grid.getExitX() << " Y : " << grid.getExitY() << endl; 
+    grid.displayCarArray();
+    std::cout << "grille originale :" << std::endl;
+    grid.displayGridId();
+
+    //Creation du .svg ---> Il faut faire une fonction pour cela !
+    ofstream file("./images_svg/image.svg");
+    file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
+
+    vector<Grid*> test = grid.getGridNeighbours();
+
+    for (int i=0; i<test.size(); i++) {
+        std::cout << "grille voisine " << i << std::endl;
+        test[i]->displayGridId();
     }
-    #endif
 
     #ifdef LOAD_SVG
     {

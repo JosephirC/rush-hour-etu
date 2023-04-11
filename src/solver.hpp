@@ -6,12 +6,12 @@ class Solver {
     private:
 
     vector<Grid*> coveredGrids;
-    std:queue<Grid*> uncoveredGrids;
+    std::queue<Grid*> uncoveredGrids;
 
     public:
 
-    Solver(Grid grid);
+    Solver(Grid* grid);
 
     void solve();
 
-}
+};

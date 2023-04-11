@@ -49,6 +49,8 @@ class Grid {
 
         void addCar(const Car& v);
 
+        void updateGridCarId(const vector<Car>& carArray);
+
         void displayGridId();
 
         int getExitX() const;
@@ -58,6 +60,8 @@ class Grid {
         int getSizeX() const;
 
         int getSizeY() const;
+
+        void changeCarPosition(int id, int newPosX, int newPosY);
 
         vector<Car> getCarArray() const;
 
@@ -76,8 +80,6 @@ class Grid {
         string svgFooter() const;
 
         vector<Grid*> getGridNeighbours();
-
-        vector<int> getNeighboursCars(int carId);
 
         bool operator==(const Grid& other) const;
 

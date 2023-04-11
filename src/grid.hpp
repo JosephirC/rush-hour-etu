@@ -34,12 +34,8 @@ class Grid {
         int exitPosX, exitPosY;
         vector<Car> carArray;
         int gridCarId[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
-<<<<<<< HEAD
-=======
         Grid* parent;
-
->>>>>>> 80c11fd38a6aaaa4d9e52539d30d54dc0dbfdcfa
-        vector<Grid> neighbours;
+        vector<Grid*> neighbours;
 
     public : 
 
@@ -79,7 +75,7 @@ class Grid {
         
         string svgFooter() const;
 
-        vector<Grid> getGridNeighbours();
+        vector<Grid*> getGridNeighbours();
 
         vector<int> getNeighboursCars(int carId);
 
@@ -87,7 +83,7 @@ class Grid {
 
         Grid operator=(const Grid& grid);
 
-        bool isInNeighbours(const Grid& grid) const;
+        bool isInNeighbours(const Grid* grid) const;
 
         
 };

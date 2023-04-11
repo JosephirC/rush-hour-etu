@@ -30,11 +30,11 @@ int main(int argc, char** argv){
     ofstream file("./images_svg/image.svg");
     file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
 
-    vector<Grid> test = grid.getGridNeighbours();
+    vector<Grid*> test = grid.getGridNeighbours();
 
     for (int i=0; i<test.size(); i++) {
-        std::cout << "grille " << i << std::endl;
-        test[i].displayGridId();
+        std::cout << "grille voisine " << i << std::endl;
+        test[i]->displayGridId();
     }
 
 

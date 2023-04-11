@@ -5,9 +5,9 @@
 #include <fstream>
 
 #define CONSTRUCTOR_COPY
-// #define GRID_DISPLAY
-// #define LOAD_SVG
-// #define GET_NEIGHBORD_CARS
+#define GRID_DISPLAY
+#define LOAD_SVG
+#define GET_NEIGHBORD_CARS
 
 int main(int argc, char** argv){
 

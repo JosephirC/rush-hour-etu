@@ -28,4 +28,4 @@ obj/sdl.o: src/sdl.cpp
 clean:
 	rm obj/*.o
 	rm bin/*
-	rm images_svg/*
+	rm -rf images_svg/*

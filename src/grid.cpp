@@ -8,11 +8,12 @@ Grid::Grid(int _width, int _height) :
 width(6),
 height(6)
 {
-    width = _width;
-    height = _height;
-    exitPosX = 0;
-    exitPosY = 0;
-    neighbours.push_back(*this);
+    this->width = _width;
+    this->height = _height;
+    this->exitPosX = 0;
+    this->exitPosY = 0;
+    this->loadData("./Sujet/puzzle.txt");
+    //neighbours.push_back(*this);
 }
 
 Grid::Grid(const Grid& grid) { //constructeur par copie
@@ -20,7 +21,7 @@ Grid::Grid(const Grid& grid) { //constructeur par copie
     height = grid.height;
     exitPosX = grid.exitPosX;
     exitPosY = grid.exitPosY;
-    for (int i=0; i<grid.carArray.size(); i++) {
+    for (int i = 0; i < grid.carArray.size(); i++) {
         carArray.push_back(grid.carArray[i]);
     }
     for(int i = 0; i < width; i++){
@@ -28,12 +29,10 @@ Grid::Grid(const Grid& grid) { //constructeur par copie
             gridCarId[i][j] = grid.gridCarId[i][j];
         }
     }
-    for (int i=0; i<grid.neighbours.size(); i++) {
+    for (int i = 0; i < grid.neighbours.size(); i++) {
         neighbours.push_back(grid.neighbours[i]);
     }
 
-
-   
 }
 
 Grid Grid::operator=(const Grid& grid) {
@@ -285,7 +284,7 @@ bool Grid::operator==(const Grid& other) const {
 }
 
 bool Grid::isInNeighbours(const Grid& grid) const {
-    for (int i=0; i<neighbours.size(); i++) {
+    for (int i = 0; i < neighbours.size(); i++) {
         if (grid == neighbours[i]) {
             return true;
         }
@@ -295,25 +294,39 @@ bool Grid::isInNeighbours(const Grid& grid) const {
 
 vector<Grid> Grid::getGridNeighbours() {
 
+
     for (int i=0; i<carArray.size(); i++) {
-        if (carArray[i].getDirection() == 1) { // Horizontal
-        std::cout << "carArray[" << i << "]" << std::endl;
-            std::cout << "gridCarId[" << carArray[i].getPosX() - 1 << "][" << carArray[i].getPosY() << "] = " << gridCarId[carArray[i].getPosX() - 1][carArray[i].getPosY()] << std::endl;
-            if (gridCarId[carArray[i].getPosX() - 1][carArray[i].getPosY()] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
+
+        int x = carArray[i].getPosX();
+        int y = carArray[i].getPosY();
+        int size = carArray[i].getCarSize();
+        int direction = carArray[i].getDirection();
+
+        if (direction == 1) { // Horizontal
+
+            //COUT EDGAR 
+            //std::cout << "carArray[" << i << "]" << std::endl;
+            //std::cout << "gridCarId[" << x - 1 << "][" << y << "] = " << gridCarId[x - 1][y] << std::endl;
+
+
+            //COUT YOUSSEF
+            cout << "Je suis la voiture : " << carArray[i].getId() << endl;
+            
+            if (x > 0 && gridCarId[x - 1][y] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
                 std::cout << "carArray[" << i << "] peut avancer horizontal" << std::endl;
                 Grid temp(*this);
-                temp.carArray[i].setPosX(carArray[i].getPosX() - 1); //bouger la voiture dans la nouvelle grille
-                temp.carArray[i].setPosY(carArray[i].getPosY());
+                temp.carArray[i].setPosX(x - 1); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosY(y);
     
                 if (!isInNeighbours(temp)) {
                     neighbours.push_back(temp);
                 }
 
             }
-            else if (gridCarId[carArray[i].getPosX() + carArray[i].getCarSize()][carArray[i].getPosY()] == -1) { // Si la voiture a une case vide devant elle, elle peut reculer
+            else if (x + size < width && gridCarId[x + size][y] == -1) { // Si la voiture a une case vide devant elle, elle peut reculer
                 Grid temp(*this);
-                temp.carArray[i].setPosX(carArray[i].getPosX() + carArray[i].getCarSize()); //bouger la voiture dans la nouvelle grille
-                temp.carArray[i].setPosY(carArray[i].getPosY());
+                temp.carArray[i].setPosX(x + size); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosY(y);
 
                 if (!isInNeighbours(temp)) {
                     neighbours.push_back(temp);
@@ -321,20 +334,20 @@ vector<Grid> Grid::getGridNeighbours() {
             }
         } 
 
-        else if (carArray[i].getDirection() == 0) { // Vertical
-            if (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() - 1] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
+        else if (direction == 0) { // Vertical
+            if (y > 0 && gridCarId[x][y - 1] == -1) { // Si la voiture a une case vide derrière elle, elle peut avancer
                 Grid temp(*this);
-                temp.carArray[i].setPosX(carArray[i].getPosX()); //bouger la voiture dans la nouvelle grille
-                temp.carArray[i].setPosY(carArray[i].getPosY() - 1);
+                temp.carArray[i].setPosX(x); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosY(y - 1);
 
                 if (!isInNeighbours(temp)) {
                     neighbours.push_back(temp);
                 }
             }
-            else if (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() + carArray[i].getCarSize()] == -1) { // Si la voiture a une case vide devant elle, elle peut reculer
+            else if (y + size < height && gridCarId[x][y + size] == -1) { // Si la voiture a une case vide devant elle, elle peut reculer
                 Grid temp(*this);
-                temp.carArray[i].setPosX(carArray[i].getPosX()); //bouger la voiture dans la nouvelle grille
-                temp.carArray[i].setPosY(carArray[i].getPosY() + carArray[i].getCarSize());
+                temp.carArray[i].setPosX(x); //bouger la voiture dans la nouvelle grille
+                temp.carArray[i].setPosY(y + size);
 
                 if (!isInNeighbours(temp)) {
                     neighbours.push_back(temp);

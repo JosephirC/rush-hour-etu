@@ -4,6 +4,10 @@
 #include <iostream>
 #include <fstream>
 
+#define CONSTRUCTOR_COPY
+// #define GRID_DISPLAY
+// #define LOAD_SVG
+// #define GET_NEIGHBORD_CARS
 
 int main(int argc, char** argv){
 
@@ -12,43 +16,58 @@ int main(int argc, char** argv){
 
     grid.initEmptyGrid();
     //g.ajouterVoiture(v);
-    grid.loadData("./Sujet/puzzle.txt");
 
-    Grid grid1(grid);
+    #ifdef CONSTRUCTOR_COPY
+    {
 
-    if(grid1 == grid){
-        cout <<"nous sommes egale" << endl;
+        Grid grid1(grid);
+
+        if(grid1 == grid){
+            cout <<"nous sommes egale" << endl;
+        }
     }
+    #endif
 
-
-    cout << "Je display les pos de sortie X : " << grid.getExitX() << " Y : " << grid.getExitY() << endl; 
-    grid.displayCarArray();
-    std::cout << "grille originale :" << std::endl;
-    grid.displayGridId();
-
-    //Creation du .svg ---> Il faut faire une fonction pour cela !
-    ofstream file("./images_svg/image.svg");
-    file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
-
-    vector<Grid> test = grid.getGridNeighbours();
-
-    for (int i=0; i<test.size(); i++) {
-        std::cout << "grille " << i << std::endl;
-        test[i].displayGridId();
+    #ifdef GRID_DISPLAY
+    {
+        std::cout << "Je display les pos de sortie X : " << grid.getExitX() << " Y : " << grid.getExitY() << std::endl; 
+        grid.displayCarArray();
+        std::cout << "grille originale :" << std::endl;
+        grid.displayGridId();
     }
+    #endif
 
+    #ifdef LOAD_SVG
+    {
+        //Creation du .svg ---> Il faut faire une fonction pour cela !
+        ofstream file("./images_svg/image.svg");
+        file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
+    }
+    #endif
 
+    // vector<Grid> test = grid.getGridNeighbours();
 
-    // //test neighbor function
-    // int carId = 0;
-    // vector<int> test;
-
-    // for(int i = 0; i < grid.getCarArray().size(); i++){
-    //     cout << "Working on Car id : " << carId << endl;
-    //     test =  grid.getNeighboursCars(carId);
-    //     carId++;
-    //     cout << endl;
+    // for (int i=0; i<test.size(); i++) {
+    //     std::cout << "grille " << i << std::endl;
+    //     test[i].displayGridId();
     // }
+
+
+    #ifdef GET_NEIGHBORD_CARS
+    {
+        //test neighbor function
+        int carId = 0;
+        vector<int> test;
+
+        for(int i = 0; i < grid.getCarArray().size(); i++){
+            cout << "Working on Car id : " << carId << endl;
+            test =  grid.getNeighboursCars(carId);
+            carId++;
+            cout << endl;
+        }
+    }
+    #endif
+
     
     return 0;
 }

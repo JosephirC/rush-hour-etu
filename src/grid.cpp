@@ -5,11 +5,9 @@
 #include <exception>
 
 Grid::Grid(int _width, int _height) :
-width(6),
-height(6)
+width(_width),
+height(_height)
 {
-    width = _width;
-    height = _height;
     exitPosX = 0;
     exitPosY = 0;
     neighbours.push_back(this);
@@ -177,7 +175,6 @@ void Grid::loadData(const string& filename){
     
 }
 
-
 const int STROKE_WIDTH = 1;
 const string STROKE_COLOR = "black";
 const string FILL_COLOR = "red";
@@ -251,12 +248,10 @@ bool Grid::operator==(const Grid& other) const {
     return true;
 }
 
-
 void Grid::changeCarPosition(Grid *temp, int id, int newPosX, int newPosY) {
     temp->carArray[id].setPosX(newPosX);
     temp->carArray[id].setPosY(newPosY);
 }
-
 
 bool Grid::isInNeighbours(const Grid* grid) const {
     for (int i=0; i<neighbours.size(); i++) {
@@ -266,7 +261,6 @@ bool Grid::isInNeighbours(const Grid* grid) const {
     }
     return false;
 }
-
 
 vector<Grid*> Grid::getGridNeighbours() {
 
@@ -282,6 +276,7 @@ vector<Grid*> Grid::getGridNeighbours() {
                 temp->updateGridCarId(temp->carArray);
     
                 if (!isInNeighbours(temp)) {
+                    temp->parent = this;
                     neighbours.push_back(temp);
                 }
 
@@ -296,6 +291,7 @@ vector<Grid*> Grid::getGridNeighbours() {
                 temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
+                    temp->parent = this;
                     neighbours.push_back(temp);
                 }
 
@@ -311,6 +307,7 @@ vector<Grid*> Grid::getGridNeighbours() {
                 temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
+                    temp->parent = this;
                     neighbours.push_back(temp);
                 }
 
@@ -325,6 +322,7 @@ vector<Grid*> Grid::getGridNeighbours() {
                 temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
+                    temp->parent = this;
                     neighbours.push_back(temp);
                 }
 
@@ -335,4 +333,3 @@ vector<Grid*> Grid::getGridNeighbours() {
     
     return neighbours;
 }
-

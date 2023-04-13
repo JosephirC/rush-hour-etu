@@ -5,13 +5,13 @@
 class Solver {
     private:
 
-    vector<Grid*> coveredGrids;
-    std::queue<Grid*> uncoveredGrids;
+        vector<Grid*> coveredGrids;
+        std::queue<Grid*> uncoveredGrids;
 
     public:
 
-    Solver(Grid* grid);
+        Solver(Grid* grid);
 
-    void solve();
+        void solve();
 
 };

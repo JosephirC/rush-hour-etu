@@ -12,6 +12,8 @@ class Solver {
 
         Solver(Grid* grid);
 
+        void solve1();
+
         void solve();
 
 };

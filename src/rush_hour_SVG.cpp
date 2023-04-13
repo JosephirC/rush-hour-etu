@@ -9,7 +9,7 @@
 #define GRID_DISPLAY
 #define LOAD_SVG
 #define GET_NEIGHBORD_CARS
-//#define SOLVER_TEST
+#define SOLVER_TEST
 
 int main(int argc, char** argv){
 
@@ -53,11 +53,10 @@ int main(int argc, char** argv){
     #ifdef SOLVER_TEST
     {
         Solver sol(&grid);
-        sol.solve();
+        sol.solve1();
         cout << "le solver fonctionne ? " << endl;
     }
     #endif
 
-    
     return 0;
 }

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 
+
 #define CONSTRUCTOR_COPY
 #define GRID_DISPLAY
 #define LOAD_SVG
@@ -18,11 +19,12 @@ int main(int argc, char** argv){
 
     grid.initEmptyGrid();
     //g.ajouterVoiture(v);
-    grid.loadData("./Sujet/puzzle.txt"); //pk j'ai 50 fils quand je le mets dans le constructeur *_*
+    grid.loadData("./Sujet/puzzle.txt");
 
 
     #ifdef CONSTRUCTOR_COPY
     {
+
         Grid grid1(grid);
 
         if(grid1 == grid){
@@ -31,24 +33,16 @@ int main(int argc, char** argv){
     }
     #endif
 
+
     cout << "Je display les pos de sortie X : " << grid.getExitX() << " Y : " << grid.getExitY() << endl; 
     grid.displayCarArray();
     std::cout << "grille originale :" << std::endl;
     grid.displayGridId();
 
-    vector<Grid*> test = grid.getGridNeighbours();
-    for (int i=0; i<test.size(); i++) {
-        std::cout << "grille voisine " << i << std::endl;
-        test[i]->displayGridId();
-    }
+    //Creation du .svg ---> Il faut faire une fonction pour cela !
+    ofstream file("./images_svg/original.svg");
+    file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
 
-    #ifdef LOAD_SVG
-    {
-        //Creation du .svg ---> Il faut faire une fonction pour cela !
-        ofstream file("./images_svg/image.svg");
-        file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
-    }
-    #endif
 
     #ifdef SOLVER_TEST
     {

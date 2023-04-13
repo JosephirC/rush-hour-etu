@@ -16,6 +16,8 @@ int main(int argc, char** argv){
 
     grid.initEmptyGrid();
     //g.ajouterVoiture(v);
+    grid.loadData("./Sujet/puzzle.txt");
+
 
     #ifdef CONSTRUCTOR_COPY
     {
@@ -45,14 +47,14 @@ int main(int argc, char** argv){
         test[i]->displayGridId();
     }
 
-    #ifdef LOAD_SVG
-    {
-        //Creation du .svg ---> Il faut faire une fonction pour cela !
-        ofstream file("./images_svg/image.svg");
-        file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
-    }
-    #endif
-
+    // #ifdef LOAD_SVG
+    // {
+    //     //Creation du .svg ---> Il faut faire une fonction pour cela !
+    //     ofstream file("./images_svg/image.svg");
+    //     file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
+    // }
+    // #endif
+    
     // vector<Grid> test = grid.getGridNeighbours();
 
     // for (int i=0; i<test.size(); i++) {
@@ -61,20 +63,20 @@ int main(int argc, char** argv){
     // }
 
 
-    #ifdef GET_NEIGHBORD_CARS
-    {
-        //test neighbor function
-        int carId = 0;
-        vector<int> test;
+    // #ifdef GET_NEIGHBORD_CARS
+    // {
+    //     //test neighbor function
+    //     int carId = 0;
+    //     vector<int> test;
 
-        for(int i = 0; i < grid.getCarArray().size(); i++){
-            cout << "Working on Car id : " << carId << endl;
-            test =  grid.getNeighboursCars(carId);
-            carId++;
-            cout << endl;
-        }
-    }
-    #endif
+    //     for(int i = 0; i < grid.getCarArray().size(); i++){
+    //         cout << "Working on Car id : " << carId << endl;
+    //         test =  grid.getNeighboursCars(carId);
+    //         carId++;
+    //         cout << endl;
+    //     }
+    // }
+    // #endif
 
     
     return 0;

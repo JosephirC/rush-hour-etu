@@ -4,10 +4,10 @@
 #include <iostream>
 #include <fstream>
 
-#define CONSTRUCTOR_COPY
-#define GRID_DISPLAY
-#define LOAD_SVG
-#define GET_NEIGHBORD_CARS
+// #define CONSTRUCTOR_COPY
+// #define GRID_DISPLAY
+// #define LOAD_SVG
+// #define GET_NEIGHBORD_CARS
 
 int main(int argc, char** argv){
 
@@ -17,16 +17,16 @@ int main(int argc, char** argv){
     grid.initEmptyGrid();
     //g.ajouterVoiture(v);
 
-    #ifdef CONSTRUCTOR_COPY
-    {
+    //#ifdef CONSTRUCTOR_COPY
+    //{
 
         Grid grid1(grid);
 
         if(grid1 == grid){
             cout <<"nous sommes egale" << endl;
         }
-    }
-    #endif
+    //}
+    //#endif
 
 
     cout << "Je display les pos de sortie X : " << grid.getExitX() << " Y : " << grid.getExitY() << endl; 
@@ -45,13 +45,13 @@ int main(int argc, char** argv){
         test[i]->displayGridId();
     }
 
-    #ifdef LOAD_SVG
-    {
+    //#ifdef LOAD_SVG
+    //{
         //Creation du .svg ---> Il faut faire une fonction pour cela !
-        ofstream file("./images_svg/image.svg");
-        file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
-    }
-    #endif
+        //ofstream file("./images_svg/image.svg");
+        //file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
+    //}
+    //#endif
 
     // vector<Grid> test = grid.getGridNeighbours();
 
@@ -61,20 +61,20 @@ int main(int argc, char** argv){
     // }
 
 
-    #ifdef GET_NEIGHBORD_CARS
-    {
-        //test neighbor function
-        int carId = 0;
-        vector<int> test;
+    // #ifdef GET_NEIGHBORD_CARS
+    // {
+    //     //test neighbor function
+    //     int carId = 0;
+    //     vector<int> test;
 
-        for(int i = 0; i < grid.getCarArray().size(); i++){
-            cout << "Working on Car id : " << carId << endl;
-            test =  grid.getNeighboursCars(carId);
-            carId++;
-            cout << endl;
-        }
-    }
-    #endif
+    //     for(int i = 0; i < grid.getCarArray().size(); i++){
+    //         cout << "Working on Car id : " << carId << endl;
+    //         test =  grid.getNeighboursCars(carId);
+    //         carId++;
+    //         cout << endl;
+    //     }
+    // }
+    // #endif
 
     
     return 0;

@@ -16,6 +16,8 @@ int main(int argc, char** argv){
 
     grid.initEmptyGrid();
     //g.ajouterVoiture(v);
+    grid.loadData("./Sujet/puzzle.txt");
+
 
     //#ifdef CONSTRUCTOR_COPY
     //{
@@ -45,6 +47,7 @@ int main(int argc, char** argv){
         test[i]->displayGridId();
     }
 
+<<<<<<< HEAD
     //#ifdef LOAD_SVG
     //{
         //Creation du .svg ---> Il faut faire une fonction pour cela !
@@ -53,6 +56,16 @@ int main(int argc, char** argv){
     //}
     //#endif
 
+=======
+    // #ifdef LOAD_SVG
+    // {
+    //     //Creation du .svg ---> Il faut faire une fonction pour cela !
+    //     ofstream file("./images_svg/image.svg");
+    //     file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
+    // }
+    // #endif
+    
+>>>>>>> 014f20ba056e046ea863c8362b7bc763c8930da4
     // vector<Grid> test = grid.getGridNeighbours();
 
     // for (int i=0; i<test.size(); i++) {

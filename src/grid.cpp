@@ -20,7 +20,7 @@ Grid::Grid(const Grid& grid) { //constructeur par copie
     height = grid.height;
     exitPosX = grid.exitPosX;
     exitPosY = grid.exitPosY;
-    for (int i = 0; i < grid.carArray.size(); i++) {
+    for (int i=0; i<grid.carArray.size(); i++) {
         carArray.push_back(grid.carArray[i]);
     }
     for(int i = 0; i < width; i++){
@@ -28,7 +28,7 @@ Grid::Grid(const Grid& grid) { //constructeur par copie
             gridCarId[i][j] = grid.gridCarId[i][j];
         }
     }
-    for (int i = 0; i < grid.neighbours.size(); i++) {
+    for (int i=0; i<grid.neighbours.size(); i++) {
         neighbours.push_back(grid.neighbours[i]);
     }   
 }
@@ -107,7 +107,6 @@ void Grid::displayGridId(){
     for(int i = 0; i < width; i++){
         for(int j = 0; j < height; j++){
             cout << "  " << gridCarId[i][j] << "  ";
-            //cout << gridCarId;
         } cout << endl;
     }
     cout << endl;
@@ -253,10 +252,9 @@ bool Grid::operator==(const Grid& other) const {
 }
 
 
-void Grid::changeCarPosition(int id, int newPosX, int newPosY) {
-    std::cout << "avant changement : carArray[" << id << "] = (" << carArray[id].getPosX() << ", " << carArray[id].getPosY() << ")" << std:: endl;
-    carArray[id].setPosX(newPosX);
-    carArray[id].setPosY(newPosY);
+void Grid::changeCarPosition(Grid *temp, int id, int newPosX, int newPosY) {
+    temp->carArray[id].setPosX(newPosX);
+    temp->carArray[id].setPosY(newPosY);
 }
 
 
@@ -269,53 +267,72 @@ bool Grid::isInNeighbours(const Grid* grid) const {
     return false;
 }
 
+
 vector<Grid*> Grid::getGridNeighbours() {
 
+    for (int i=0; i<carArray.size(); i++) {    
+        
+        int n = 1;
 
-    for (int i=0; i<carArray.size(); i++) {
         if (carArray[i].getDirection() == 1) { // Horizontal
-            if (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() - 1] == -1 && (carArray[i].getPosY() - 1) >= 0) { // Si la voiture a une case vide à sa gauche, elle peut aller à gauche
+            while (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() - n] == -1 && (carArray[i].getPosY() - n) >= 0) { // Si la voiture a une case vide à sa gauche, elle peut aller à gauche
+                std::cout << i << " : " << std::endl;
                 Grid *temp = new Grid(*this);
-                temp->changeCarPosition(i, carArray[i].getPosX(), (carArray[i].getPosY() - 1));
-                updateGridCarId(temp->carArray);
+                changeCarPosition(temp, i, carArray[i].getPosX(), (carArray[i].getPosY() - n));
+                temp->updateGridCarId(temp->carArray);
     
                 if (!isInNeighbours(temp)) {
                     neighbours.push_back(temp);
                 }
 
+                n++;
             }
-            else if (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() + carArray[i].getCarSize()] == -1 && (carArray[i].getPosY() + carArray[i].getCarSize()) < width) { // Si la voiture a une case vide à sa droite, elle peut aller à droite
+
+            n = 1;
+            while (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() + carArray[i].getCarSize()-1 + n] == -1 && (carArray[i].getPosY() + carArray[i].getCarSize()-1 + n) < width) { // Si la voiture a une case vide à sa droite, elle peut aller à droite
+                std::cout << i << " : " << std::endl;
                 Grid *temp = new Grid(*this);
-                temp->changeCarPosition(i, carArray[i].getPosX(), (carArray[i].getPosY() + 1));
-                updateGridCarId(temp->carArray);
+                temp->changeCarPosition(temp, i, carArray[i].getPosX(), (carArray[i].getPosY() + n));
+                temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
                     neighbours.push_back(temp);
                 }
+
+                n++;
             }
         } 
 
         else if (carArray[i].getDirection() == 0) { // Vertical
-            if (gridCarId[carArray[i].getPosX() - 1][carArray[i].getPosY()] == -1 && (carArray[i].getPosX() - 1) >= 0) { // Si la voiture a une case vide au dessus d'elle, elle peut avancer vers le haut
+            while (gridCarId[carArray[i].getPosX() - n][carArray[i].getPosY()] == -1 && (carArray[i].getPosX() - n) >= 0) { // Si la voiture a une case vide au dessus d'elle, elle peut avancer vers le haut
+                std::cout << i << " : " << std::endl;
                 Grid *temp = new Grid(*this);
-                temp->changeCarPosition(i, (carArray[i].getPosX() - 1), carArray[i].getPosY());
-                updateGridCarId(temp->carArray);
+                temp->changeCarPosition(temp, i, (carArray[i].getPosX() - n), carArray[i].getPosY());
+                temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
                     neighbours.push_back(temp);
                 }
+
+                n++;
             }
-            else if (gridCarId[carArray[i].getPosX() + carArray[i].getCarSize()][carArray[i].getPosY()] == -1 && (carArray[i].getPosX() + carArray[i].getCarSize()) < height) { // Si la voiture a une case vide devant elle, elle peut reculer
+
+            n = 1;
+            while (gridCarId[carArray[i].getPosX() + carArray[i].getCarSize()-1 + n][carArray[i].getPosY()] == -1 && (carArray[i].getPosX() + carArray[i].getCarSize()-1 + n) < height) { // Si la voiture a une case vide devant elle, elle peut reculer
+                std::cout << i << " : " << std::endl;
                 Grid *temp = new Grid(*this);
-                temp->changeCarPosition(i, (carArray[i].getPosX() + 1), carArray[i].getPosY());
-                updateGridCarId(temp->carArray);
+                temp->changeCarPosition(temp, i, (carArray[i].getPosX() + n), carArray[i].getPosY());
+                temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
                     neighbours.push_back(temp);
                 }
+
+                n++;
             }
         } 
     }
+    
     return neighbours;
 }
 

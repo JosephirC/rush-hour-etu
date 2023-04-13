@@ -61,7 +61,7 @@ class Grid {
 
         int getSizeY() const;
 
-        void changeCarPosition(int id, int newPosX, int newPosY);
+        void changeCarPosition(Grid *temp, int id, int newPosX, int newPosY);
 
         vector<Car> getCarArray() const;
 
@@ -80,6 +80,8 @@ class Grid {
         string svgFooter() const;
 
         vector<Grid*> getGridNeighbours();
+
+        int peutAvancerHorizontal(int i);
 
         bool operator==(const Grid& other) const;
 

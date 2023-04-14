@@ -12,14 +12,6 @@ class Solver {
 
         Solver(Grid* grid);
 
-        Solver(Grid grid);
-
-        void solve1();
-
         void solve();
-
-        void solvedGridsSVG();
-
-        vector<Grid*> getCoveredGrids() const;
 
 };

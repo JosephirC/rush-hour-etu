@@ -23,8 +23,12 @@ class Car {
         
         int getId() const;
 
+        int getSize() const;
+
         void setPosX(int x);
 
         void setPosY(int y);
+
+        bool operator==(const Car& other) const;
 };
 #endif

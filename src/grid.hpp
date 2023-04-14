@@ -47,6 +47,8 @@ class Grid {
         
         void initEmptyGrid();
 
+        string gridToString();
+
         void addCar(const Car& v);
 
         void updateGridCarId(const vector<Car>& carArray);
@@ -88,6 +90,7 @@ class Grid {
         Grid operator=(const Grid& grid);
 
         bool isInNeighbours(const Grid* grid) const;
+
         
 };
 

@@ -4,132 +4,81 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
-#include <iostream>
 
 Solver::Solver(Grid* grid) {
     uncoveredGrids.push(grid);
 }
 
-//fonction solve youssef
-void Solver::solve1() {
-    while (uncoveredGrids.size() > 0) {
-        //verifier que chaque gridNeighbor n'a pas deja ete cover/parcouru
-	    //ajouter a coveredGrid
-        
-        for(int i=0; i<coveredGrids.size(); i++){
-            if(std::find(coveredGrids.begin(), coveredGrids.end(), coveredGrids[i]) != coveredGrids.end()){
-                std::cout << "double " << std::endl;
-            }
-        }
+bool checkContainsGrid(vector<Grid*> grid, string s) {
+    for (int i=0; i<grid.size(); i++) {
+        string temp = grid[i]->gridToString();
+        if (temp == s)
+            return true;
+    }
+    return false;
+}
 
+bool checkContainsGrid(std::queue<Grid*> q, string s) {
+    while (!q.empty())
+    {
+        string temp = q.front()->gridToString();
+        if (temp == s)    
+            return true;
+        q.pop();
+    }
+    return false; 
+}
+
+void Solver::solve() {
+
+    int nn = 0;
+
+    bool win = false;
+
+    while (uncoveredGrids.size() > 0 && !win) {
 
         Grid* grid = uncoveredGrids.front();
         uncoveredGrids.pop();
-        vector<Grid*> gridNeighbours = grid->getGridNeighbours();
 
-        if(std::find(coveredGrids.begin(), coveredGrids.end(), grid) != coveredGrids.end()){
-            std::cout << "Grid is in coveredGrids " << std::endl;
-        }
+        string temp = grid->gridToString();
+        bool checkEquals = checkContainsGrid(coveredGrids, temp);
+        
+        if (!checkEquals) { // si cette grille voisine n'est pas dans les grilles covered, on la rajoute dans coveredGrids
+            coveredGrids.push_back(grid);
 
-        coveredGrids.push_back(grid);
-
-        cout <<"coveredGrids size : " << coveredGrids.size() << " uncoveredGrids size : " << uncoveredGrids.size() << endl;
-
-        for(int i=0; i<gridNeighbours.size(); i++){
-            if(std::find(coveredGrids.begin(), coveredGrids.end(), gridNeighbours[i]) != coveredGrids.end()){
-                std::cout << "Grid " << i << " is in uncoveredGrids " << std::endl;
-                uncoveredGrids.push(gridNeighbours[i]);
-
-                std::string path = "./images_svg/COVERED";
-                path.append(std::to_string(i));
-                path.append(".svg");
-                ofstream file(path);
-                file << grid->svgHeader() << grid->svgRectangle() << grid->svgFooter();   
-            }        
-        }
-               
-    }
-}
-
-//fonction solveur edgar
-void Solver::solve() {
-    while (uncoveredGrids.size() > 0) {
-        //verifier que chaque gridNeighbor n'a pas deja ete cover/parcouru
-	    //ajouter a coveredGrid
-
-        //int j = 0;
-
-        //while (uncoveredGrids.size() > 0 && j< 1000) {
-        for (int j=0; j<50; j++) {
-
-            std:cout << coveredGrids.size() << std::endl;
-
-            Grid* grid = uncoveredGrids.front();
-            uncoveredGrids.pop();
-
-            // vector<Car> cars = grid->getCarArray();
-            // for (const auto& car : cars) {
-            //     if (car.getId() == 0 && car.getPosY() == 2) {
-            //         std::cout << "éjnkjnkjnkjn" << std::endl;
-            //         std::string path = "./images_svg/test.svg";
-            //         ofstream file(path);
-            //         file << grid->svgHeader() << grid->svgRectangle() << grid->svgFooter(); 
-
-            //     }
-            // }
+            //-----POUR SAVE LES IMAGES (DEBUG)-----
+            // std::string path = "./images_svg/COVERED";
+            // path.append(std::to_string(nn));
+            // path.append(".svg");
+            // ofstream file(path);
+            // file << grid->svgHeader() << grid->svgRectangle() << grid->svgFooter(); 
+            
+            // temporaire pour detecter une win, il faut faire une fonction qui marche pour n'importe quel axe X/Y
+            vector<Car> cars = grid->getCarArray();
+            for (int h=0; h <cars.size(); h++) {
+                if (cars[h].getId() == 0 && cars[h].getPosY()+cars[h].getSize()-1 == grid->getExitY()) {
+                    std::cout << "!!!WIN!!!" << std::endl;
+                    win = true;
+                }
+            }
 
             vector<Grid*> gridNeighbours = grid->getGridNeighbours();
-            for (int i =0; i<gridNeighbours.size(); i++) {
-                if(!(std::find(coveredGrids.begin(), coveredGrids.end(), gridNeighbours[i]) != coveredGrids.end())) {
-                    uncoveredGrids.push(gridNeighbours[i]);
-                }
 
-                if(std::find(gridNeighbours.begin(), gridNeighbours.end(), grid) != gridNeighbours.end()){
-                    std::cout << "The grid has not been covered " << std::endl;
-                    // std::string path = "./images_svg/UNCOVERED";
-                    // path.append(std::to_string(j));
-                    // path.append(" - ");
-                    // path.append(std::to_string(0));
-                    // path.append(".svg");
-                    // ofstream file(path);
-                    // file << gridNeighbours[1]->svgHeader() << gridNeighbours[1]->svgRectangle() << gridNeighbours[1]->svgFooter();
-                }
+            for (int j=0; j<gridNeighbours.size(); j++) {
+                    string temp2 = gridNeighbours[j]->gridToString();
+                    bool checkEquals2 = checkContainsGrid(coveredGrids, temp2);
+                    bool checkEquals3 = checkContainsGrid(uncoveredGrids, temp2);
 
-
-                if(!(std::find(coveredGrids.begin(), coveredGrids.end(), grid) != coveredGrids.end())) { // si cette grille voisine n'est pas dans les grilles covered, on la rajoute dans uncoveredGrids
-                    coveredGrids.push_back(grid);
-
-                    std::string path = "./images_svg/COVERED";
-                    path.append(std::to_string(j));
-                    path.append(".svg");
-                    ofstream file(path);
-                    file << grid->svgHeader() << grid->svgRectangle() << grid->svgFooter(); 
-                }
-                else {
-                    // std::string path = "./images_svg/DOUBLON";
-                    // path.append(std::to_string(j));
-                    // path.append(".svg");
-                    // ofstream file(path);
-                    // file << grid->svgHeader() << grid->svgRectangle() << grid->svgFooter(); 
-                }
-
-                //j++;
+                    if (!checkEquals2 && !checkEquals3) {
+                        uncoveredGrids.push(gridNeighbours[j]);
+                    } 
             }
         }
+
+        std::cout << "Number of grids covered : " << coveredGrids.size() << std::endl;
+        std::cout << "Number of grids left to cover : " << uncoveredGrids.size() << std::endl;
+        nn++;
     }
+    
 }
 
-//fonction ne marche pas ? a revoir comment generer plusieurs svg avec des index diff
-void Solver::solvedGridsSVG() {
-    int i = 1;
-    for (auto& grid : coveredGrids) {
-        std::string path = "./images_svg/grid_" + std::to_string(i) + ".svg";
-        ofstream file(path);
-        file << grid->svgHeader() << grid->svgRectangle() << grid->svgFooter();
-        i++;
-    }
-}
-
-vector<Grid*> Solver::getCoveredGrids() const{
-    return coveredGrids;
-}

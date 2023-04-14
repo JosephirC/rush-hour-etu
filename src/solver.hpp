@@ -12,13 +12,15 @@ class Solver {
 
         Solver(Grid* grid);
 
-        Solver(Grid grid);
-
         void solve1();
+
+        void bfs();
 
         void solve();
 
         void solvedGridsSVG();
+
+        void generateAllPossibleGrids();
 
         vector<Grid*> getCoveredGrids() const;
 

@@ -10,7 +10,7 @@ height(_height)
 {
     exitPosX = 0;
     exitPosY = 0;
-    this->parent == nullptr;
+    //this->parent == nullptr;
     neighbours.push_back(this);
 }
 
@@ -30,7 +30,7 @@ Grid::Grid(const Grid& grid) { //constructeur par copie
     for (int i=0; i<grid.neighbours.size(); i++) {
         neighbours.push_back(grid.neighbours[i]);
     }
-    parent = grid.parent;   
+    //parent = grid.parent;   
 }
 
 Grid Grid::operator=(const Grid& grid) {
@@ -263,16 +263,19 @@ string Grid::svgFooter() const {
 
 bool Grid::operator==(const Grid& other) const {
     
-    if(this->width != other.width && this->height != other.height)
+    if(this->width != other.width || this->height != other.height)
         return false;
 
-    if(this->exitPosX != other.exitPosX && this->exitPosY != other.exitPosY)
+    if(this->exitPosX != other.exitPosX || this->exitPosY != other.exitPosY)
+        return false;
+
+    if (this->carArray.size() != other.carArray.size())
         return false;
 
     for(int i = 0; i < this->carArray.size(); i++){
-        if(this->carArray[i].getPosX() != other.carArray[i].getPosX() && this->carArray[i].getPosY() != other.carArray[i].getPosY() 
-            && this->carArray[i].getCarSize() != other.carArray[i].getCarSize() && this->carArray[i].getDirection() != other.carArray[i].getDirection() 
-            && this->carArray[i].getId() != other.carArray[i].getId()){
+        if(this->carArray[i].getPosX() != other.carArray[i].getPosX() || this->carArray[i].getPosY() != other.carArray[i].getPosY() 
+            || this->carArray[i].getCarSize() != other.carArray[i].getCarSize() || this->carArray[i].getDirection() != other.carArray[i].getDirection() 
+            || this->carArray[i].getId() != other.carArray[i].getId()){
                 return false;
         }   
     }
@@ -284,9 +287,9 @@ bool Grid::operator==(const Grid& other) const {
         }
     }
 
-    if(this->parent != other.parent){
-        return false;
-    }
+    // if(this->parent != other.parent){
+    //     return false;
+    // }
 
     return true;
 }
@@ -318,7 +321,7 @@ vector<Grid*> Grid::getGridNeighbours() {
                 temp->updateGridCarId(temp->carArray);
     
                 if (!isInNeighbours(temp)) {
-                    temp->parent = this;
+                    //temp->parent = this;
                     neighbours.push_back(temp);
                     // std::string path = "./images_svg/";
                     // path.append(std::to_string(i+n));
@@ -337,7 +340,7 @@ vector<Grid*> Grid::getGridNeighbours() {
                 temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
-                    temp->parent = this;
+                    //temp->parent = this;
                     neighbours.push_back(temp);
                     // std::string path = "./images_svg/";
                     // path.append(std::to_string(i+n));
@@ -357,7 +360,7 @@ vector<Grid*> Grid::getGridNeighbours() {
                 temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
-                    temp->parent = this;
+                    //temp->parent = this;
                     neighbours.push_back(temp);
                     // std::string path = "./images_svg/";
                     // path.append(std::to_string(i+n));
@@ -376,7 +379,7 @@ vector<Grid*> Grid::getGridNeighbours() {
                 temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
-                    temp->parent = this;
+                    //temp->parent = this;
                     neighbours.push_back(temp);
                     // std::string path = "./images_svg/";
                     // path.append(std::to_string(i+n));

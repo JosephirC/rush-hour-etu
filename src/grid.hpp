@@ -62,6 +62,8 @@ class Grid {
         int getSizeX() const;
 
         int getSizeY() const;
+        
+        Grid* getParent() const;
 
         void changeCarPosition(Grid *temp, int id, int newPosX, int newPosY);
 
@@ -89,7 +91,7 @@ class Grid {
 
         Grid operator=(const Grid& grid);
 
-        bool isInNeighbours(const Grid* grid) const;
+        bool isInNeighbours(Grid* grid) const;
 
         
 };

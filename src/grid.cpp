@@ -12,6 +12,7 @@ height(6)
     height = _height;
     exitPosX = 0;
     exitPosY = 0;
+    parent = nullptr;
     //neighbours.push_back(this);
 }
 
@@ -147,6 +148,9 @@ int Grid::getSizeY() const {
     return height;
 }
 
+Grid* Grid::getParent() const {
+    return parent;
+}
 
 vector<Car> Grid::getCarArray() const {
     return carArray;
@@ -245,35 +249,31 @@ string Grid::svgFooter() const {
 }
 
 
-bool Grid::operator==(const Grid& other) const {
+// bool Grid::operator==(const Grid& other) const {
     
-    if(this->width != other.width && this->height != other.height)
-        return false;
+//     if(this->width != other.width && this->height != other.height)
+//         return false;
 
-    if(this->exitPosX != other.exitPosX && this->exitPosY != other.exitPosY)
-        return false;
+//     if(this->exitPosX != other.exitPosX && this->exitPosY != other.exitPosY)
+//         return false;
 
-    for(int i = 0; i < this->carArray.size(); i++){
-        if(this->carArray[i].getPosX() != other.carArray[i].getPosX() && this->carArray[i].getPosY() != other.carArray[i].getPosY() 
-            && this->carArray[i].getCarSize() != other.carArray[i].getCarSize() && this->carArray[i].getDirection() != other.carArray[i].getDirection() 
-            && this->carArray[i].getId() != other.carArray[i].getId()){
-                return false;
-        }   
-    }
+//     for(int i = 0; i < this->carArray.size(); i++){
+//         if(this->carArray[i].getPosX() != other.carArray[i].getPosX() && this->carArray[i].getPosY() != other.carArray[i].getPosY() 
+//             && this->carArray[i].getCarSize() != other.carArray[i].getCarSize() && this->carArray[i].getDirection() != other.carArray[i].getDirection() 
+//             && this->carArray[i].getId() != other.carArray[i].getId()){
+//                 return false;
+//         }   
+//     }
 
-    for(int i = 0; i < this->width; i++){
-        for(int j = 0; j < this->height; j++){
-            if(this->gridCarId[i][j] != other.gridCarId[i][j])
-                return false;
-        }
-    }
+//     for(int i = 0; i < this->width; i++){
+//         for(int j = 0; j < this->height; j++){
+//             if(this->gridCarId[i][j] != other.gridCarId[i][j])
+//                 return false;
+//         }
+//     }
 
-    if(this->parent != other.parent){
-         return false;
-     }
-
-    return true;
-}
+//     return true;
+// }
 
 
 void Grid::changeCarPosition(Grid *temp, int id, int newPosX, int newPosY) {
@@ -282,9 +282,11 @@ void Grid::changeCarPosition(Grid *temp, int id, int newPosX, int newPosY) {
 }
 
 
-bool Grid::isInNeighbours(const Grid* grid) const {
+bool Grid::isInNeighbours(Grid* grid) const {
     for (int i=0; i<neighbours.size(); i++) {
-        if (grid == neighbours[i]) {
+        string temp = grid->gridToString();
+        string temp2 = neighbours[i]->gridToString();
+        if (temp == temp2) {
             return true;
         }
     }

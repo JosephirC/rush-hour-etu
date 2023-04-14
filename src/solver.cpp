@@ -59,6 +59,29 @@ void Solver::solve() {
                 if (cars[h].getId() == 0 && cars[h].getPosY()+cars[h].getSize()-1 == grid->getExitY()) {
                     std::cout << "!!!WIN!!!" << std::endl;
                     win = true;
+                    int k = 1;
+
+                    while (grid->getParent() != nullptr) { // pour afficher en svg les étapes de résolutions
+
+                        std::string path = "./images_svg/path";
+                        path.append(std::to_string(k));
+                        path.append(".svg");
+                        ofstream file(path);
+                        file << grid->svgHeader() << grid->svgRectangle() << grid->svgFooter(); 
+
+                        grid = grid->getParent();
+                        k++;
+                    }
+
+                    // on rajoute le cas initial
+                    std::string path = "./images_svg/path";
+                    path.append(std::to_string(k));
+                    path.append(".svg");
+                    ofstream file(path);
+                    file << grid->svgHeader() << grid->svgRectangle() << grid->svgFooter(); 
+
+
+
                 }
             }
 

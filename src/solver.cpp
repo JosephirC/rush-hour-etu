@@ -143,6 +143,7 @@ void Solver::solve() {
     }
 }
 
+//fonction ne marche pas ? a revoir comment generer plusieurs svg avec des index diff
 void Solver::solvedGridsSVG() {
     int i = 1;
     for (auto& grid : coveredGrids) {

@@ -88,7 +88,6 @@ class Grid {
         Grid operator=(const Grid& grid);
 
         bool isInNeighbours(const Grid* grid) const;
-
         
 };
 

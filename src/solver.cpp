@@ -15,63 +15,39 @@ void Solver::solve1() {
     while (uncoveredGrids.size() > 0) {
         //verifier que chaque gridNeighbor n'a pas deja ete cover/parcouru
 	    //ajouter a coveredGrid
-
-        /**********DEBUUG******/
-
-        cout << endl;
-        cout << "Je traite les uncovered grid" << endl; 
-        cout << "INIT : uncoveredGrids size : " << uncoveredGrids.size() << endl;
-
-        cout << endl;
-
-        cout << "Je traite les covered grid" << endl;
-        cout <<"INIT : coveredgrids size : " << coveredGrids.size() << endl; 
-        cout << endl;
+        
+        for(int i=0; i<coveredGrids.size(); i++){
+            if(std::find(coveredGrids.begin(), coveredGrids.end(), coveredGrids[i]) != coveredGrids.end()){
+                std::cout << "double " << std::endl;
+            }
+        }
 
 
-        /************************/
         Grid* grid = uncoveredGrids.front();
         uncoveredGrids.pop();
         vector<Grid*> gridNeighbours = grid->getGridNeighbours();
 
-
-        /********DEBUG*********/
-        // for(int i =0; i < gridNeighbours.size(); i++){
-        //     gridNeighbours[i]->displayGridId();
-        // }
-        cout << endl << "Origianl Neighbours Size " << gridNeighbours.size() << endl;
-        cout << endl << "NEW? Neighbours Size " << grid->getGridNeighbours().size() << endl;
-
-
-
-
-        /************END DEBUG***************/
-
-
         if(std::find(coveredGrids.begin(), coveredGrids.end(), grid) != coveredGrids.end()){
-            std::cout << "Grid is already in coveredGrids " << std::endl;
+            std::cout << "Grid is in coveredGrids " << std::endl;
         }
-        else {
-            coveredGrids.push_back(grid);
-            
-            /***************DEBUG************/
-            cout << "TEST : BEFORE PUSHING NEIGHBOUR GRIDS IN UNCOVERED GRIDS : size = " << uncoveredGrids.size() << endl << endl; 
-            
 
+        coveredGrids.push_back(grid);
 
+        cout <<"coveredGrids size : " << coveredGrids.size() << " uncoveredGrids size : " << uncoveredGrids.size() << endl;
 
-            for(int i=0; i<gridNeighbours.size(); i++){
-                if(std::find(coveredGrids.begin(), coveredGrids.end(), gridNeighbours[i]) != coveredGrids.end()){
-                    std::cout << "Grid " << i << " is in uncoveredGrids " << std::endl;
-                    gridNeighbours[i]->displayGridId();
-                    uncoveredGrids.push(gridNeighbours[i]);
-                }        
-            }
+        for(int i=0; i<gridNeighbours.size(); i++){
+            if(std::find(coveredGrids.begin(), coveredGrids.end(), gridNeighbours[i]) != coveredGrids.end()){
+                std::cout << "Grid " << i << " is in uncoveredGrids " << std::endl;
+                uncoveredGrids.push(gridNeighbours[i]);
 
-            /***************DEBUG************/
-            cout << "TEST : AFTER PUSHING NEIGHBOUR GRIDS IN UNCOVERED GRIDS : size = " << uncoveredGrids.size() << endl << endl; 
-
-        }        
+                std::string path = "./images_svg/COVERED";
+                path.append(std::to_string(i));
+                path.append(".svg");
+                ofstream file(path);
+                file << grid->svgHeader() << grid->svgRectangle() << grid->svgFooter();   
+            }        
+        }
+               
     }
 }
 

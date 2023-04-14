@@ -10,6 +10,7 @@ height(_height)
 {
     exitPosX = 0;
     exitPosY = 0;
+    this->parent == nullptr;
     neighbours.push_back(this);
 }
 
@@ -28,7 +29,8 @@ Grid::Grid(const Grid& grid) { //constructeur par copie
     }
     for (int i=0; i<grid.neighbours.size(); i++) {
         neighbours.push_back(grid.neighbours[i]);
-    }   
+    }
+    parent = grid.parent;   
 }
 
 Grid Grid::operator=(const Grid& grid) {
@@ -280,6 +282,10 @@ bool Grid::operator==(const Grid& other) const {
             if(this->gridCarId[i][j] != other.gridCarId[i][j])
                 return false;
         }
+    }
+
+    if(this->parent != other.parent){
+        return false;
     }
 
     return true;

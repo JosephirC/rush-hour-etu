@@ -29,6 +29,10 @@ int main(int argc, char** argv){
         if(grid1 == grid){
             cout <<"nous sommes egale" << endl;
         }
+
+        Grid grid2 = Grid(grid);
+        if(grid2 == grid1)
+            cout<<"2=0" << endl;
     }
     #endif
 
@@ -57,6 +61,9 @@ int main(int argc, char** argv){
             std::cout << "grille voisine " << i << std::endl;
             test[i]->displayGridId();
         }
+
+        cout << "taille du test " << test.size() << endl;
+
     }
     #endif
 
@@ -70,10 +77,14 @@ int main(int argc, char** argv){
         vector<Grid*> coveredGrid = sol.getCoveredGrids();
         cout << "size:"  << coveredGrid.size()<<endl;
 
+
+        
         for(int i = 0; i < coveredGrid.size(); i++){
+            cout <<"davbndkbenrkgvnwrivnbebeibrnovnernvwrnvefonKEFNKIRNV3ROVR3BIFBR3GOIN R2EPKNGT4RO 1 << " << endl;
+        
             coveredGrid[i]->displayGridId();
         }
-        sol.solvedGridsSVG();
+        //sol.solvedGridsSVG();
     }
     #endif
 

@@ -101,7 +101,7 @@ void Grid::updateGridCarId(const vector<Car>& carArray) {
 }
 
 void Grid::displayGridId(){
-    cout << endl << "displayGridId" << endl;
+    // cout << endl << "displayGridId" << endl;
     for(int i = 0; i < width; i++){
         for(int j = 0; j < height; j++){
             cout << "  " << gridCarId[i][j] << "  ";
@@ -174,6 +174,43 @@ void Grid::loadData(const string& filename){
         throw invalid_argument("Failed to open file...");
     
 }
+
+/***********************************************************************/
+/*************************A REVOIR PAR YOUSSEF**************************/
+/***********************************************************************/
+
+// string Grid::HeaderSVG() const{
+//     stringstream ss;
+//     ss << "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 \" width=\"" 
+//         << width * TAILLE_CASE << "\" height=\"" << length * TAILLE_CASE << "\" stroke=\"black\" stroke-width=\"1\" fill=\"none\" >" << endl
+//         << "<rect x=\"0""\" y=\"0""\" width=\"600""\" height=\"600""\" stroke=\"black""\" stroke-width=\"15""\" fill=\"none""\" />" << endl;
+//     return ss.str();
+// }
+
+// string Grid::RectangleSVG() const{
+//     stringstream ss;
+//     for (int i = 0; i < carArray.size(); i++) {
+//         if(carArray[i].getDirection() == 0){
+//              ss << "<rect x=\"" << (carArray[i].getPosY() * TAILLE_CASE) + MARGE << "\" y=\"" << (carArray[i].getPosX() * TAILLE_CASE) + MARGE
+//             << "\" width=\"" << TAILLE_CASE - (MARGE * 2) << "\" height=\""
+//             << (carArray[i].getTaille() * TAILLE_CASE) - (MARGE * 2) << "\" fill=\"red\" />" << endl;
+//         }
+//         else{
+//             ss << "<rect x=\"" << (carArray[i].getPosY() * TAILLE_CASE) + MARGE << "\" y=\"" << (carArray[i].getPosX() * TAILLE_CASE) + MARGE
+//             << "\" width=\"" << (carArray[i].getTaille() * TAILLE_CASE) - (MARGE * 2) << "\" height=\""
+//             << TAILLE_CASE - (MARGE * 2) << "\" fill=\"red\" />" << endl;
+//         }
+//     }
+//     return ss.str();
+// }
+
+// string Grid::FooterSVG() const{
+//     stringstream ss;
+//     ss << "</svg>";
+//     return ss.str();
+// }
+
+/***********************************************************************/
 
 const int STROKE_WIDTH = 1;
 const string STROKE_COLOR = "black";

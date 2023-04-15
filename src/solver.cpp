@@ -10,7 +10,7 @@ Solver::Solver(Grid* grid) {
     uncoveredGrids.push(grid);
 }
 
-bool checkContainsGrid(vector<Grid*> grid, string s) {
+bool Solver::checkContainsGrid(vector<Grid*> grid, string s) {
     for (int i=0; i<grid.size(); i++) {
         string temp = grid[i]->gridToString();
         if (temp == s)
@@ -19,7 +19,7 @@ bool checkContainsGrid(vector<Grid*> grid, string s) {
     return false;
 }
 
-bool checkContainsGrid(std::queue<Grid*> q, string s) {
+bool Solver::checkContainsGrid(std::queue<Grid*> q, string s) {
     while (!q.empty())
     {
         string temp = q.front()->gridToString();
@@ -57,14 +57,15 @@ void Solver::solve() {
             vector<Car> cars = grid->getCarArray();
             for (int h=0; h <cars.size(); h++) {
                 if (cars[h].getId() == 0 && cars[h].getPosY()+cars[h].getSize()-1 == grid->getExitY()) {
-                    std::cout << "!!!WIN!!!" << std::endl;
+                    std::cout << "!!! WIN !!!" << std::endl;
                     win = true;
                     int k = 1;
 
-                    cout << "grid parent" << grid->getParent() << endl;
-
                     while (grid->getParent() != nullptr) { // pour afficher en svg les étapes de résolutions
+<<<<<<< HEAD
+=======
 
+>>>>>>> ce04e0db418f324555b79ad9d0b61174bbf3d4c3
                         std::string path = "./images_svg/path";
                         path.append(std::to_string(k));
                         path.append(".svg");
@@ -100,8 +101,13 @@ void Solver::solve() {
             }
         }
 
+<<<<<<< HEAD
+        std::cout << "Number of grids covered : " << coveredGrids.size() << std::endl;
+        std::cout << "Number of grids left to cover : " << uncoveredGrids.size() << std::endl;
+=======
         // std::cout << "Number of grids covered : " << coveredGrids.size() << std::endl;
         // std::cout << "Number of grids left to cover : " << uncoveredGrids.size() << std::endl;
+>>>>>>> ce04e0db418f324555b79ad9d0b61174bbf3d4c3
         nn++;
     }
     

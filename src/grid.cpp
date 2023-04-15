@@ -5,13 +5,12 @@
 #include <exception>
 
 Grid::Grid(int _width, int _height) :
-width(6),
-height(6)
+width(_width),
+height(_height)
 {
-    width = _width;
-    height = _height;
     exitPosX = 0;
     exitPosY = 0;
+
     parent = nullptr;
 }
 

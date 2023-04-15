@@ -5,24 +5,7 @@
 #include <iostream>
 #include <vector>
 
-
 using namespace std;
-
-
-
-
-/**********==NOTES==********/
-/*
-STOCKER LES CASES VIDES DANS LA DIRECTION D'UNE VOITURE POUR VOIR DE COMBIEN DE CASES ELLE PEUT AVANCER
-COMPTER LE NOMBRE DE DEPLACEMENT DE VOITURE --> SCORE
-
-FONCTION POUR CHERCHER LES VOITURES VOISINES
-
-FONCTION POUR DEPLACER LES VOITURE(QUI PEUVENT SE DEPLACER) DE UN SEUL COUP 
-
-
-*/
-
 
 
 class Grid {
@@ -62,6 +45,8 @@ class Grid {
         int getSizeX() const;
 
         int getSizeY() const;
+        
+        Grid* getParent() const;
 
         void changeCarPosition(Grid *temp, int id, int newPosX, int newPosY);
 
@@ -89,7 +74,7 @@ class Grid {
 
         Grid operator=(const Grid& grid);
 
-        bool isInNeighbours(const Grid* grid) const;
+        bool isInNeighbours(Grid* grid) const;
 
         
 };

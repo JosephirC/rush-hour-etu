@@ -59,8 +59,79 @@ void Solver::solve() {
                 if (cars[h].getId() == 0 && cars[h].getPosY()+cars[h].getSize()-1 == grid->getExitY()) {
                     std::cout << "!!!WIN!!!" << std::endl;
                     win = true;
+                    int k = 1;
+
+                    cout << "grid parent" << grid->getParent() << endl;
+
+                    while (grid->getParent() != nullptr) { // pour afficher en svg les étapes de résolutions
+
+                        cout << "test" << endl;
+
+                        std::string path = "./images_svg/path";
+                        path.append(std::to_string(k));
+                        path.append(".svg");
+                        ofstream file(path);
+                        file << grid->svgHeader() << grid->svgRectangle() << grid->svgFooter(); 
+
+                        grid = grid->getParent();
+                        k++;
+                    }
+
+                    // on rajoute le cas initial
+                    std::string path = "./images_svg/path";
+                    path.append(std::to_string(k));
+                    path.append(".svg");
+                    ofstream file(path);
+                    file << grid->svgHeader() << grid->svgRectangle() << grid->svgFooter(); 
+
+
+
                 }
             }
+
+            vector<Grid*> gridNeighbours = grid->getGridNeighbours();
+
+            for (int j=0; j<gridNeighbours.size(); j++) {
+                    string temp2 = gridNeighbours[j]->gridToString();
+                    bool checkEquals2 = checkContainsGrid(coveredGrids, temp2);
+                    bool checkEquals3 = checkContainsGrid(uncoveredGrids, temp2);
+
+                    if (!checkEquals2 && !checkEquals3) {
+                        uncoveredGrids.push(gridNeighbours[j]);
+                    } 
+            }
+        }
+
+        //std::cout << "Number of grids covered : " << coveredGrids.size() << std::endl;
+        //std::cout << "Number of grids left to cover : " << uncoveredGrids.size() << std::endl;
+        nn++;
+    }
+    
+}
+
+vector<Grid*> Solver::getCoveredGrids() const{
+    return coveredGrids;
+}
+
+//fonction pour commencer la generation des puzzle
+void Solver::solveALL() { 
+
+    int nn = 0;
+
+    vector<Grid*> test;
+
+    while (uncoveredGrids.size() > 0) {
+
+        Grid* grid = uncoveredGrids.front();
+        uncoveredGrids.pop();
+
+        string temp = grid->gridToString();
+        bool checkEquals = checkContainsGrid(coveredGrids, temp);
+        
+        if (!checkEquals) { // si cette grille voisine n'est pas dans les grilles covered, on la rajoute dans coveredGrids
+            coveredGrids.push_back(grid);
+            
+
 
             vector<Grid*> gridNeighbours = grid->getGridNeighbours();
 
@@ -79,10 +150,17 @@ void Solver::solve() {
         std::cout << "Number of grids left to cover : " << uncoveredGrids.size() << std::endl;
         nn++;
     }
-    
-}
 
-vector<Grid*> Solver::getCoveredGrids() const{
-    return coveredGrids;
-}
+    //test de double
+    int doubleCount =0;
+    for(int i=0; i<coveredGrids.size(); i++){
+        if(std::find(coveredGrids.begin(), coveredGrids.end(), coveredGrids[i]) != coveredGrids.end()){
+            //std::cout << "double " << std::endl;
+            doubleCount++;
+        }
+    }
 
+    cout << "double count " << doubleCount << endl;
+
+
+}

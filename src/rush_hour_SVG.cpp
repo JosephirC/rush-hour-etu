@@ -1,10 +1,8 @@
 #include "car.hpp"
 #include "grid.hpp"
 #include "solver.hpp"
-//#include "sdl.hpp"
 #include <iostream>
 #include <fstream>
-
 
 //#define CONSTRUCTOR_COPY
 //#define GRID_DISPLAY
@@ -15,19 +13,13 @@
 int main(int argc, char** argv){
 
     Grid grid(6,6);
-    //Voiture v(0, 0, 2, 1, 0);
-
     grid.initEmptyGrid();
-    //g.ajouterVoiture(v);
     grid.loadData("./Sujet/puzzle.txt"); //pk j'ai 50 fils quand je le mets dans le constructeur *_*
 
     #ifdef CONSTRUCTOR_COPY
     {
-
         Grid grid1(grid);
-
-        grid1.changeCarPosition(&grid1, 2, 3,2 );
-                
+        grid1.changeCarPosition(&grid1, 2, 3,2 );      
         grid1.displayGridId();
         grid.displayGridId();
 
@@ -55,14 +47,13 @@ int main(int argc, char** argv){
     }
     #endif
 
-    #ifdef LOAD_SVG
+     #ifdef LOAD_SVG
     {
         //Creation du .svg ---> Il faut faire une fonction pour cela !
-        ofstream file("./images_svg/image.svg");
+        ofstream file("./images_svg/test.svg");
         file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
     }
     #endif
-
 
     #ifdef GET_GRID_NEIGHBORS
     {
@@ -71,20 +62,18 @@ int main(int argc, char** argv){
             std::cout << "grille voisine " << i << std::endl;
             test[i]->displayGridId();
         }
-
         cout << "taille du test " << test.size() << endl;
-
     }
-    #endif
+    #endif  
 
     #ifdef SOLVER_TEST
     {
         cout << endl << "SOLVER_TEST " << endl << endl;
-        
+   
         Solver solution(&grid);
         solution.solve();
-
         //sol.solvedGridsSVG();
+        //solution.solveALL();
     }
     #endif
 

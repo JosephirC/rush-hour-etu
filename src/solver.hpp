@@ -18,4 +18,6 @@ class Solver {
 
         vector<Grid*> getCoveredGrids() const;
 
+        void solveALL();
+
 };

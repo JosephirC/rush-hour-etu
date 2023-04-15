@@ -26,6 +26,8 @@ class Grid {
 
         Grid(const Grid& grid); // constructeur par copie
 
+        Grid(const Grid* other); // constructeur par copie
+
         Grid(int sX, int sY);
         
         void initEmptyGrid();

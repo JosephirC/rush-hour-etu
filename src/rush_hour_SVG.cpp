@@ -3,6 +3,7 @@
 #include "solver.hpp"
 #include <iostream>
 #include <fstream>
+#include <string>
 
 //#define CONSTRUCTOR_COPY
 //#define GRID_DISPLAY
@@ -21,6 +22,8 @@ int main(int argc, char** argv){
         Grid grid1(grid);
         grid1.changeCarPosition(&grid1, 2, 3,2 );      
         grid1.displayGridId();
+
+        cout<<"original grid display" << endl;
         grid.displayGridId();
 
         if(grid1 == grid){
@@ -34,6 +37,26 @@ int main(int argc, char** argv){
         Grid grid2 = Grid(grid);
         if(grid2 == grid1)
             cout<<"2=0" << endl;
+
+
+        Grid* gridPtr = &grid;
+
+        cout<<"gridptr display" << endl;
+        gridPtr->displayGridId();
+
+        Grid* gridtest = new Grid(gridPtr);
+
+
+        cout<<"gridtest display" << endl;
+        gridtest->displayGridId();
+
+        if(*gridtest== *gridPtr){
+            cout <<"equals" << endl;
+        }
+        else {
+            cout <<"bruh" << endl;
+        }
+
 
     }
     #endif
@@ -71,9 +94,23 @@ int main(int argc, char** argv){
         cout << endl << "SOLVER_TEST " << endl << endl;
    
         Solver solution(&grid);
-        solution.solve();
-        //sol.solvedGridsSVG();
-        //solution.solveALL();
+        //solution.solve();
+
+        solution.solveTest();
+
+
+        vector<Grid*> winningGrids = solution.getWinningGrids();
+
+        cout << "wining size" << winningGrids.size() << endl;
+        cout << "covered size " << solution.getCoveredGrids().size() << endl;
+
+        for(int i =0; i < winningGrids.size(); i++){
+            std::string filenumber = std::to_string(i);
+            solution.solvedGridsSVG(winningGrids[i], filenumber);
+        }
+
+        solution.puzzle();
+
     }
     #endif
 

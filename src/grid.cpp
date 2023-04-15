@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <exception>
+#include <cstring>
 
 Grid::Grid(int _width, int _height) :
 width(_width),
@@ -33,6 +34,17 @@ Grid::Grid(const Grid& grid) { //constructeur par copie
     parent = grid.parent;
 }
 
+// Grid::Grid(const Grid* other) { // constructeur par copie
+//     width = other->width;
+//     height = other->height;
+//     exitPosX = other->exitPosX;
+//     exitPosY = other->exitPosY;
+//     carArray = other->carArray;
+//     memcpy(gridCarId, other->gridCarId, sizeof(gridCarId));
+//     parent = other->parent;
+//     neighbours = other->neighbours;
+// }
+
 Grid Grid::operator=(const Grid& grid) {
     this->width = grid.width;
     this->height = grid.height;
@@ -53,6 +65,21 @@ Grid Grid::operator=(const Grid& grid) {
 
     return *this;
 }
+
+// Grid Grid::operator=(const Grid& other) {
+//     if (this != &other) {
+//         width = other.width;
+//         height = other.height;
+//         exitPosX = other.exitPosX;
+//         exitPosY = other.exitPosY;
+//         carArray = other.carArray;
+//         parent = other.parent;
+//         for (auto neighbor : other.neighbours) {
+//             neighbours.push_back(new Grid(*neighbor));
+//         }
+//     }
+//     return *this;
+// }
 
 // fonction pour debug (visualiser dans la console)
 void Grid::initEmptyGrid(){
@@ -245,6 +272,35 @@ string Grid::svgFooter() const {
     return "</svg>";
 }
 
+bool Grid::operator==(const Grid& other) const {
+    
+    if(this->width != other.width && this->height != other.height)
+        return false;
+
+    if(this->exitPosX != other.exitPosX && this->exitPosY != other.exitPosY)
+        return false;
+
+    for(int i = 0; i < this->carArray.size(); i++){
+        if(this->carArray[i].getPosX() != other.carArray[i].getPosX() && this->carArray[i].getPosY() != other.carArray[i].getPosY() 
+            && this->carArray[i].getCarSize() != other.carArray[i].getCarSize() && this->carArray[i].getDirection() != other.carArray[i].getDirection() 
+            && this->carArray[i].getId() != other.carArray[i].getId()){
+                return false;
+        }   
+    }
+
+    for(int i = 0; i < this->width; i++){
+        for(int j = 0; j < this->height; j++){
+            if(this->gridCarId[i][j] != other.gridCarId[i][j])
+                return false;
+        }
+    }
+
+    if(this->parent != other.parent){
+        return false;
+    }
+
+    return true;
+}
 
 void Grid::changeCarPosition(Grid *temp, int id, int newPosX, int newPosY) {
     temp->carArray[id].setPosX(newPosX);

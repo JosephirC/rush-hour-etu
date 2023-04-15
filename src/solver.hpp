@@ -14,10 +14,18 @@ class Solver {
 
         void solve();
 
-        void solvedGridsSVG();
+        void solvedGridsSVG(Grid* grid, string filenumber);
 
         vector<Grid*> getCoveredGrids() const;
 
         void solveALL();
+
+        void solveTest();
+
+        bool isWinningGrid(Grid* grid);
+
+        vector<Grid*> getWinningGrids();
+
+        void puzzle();
 
 };

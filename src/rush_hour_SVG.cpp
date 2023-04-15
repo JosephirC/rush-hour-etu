@@ -26,13 +26,23 @@ int main(int argc, char** argv){
 
         Grid grid1(grid);
 
+        grid1.changeCarPosition(&grid1, 2, 3,2 );
+                
+        grid1.displayGridId();
+        grid.displayGridId();
+
         if(grid1 == grid){
             cout <<"nous sommes egale" << endl;
+        }
+        
+        else {
+            cout << "aie" << endl;
         }
 
         Grid grid2 = Grid(grid);
         if(grid2 == grid1)
             cout<<"2=0" << endl;
+
     }
     #endif
 
@@ -71,19 +81,9 @@ int main(int argc, char** argv){
     {
         cout << endl << "SOLVER_TEST " << endl << endl;
         
-        Solver sol(&grid);
-        sol.solve1();
-        sol.solvedGridsSVG();
-        vector<Grid*> coveredGrid = sol.getCoveredGrids();
-        cout << "size:"  << coveredGrid.size()<<endl;
+        Solver solution(&grid);
+        solution.solve();
 
-
-        
-        for(int i = 0; i < coveredGrid.size(); i++){
-            cout <<"davbndkbenrkgvnwrivnbebeibrnovnernvwrnvefonKEFNKIRNV3ROVR3BIFBR3GOIN R2EPKNGT4RO 1 << " << endl;
-        
-            coveredGrid[i]->displayGridId();
-        }
         //sol.solvedGridsSVG();
     }
     #endif

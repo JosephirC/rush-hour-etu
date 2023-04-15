@@ -21,12 +21,16 @@ int Car::getCarSize() const{
     return size;
 }
 
-int Car::getDirection() const{\
+int Car::getDirection() const{
     return direction;
 }
 
 int Car::getId() const{
     return id;
+}
+
+int Car::getSize() const {
+    return size;
 }
 
 void Car::setPosX(int x){
@@ -35,4 +39,27 @@ void Car::setPosX(int x){
 
 void Car::setPosY(int y){
     posY = y;
+}
+
+// bool Car::operator==(const Car& other) const {
+//     if (posX != other.posX)
+//         return false;
+//     if (posY != other.posY)
+//         return false;
+//     if (size != other.size)
+//         return false;
+//     if (direction != other.direction)
+//         return false;
+//     if (id != other.id)
+//         return false;
+
+//     return true;
+// }
+
+bool Car::operator==(const Car& other) const {
+    return (posX == other.posX && 
+            posY == other.posY &&
+            size == other.size && 
+            direction == other.direction &&
+            id == other.id);
 }

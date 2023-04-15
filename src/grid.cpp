@@ -10,8 +10,8 @@ height(_height)
 {
     exitPosX = 0;
     exitPosY = 0;
-    //this->parent == nullptr;
-    neighbours.push_back(this);
+    //neighbours.push_back(this);
+    parent = nullptr;
 }
 
 Grid::Grid(const Grid& grid) { //constructeur par copie
@@ -29,8 +29,9 @@ Grid::Grid(const Grid& grid) { //constructeur par copie
     }
     for (int i=0; i<grid.neighbours.size(); i++) {
         neighbours.push_back(grid.neighbours[i]);
-    }
-    //parent = grid.parent;   
+    }   
+
+    parent = grid.parent;
 }
 
 Grid Grid::operator=(const Grid& grid) {
@@ -61,6 +62,23 @@ void Grid::initEmptyGrid(){
             gridCarId[i][j] = -1; // -1 = case vide
         }
     }
+}
+
+string Grid::gridToString() {
+
+    string res;
+
+    res.append(std::to_string(exitPosX));
+    res.append(std::to_string(exitPosY));
+    for (int i=0; i<carArray.size(); i++) {
+        res.append(std::to_string(carArray[i].getPosX()));
+        res.append(std::to_string(carArray[i].getPosY()));
+        res.append(std::to_string(carArray[i].getCarSize()));
+        res.append(std::to_string(carArray[i].getDirection()));
+        res.append(std::to_string(carArray[i].getId()));
+    }
+
+    return res;
 }
 
 void Grid::addCar(const Car& c){
@@ -103,7 +121,7 @@ void Grid::updateGridCarId(const vector<Car>& carArray) {
 }
 
 void Grid::displayGridId(){
-    // cout << endl << "displayGridId" << endl;
+    cout << endl << "displayGridId" << endl;
     for(int i = 0; i < width; i++){
         for(int j = 0; j < height; j++){
             cout << "  " << gridCarId[i][j] << "  ";
@@ -127,6 +145,7 @@ int Grid::getSizeX() const {
 int Grid::getSizeY() const {
     return height;
 }
+
 
 vector<Car> Grid::getCarArray() const {
     return carArray;
@@ -214,6 +233,7 @@ void Grid::loadData(const string& filename){
 
 /***********************************************************************/
 
+
 const int STROKE_WIDTH = 1;
 const string STROKE_COLOR = "black";
 const string FILL_COLOR = "red";
@@ -287,17 +307,19 @@ bool Grid::operator==(const Grid& other) const {
         }
     }
 
-    // if(this->parent != other.parent){
-    //     return false;
-    // }
+    if(this->parent != other.parent){
+         return false;
+     }
 
     return true;
 }
+
 
 void Grid::changeCarPosition(Grid *temp, int id, int newPosX, int newPosY) {
     temp->carArray[id].setPosX(newPosX);
     temp->carArray[id].setPosY(newPosY);
 }
+
 
 bool Grid::isInNeighbours(const Grid* grid) const {
     for (int i=0; i<neighbours.size(); i++) {
@@ -307,6 +329,7 @@ bool Grid::isInNeighbours(const Grid* grid) const {
     }
     return false;
 }
+
 
 vector<Grid*> Grid::getGridNeighbours() {
 
@@ -323,11 +346,6 @@ vector<Grid*> Grid::getGridNeighbours() {
                 if (!isInNeighbours(temp)) {
                     //temp->parent = this;
                     neighbours.push_back(temp);
-                    // std::string path = "./images_svg/";
-                    // path.append(std::to_string(i+n));
-                    // path.append(".svg");
-                    // ofstream file(path);
-                    // file << temp->svgHeader() << temp->svgRectangle() << temp->svgFooter(); 
                 }
 
                 n++;
@@ -336,17 +354,12 @@ vector<Grid*> Grid::getGridNeighbours() {
             n = 1;
             while (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() + carArray[i].getCarSize()-1 + n] == -1 && (carArray[i].getPosY() + carArray[i].getCarSize()-1 + n) < width) { // Si la voiture a une case vide à sa droite, elle peut aller à droite
                 Grid *temp = new Grid(*this);
-                temp->changeCarPosition(temp, i, carArray[i].getPosX(), (carArray[i].getPosY() + n));
+                changeCarPosition(temp, i, carArray[i].getPosX(), (carArray[i].getPosY() + n));
                 temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
                     //temp->parent = this;
                     neighbours.push_back(temp);
-                    // std::string path = "./images_svg/";
-                    // path.append(std::to_string(i+n));
-                    // path.append(".svg");
-                    // ofstream file(path);
-                    // file << temp->svgHeader() << temp->svgRectangle() << temp->svgFooter(); 
                 }
 
                 n++;
@@ -356,17 +369,12 @@ vector<Grid*> Grid::getGridNeighbours() {
         else if (carArray[i].getDirection() == 0) { // Vertical
             while (gridCarId[carArray[i].getPosX() - n][carArray[i].getPosY()] == -1 && (carArray[i].getPosX() - n) >= 0) { // Si la voiture a une case vide au dessus d'elle, elle peut avancer vers le haut
                 Grid *temp = new Grid(*this);
-                temp->changeCarPosition(temp, i, (carArray[i].getPosX() - n), carArray[i].getPosY());
+                changeCarPosition(temp, i, (carArray[i].getPosX() - n), carArray[i].getPosY());
                 temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
                     //temp->parent = this;
                     neighbours.push_back(temp);
-                    // std::string path = "./images_svg/";
-                    // path.append(std::to_string(i+n));
-                    // path.append(".svg");
-                    // ofstream file(path);
-                    // file << temp->svgHeader() << temp->svgRectangle() << temp->svgFooter(); 
                 }
 
                 n++;
@@ -375,17 +383,12 @@ vector<Grid*> Grid::getGridNeighbours() {
             n = 1;
             while (gridCarId[carArray[i].getPosX() + carArray[i].getCarSize()-1 + n][carArray[i].getPosY()] == -1 && (carArray[i].getPosX() + carArray[i].getCarSize()-1 + n) < height) { // Si la voiture a une case vide devant elle, elle peut reculer
                 Grid *temp = new Grid(*this);
-                temp->changeCarPosition(temp, i, (carArray[i].getPosX() + n), carArray[i].getPosY());
+                changeCarPosition(temp, i, (carArray[i].getPosX() + n), carArray[i].getPosY());
                 temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
                     //temp->parent = this;
                     neighbours.push_back(temp);
-                    // std::string path = "./images_svg/";
-                    // path.append(std::to_string(i+n));
-                    // path.append(".svg");
-                    // ofstream file(path);
-                    // file << temp->svgHeader() << temp->svgRectangle() << temp->svgFooter(); 
                 }
 
                 n++;
@@ -395,3 +398,4 @@ vector<Grid*> Grid::getGridNeighbours() {
     
     return neighbours;
 }
+

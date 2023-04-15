@@ -16,6 +16,10 @@ class Solver {
 
         void solvedGridsSVG();
 
+        bool checkContainsGrid(vector<Grid*> grid, string s);
+
+        bool checkContainsGrid(std::queue<Grid*> q, string s);
+
         vector<Grid*> getCoveredGrids() const;
 
         void solveALL();

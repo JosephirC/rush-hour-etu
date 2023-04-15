@@ -12,74 +12,26 @@ height(_height)
     exitPosX = 0;
     exitPosY = 0;
     parent = nullptr;
+    gridString = "";
 }
 
-Grid::Grid(const Grid& grid) { //constructeur par copie
+Grid::Grid(Grid& grid) { //constructeur par copie
     width = grid.width;
     height = grid.height;
     exitPosX = grid.exitPosX;
     exitPosY = grid.exitPosY;
-    for (int i=0; i<grid.carArray.size(); i++) {
-        carArray.push_back(grid.carArray[i]);
-    }
+    gridString = grid.gridString;
+    carArray = grid.carArray;
+
     for(int i = 0; i < width; i++){
         for(int j = 0; j < height; j++){
             gridCarId[i][j] = grid.gridCarId[i][j];
         }
     }
-    for (int i=0; i<grid.neighbours.size(); i++) {
-        neighbours.push_back(grid.neighbours[i]);
-    }   
 
+    neighbours = grid.neighbours;
     parent = grid.parent;
 }
-
-// Grid::Grid(const Grid* other) { // constructeur par copie
-//     width = other->width;
-//     height = other->height;
-//     exitPosX = other->exitPosX;
-//     exitPosY = other->exitPosY;
-//     carArray = other->carArray;
-//     memcpy(gridCarId, other->gridCarId, sizeof(gridCarId));
-//     parent = other->parent;
-//     neighbours = other->neighbours;
-// }
-
-Grid Grid::operator=(const Grid& grid) {
-    this->width = grid.width;
-    this->height = grid.height;
-    this->exitPosX = grid.exitPosX;
-    this->exitPosY = grid.exitPosY;
-    for (int i=0; i<grid.carArray.size(); i++) {
-        this->carArray.push_back(grid.carArray[i]);
-    }
-    for(int i = 0; i < this->width; i++){
-        for(int j = 0; j < this->height; j++){
-            this->gridCarId[i][j] = grid.gridCarId[i][j];
-        }
-    }
-    for (int i=0; i<grid.neighbours.size(); i++) {
-        this->neighbours.push_back(grid.neighbours[i]);
-    }
-    this->parent = grid.parent;
-
-    return *this;
-}
-
-// Grid Grid::operator=(const Grid& other) {
-//     if (this != &other) {
-//         width = other.width;
-//         height = other.height;
-//         exitPosX = other.exitPosX;
-//         exitPosY = other.exitPosY;
-//         carArray = other.carArray;
-//         parent = other.parent;
-//         for (auto neighbor : other.neighbours) {
-//             neighbours.push_back(new Grid(*neighbor));
-//         }
-//     }
-//     return *this;
-// }
 
 // fonction pour debug (visualiser dans la console)
 void Grid::initEmptyGrid(){
@@ -104,7 +56,6 @@ string Grid::gridToString() {
         res.append(std::to_string(carArray[i].getDirection()));
         res.append(std::to_string(carArray[i].getId()));
     }
-
     return res;
 }
 
@@ -181,6 +132,10 @@ vector<Car> Grid::getCarArray() const {
     return carArray;
 }
 
+string Grid::getGridString() {
+    return gridString;
+}
+
 void Grid::displayCarArray() const {
     cout << endl << "displayCarArray" << endl;
     for(int i = 0; i < carArray.size(); i++){
@@ -197,12 +152,13 @@ void Grid::loadData(const string& filename){
     if (file.good())
     {
         int finishX, finishY;
-        string firstLine;
-        //getline(file, premiereLine);
         
         if(file >> finishX >> finishY){
             exitPosX = finishX;
             exitPosY = finishY;
+
+            gridString.append(std::to_string(finishX));
+            gridString.append(std::to_string(finishY));
         }
         else{
             throw length_error("Impossible to read the grid exit");
@@ -217,9 +173,15 @@ void Grid::loadData(const string& filename){
             
             Car c(pX, pY, t, dir, id);
             addCar(c);
+
+            gridString.append(std::to_string(pX));
+            gridString.append(std::to_string(pY));
+            gridString.append(std::to_string(t));
+            gridString.append(std::to_string(dir));
+            gridString.append(std::to_string(id));
+
             id++;
         }
-
     }
     else
         throw invalid_argument("Failed to open file...");
@@ -272,47 +234,17 @@ string Grid::svgFooter() const {
     return "</svg>";
 }
 
-bool Grid::operator==(const Grid& other) const {
-    
-    if(this->width != other.width && this->height != other.height)
-        return false;
-
-    if(this->exitPosX != other.exitPosX && this->exitPosY != other.exitPosY)
-        return false;
-
-    for(int i = 0; i < this->carArray.size(); i++){
-        if(this->carArray[i].getPosX() != other.carArray[i].getPosX() && this->carArray[i].getPosY() != other.carArray[i].getPosY() 
-            && this->carArray[i].getCarSize() != other.carArray[i].getCarSize() && this->carArray[i].getDirection() != other.carArray[i].getDirection() 
-            && this->carArray[i].getId() != other.carArray[i].getId()){
-                return false;
-        }   
-    }
-
-    for(int i = 0; i < this->width; i++){
-        for(int j = 0; j < this->height; j++){
-            if(this->gridCarId[i][j] != other.gridCarId[i][j])
-                return false;
-        }
-    }
-
-    if(this->parent != other.parent){
-        return false;
-    }
-
-    return true;
-}
-
-void Grid::changeCarPosition(Grid *temp, int id, int newPosX, int newPosY) {
-    temp->carArray[id].setPosX(newPosX);
-    temp->carArray[id].setPosY(newPosY);
+void Grid::changeCarPosition(int id, int newPosX, int newPosY) {
+    carArray[id].setPosX(newPosX);
+    carArray[id].setPosY(newPosY);
+    gridString = gridToString();
 }
 
 
 bool Grid::isInNeighbours(Grid* grid) const {
     for (int i=0; i<neighbours.size(); i++) {
-        string temp = grid->gridToString();
-        string temp2 = neighbours[i]->gridToString();
-        if (temp == temp2) {
+
+        if (grid->getGridString() == gridString) {
             return true;
         }
     }
@@ -329,7 +261,7 @@ vector<Grid*> Grid::getGridNeighbours() {
         if (carArray[i].getDirection() == 1) { // Horizontal
             while (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() - n] == -1 && (carArray[i].getPosY() - n) >= 0) { // Si la voiture a une case vide à sa gauche, elle peut aller à gauche
                 Grid *temp = new Grid(*this);
-                changeCarPosition(temp, i, carArray[i].getPosX(), (carArray[i].getPosY() - n));
+                temp->changeCarPosition(i, carArray[i].getPosX(), (carArray[i].getPosY() - n));
                 temp->updateGridCarId(temp->carArray);
     
                 if (!isInNeighbours(temp)) {
@@ -343,7 +275,7 @@ vector<Grid*> Grid::getGridNeighbours() {
             n = 1;
             while (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() + carArray[i].getCarSize()-1 + n] == -1 && (carArray[i].getPosY() + carArray[i].getCarSize()-1 + n) < width) { // Si la voiture a une case vide à sa droite, elle peut aller à droite
                 Grid *temp = new Grid(*this);
-                changeCarPosition(temp, i, carArray[i].getPosX(), (carArray[i].getPosY() + n));
+                temp->changeCarPosition(i, carArray[i].getPosX(), (carArray[i].getPosY() + n));
                 temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
@@ -358,7 +290,7 @@ vector<Grid*> Grid::getGridNeighbours() {
         else if (carArray[i].getDirection() == 0) { // Vertical
             while (gridCarId[carArray[i].getPosX() - n][carArray[i].getPosY()] == -1 && (carArray[i].getPosX() - n) >= 0) { // Si la voiture a une case vide au dessus d'elle, elle peut avancer vers le haut
                 Grid *temp = new Grid(*this);
-                changeCarPosition(temp, i, (carArray[i].getPosX() - n), carArray[i].getPosY());
+                temp->changeCarPosition(i, (carArray[i].getPosX() - n), carArray[i].getPosY());
                 temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {
@@ -372,7 +304,7 @@ vector<Grid*> Grid::getGridNeighbours() {
             n = 1;
             while (gridCarId[carArray[i].getPosX() + carArray[i].getCarSize()-1 + n][carArray[i].getPosY()] == -1 && (carArray[i].getPosX() + carArray[i].getCarSize()-1 + n) < height) { // Si la voiture a une case vide devant elle, elle peut reculer
                 Grid *temp = new Grid(*this);
-                changeCarPosition(temp, i, (carArray[i].getPosX() + n), carArray[i].getPosY());
+                temp->changeCarPosition(i, (carArray[i].getPosX() + n), carArray[i].getPosY());
                 temp->updateGridCarId(temp->carArray);
 
                 if (!isInNeighbours(temp)) {

@@ -177,6 +177,30 @@ int Puzzle::randCar(int &gridCarId[6][6]){ //gridCarId = -1 au debut et on l'upd
 }
 
 
+void Puzzle::randomCar(int x, int y, int direction, int size, int gridCarId[6][6]) { //  x=0, y=0, direction=0, size=2 par défaut
+   while (gridCarId[x][y] != -1 && y<6) {
+        y++;
+    }
+    if (gridCarId[x+1][y] != -1) {
+        direction = 1;
+        if (gridCarId[x][y+1] != -1) {
+            std::cout << "impossible" << std::endl;
+            randomCar(x+1, 0, 0, 2, gridCarId);
+        }
+        if (gridCarId[x][y+2] != -1) {
+            size = 3;
+        }
+        else {
+            size = 2;
+        }
+    }   
+
+    car.setPosX(x);
+    car.setPosY(y);
+    car.setDirection(direction);
+    car.setSize(size);
+}
+
 //RULE : always min = 6, max = 13
 Grid Puzzle::generateRandomGrid(int carMin, int carMax){
     

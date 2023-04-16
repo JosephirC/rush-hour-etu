@@ -83,51 +83,21 @@ void Image::draw (SDL_Renderer * renderer, int x, int y, int w, int h) {
     assert(ok == 0);
 }
 
-SDL_Texture * Image::getTexture() const {return m_texture;}
+SDL_Texture * Image::getTexture() const {
+    return m_texture;
+}
 
-void Image::setSurface(SDL_Surface * surf) {m_surface = surf;}
-
-
-//Image grid;
-
-// Voitures verticales
-Image im_car2_main;
-Image im_car2_yellow;
-Image im_car2_police;
-Image im_car2_ambulance;
-Image im_car2_grey;
-Image im_car2_rose;
-Image im_car2_orange;
-Image im_car2_black;
-Image im_car2_white;
-Image im_car2_blue;
-Image im_car3_black;
-Image im_car3_grey;
-Image im_car3_white;
-Image im_car3_firetruck;
-
-// Voitures horizontales 
-Image im_car2_main90;
-Image im_car2_yellow90;
-Image im_car2_police90;
-Image im_car2_ambulance90;
-Image im_car2_grey90;
-Image im_car2_rose90;
-Image im_car2_orange90;
-Image im_car2_black90;
-Image im_car2_white90;
-Image im_car2_blue90;
-Image im_car3_black90;
-Image im_car3_grey90;
-Image im_car3_white90;
-Image im_car3_firetruck90;
-
-Case tabCase[6][6]; // Tableau qui pour chaque case contient sa position (x,y) en pixel sur l'image
-
+void Image::setSurface(SDL_Surface * surf) {
+    m_surface = surf;
+}
 
 // ============= CLASS SDLJEU =============== //
 
 SDL::SDL (){
+
+    SIZE_X = 600;
+    SIZE_Y = 600;
+
     // Initialisation de la SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << endl;
@@ -149,7 +119,7 @@ SDL::SDL (){
     }
 
     // Creation de la fenetre
-    window = SDL_CreateWindow("RushHour", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 600, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("RushHour", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SIZE_X, SIZE_Y, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (window == nullptr) {
         cout << "Erreur lors de la creation de la fenetre : " << SDL_GetError() << endl; 
         SDL_Quit(); 
@@ -157,46 +127,6 @@ SDL::SDL (){
     }
 
     renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
-
-
-
-    // generer un txt random
-    // grid = new grid(6,6)
-    // grid.initEmptyGrid();
-    // grid.loadData("./Sujet/puzzle.txt");
-
-
-    // IMAGES
-    im_car2_main.loadFromFile("images/car2_main.png", renderer);
-    im_car2_yellow.loadFromFile("images/car2_yellow.png", renderer);
-    im_car2_police.loadFromFile("images/car2_police.png", renderer);
-    im_car2_ambulance.loadFromFile("images/car2_ambulance.png", renderer);
-    im_car2_grey.loadFromFile("images/car2_grey.png", renderer);
-    im_car2_rose.loadFromFile("images/car2_rose.png", renderer);
-    im_car2_orange.loadFromFile("images/car2_orange.png", renderer);
-    im_car2_black.loadFromFile("images/car2_black.png", renderer);
-    im_car2_white.loadFromFile("images/car2_white.png", renderer);
-    im_car2_blue.loadFromFile("images/car2_blue.png", renderer);
-    im_car3_black.loadFromFile("images/car3_black.png", renderer);
-    im_car3_grey.loadFromFile("images/car3_grey.png", renderer);
-    im_car3_white.loadFromFile("images/car3_white.png", renderer);
-    im_car3_firetruck.loadFromFile("images/car3_firetruck.png", renderer);
-
-    im_car2_main90.loadFromFile("images/car2_main90.png", renderer);
-    im_car2_yellow90.loadFromFile("images/car2_yellow90.png", renderer);
-    im_car2_police90.loadFromFile("images/car2_police90.png", renderer);
-    im_car2_ambulance90.loadFromFile("images/car2_ambulance90.png", renderer);
-    im_car2_grey90.loadFromFile("images/car2_grey90.png", renderer);
-    im_car2_rose90.loadFromFile("images/car2_rose90.png", renderer);
-    im_car2_orange90.loadFromFile("images/car2_orange90.png", renderer);
-    im_car2_black90.loadFromFile("images/car2_black90.png", renderer);
-    im_car2_white90.loadFromFile("images/car2_white90.png", renderer);
-    im_car2_blue90.loadFromFile("images/car2_blue90.png", renderer);
-    im_car3_black90.loadFromFile("images/car3_black90.png", renderer);
-    im_car3_grey90.loadFromFile("images/car3_grey90.png", renderer);
-    im_car3_white90.loadFromFile("images/car3_white90.png", renderer);
-    im_car3_firetruck90.loadFromFile("images/car3_firetruck90.png", renderer);
-    
 
     // FONTS
     font = TTF_OpenFont("data/DejaVuSansCondensed.ttf",50);
@@ -210,10 +140,6 @@ SDL::SDL (){
     font_color = {250,250,250};
 	font_im.setSurface(TTF_RenderText_Solid(font,"Niveau 1",font_color));
 	font_im.loadFromCurrentSurface(renderer);
-
-
-
-
 }
 
 SDL::~SDL () {
@@ -224,15 +150,46 @@ SDL::~SDL () {
     SDL_Quit();
 }
 
+
+void SDL::generateLvl(int difficulty) {
+    // generer des niveaux
+    // int k = solver.solve();
+
+    nbImg = 15; // remplacer 15 par k
+    currentImg = nbImg;
+
+    loadGridImg("");
+}
+
+void SDL::loadGridImg(const string s) {
+    if (s == "next" && (currentImg-1) > 0) {
+        currentImg--;
+    }
+    else if (s == "previous" && (currentImg+1) <= nbImg) {
+        currentImg++;
+    }
+
+    string path = "./images_svg/";
+    path.append(std::to_string(currentImg)); // remplacer 15 par k
+    path.append(".svg"); // remplacer 15 par k
+
+    char* char_path = new char[path.length() + 1];
+    strcpy(char_path, path.c_str());
+
+    gridImg.loadFromFile(char_path, renderer);
+    delete char_path;
+    imgSet = true; 
+}
+
+
 void SDL::sdlAff () {
-	//Remplir l'écran de blanc
+	//Remplir l'écran de noir
     SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
     SDL_RenderClear(renderer);
 
-
-
-
-    //grid.loadFromFile("images/car2_main.png", renderer);
+    // dessiner la grille si elle a été chargée
+    if (imgSet)
+        gridImg.draw(renderer, 100,100,400,400);
 
 
     // Ecrire un titre par dessus
@@ -261,7 +218,19 @@ void SDL::sdlBoucle () {
 			else if (events.type == SDL_KEYDOWN) {          
 				switch (events.key.keysym.scancode) {
 				case SDL_SCANCODE_UP:
-					//mangePastille = jeu.actionClavier('b');    // car Y inverse
+					generateLvl(5);
+					break;
+                case SDL_SCANCODE_RIGHT:
+                    if (imgSet) {
+                        imgSet = false;
+					    loadGridImg("next");
+                    }
+					break;
+                case SDL_SCANCODE_LEFT:
+                    if (imgSet) {
+                        imgSet = false;
+					    loadGridImg("previous");
+                    }
 					break;
                 case SDL_SCANCODE_ESCAPE:
                     quit = true;

@@ -40,6 +40,10 @@ class SDL {
 
     private :
 
+        // taille de la fenetre
+        int SIZE_X;
+        int SIZE_Y;
+
         SDL_Window * window;
         SDL_Renderer * renderer;
 
@@ -47,12 +51,18 @@ class SDL {
         Image font_im;
         SDL_Color font_color;
 
-        Image im_car;
+        //Image im_car;
+
+        Image gridImg;
 
         //Grid grid;
 
         bool souris;
         bool touche;
+
+        bool imgSet = false;
+        int nbImg;
+        int currentImg;
         
     public :
 
@@ -60,6 +70,8 @@ class SDL {
         ~SDL ();
         void sdlBoucle ();
         void sdlAff ();
+        void generateLvl(int difficulty);
+        void loadGridImg(const string c);
 
 };
 

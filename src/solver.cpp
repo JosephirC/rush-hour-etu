@@ -35,7 +35,7 @@ int Solver::isWinningGrid(Grid* grid) {
             int k = 1;
 
             while (grid->getParent() != nullptr) { // pour afficher en svg les étapes de résolutions
-                std::string path = "./images_svg/path";
+                std::string path = "./images_svg/";
                 path.append(std::to_string(k));
                 path.append(".svg");
                 ofstream file(path);
@@ -46,7 +46,7 @@ int Solver::isWinningGrid(Grid* grid) {
             }
 
             // on rajoute le cas initial
-            std::string path = "./images_svg/path";
+            std::string path = "./images_svg/";
             path.append(std::to_string(k));
             path.append(".svg");
             ofstream file(path);

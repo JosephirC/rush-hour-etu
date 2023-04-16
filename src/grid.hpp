@@ -23,6 +23,8 @@ class Grid {
 
     public : 
 
+        ~Grid();
+
         Grid();
 
         Grid(const Grid& grid); // constructeur par copie

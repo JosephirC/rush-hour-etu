@@ -5,13 +5,18 @@
 #include <exception>
 #include <cstring>
 
+Grid::~Grid() {
+    if (parent != nullptr)
+        delete this;
+}
+
 Grid::Grid(){
     width = 0;
     height = 0;
     exitPosX = 0;
     exitPosY = 0;
     parent = nullptr;
-    gridString = " "; 
+    gridString = ""; 
 }
 
 Grid::Grid(int _width, int _height) :

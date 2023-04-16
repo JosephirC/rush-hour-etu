@@ -1,3 +1,6 @@
+#ifndef _SOLVER_HPP
+#define _SOLVER_HPP
+
 #include <vector>
 #include "grid.hpp"
 #include <queue>
@@ -33,3 +36,5 @@ class Solver {
         void puzzle();
 
 };
+
+#endif

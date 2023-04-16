@@ -13,8 +13,8 @@ Grid::~Grid() {
 Grid::Grid(){
     width = 0;
     height = 0;
-    exitPosX = 0;
-    exitPosY = 0;
+    exitPosX = -1;
+    exitPosY = -1;
     parent = nullptr;
     gridString = ""; 
 }
@@ -23,8 +23,8 @@ Grid::Grid(int _width, int _height) :
 width(_width),
 height(_height)
 {
-    exitPosX = 0;
-    exitPosY = 0;
+    exitPosX = -1;
+    exitPosY = -1;
     parent = nullptr;
     gridString = "";
 }
@@ -196,6 +196,42 @@ vector<Car> Grid::getCarArray() const {
 
 string Grid::getGridString() {
     return gridString;
+}
+
+void Grid::setWidth(int w){
+    width = w;
+}
+
+void Grid::setHeight(int h){
+    height = h;
+}
+
+void Grid::setExitPosX(int eX){
+    exitPosX = eX;
+}
+
+void Grid::setExitPosY(int eY){
+    exitPosY = eY;
+}
+
+void Grid::setCarArray(vector<Car> car){
+    carArray = car;
+}
+
+// void Grid::setGridCarId(int gridId[6][6]){
+//     for(int i = 0; i < 6; i++){
+//         for(int j = 0; j < 6; j++){
+//             gridCarId[i][j] = gridId[i][j];
+//         }
+//     }
+// }
+
+void Grid::setParent(Grid* p){
+    parent = p;
+}
+
+void Grid::setGridString(string s){
+    gridString = s;
 }
 
 void Grid::displayCarArray() const {

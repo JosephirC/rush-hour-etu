@@ -1,11 +1,27 @@
 #include "car.hpp"
 
+Car::Car(){
+    posX = 0;
+    posY = 0;
+    size = 0;
+    direction = -1;
+    id = -1;
+}
+
 Car:: Car(int _posX, int _posY, int _size, int _direction, int _id){
     posX = _posX;
     posY = _posY;
     size = _size;
     direction = _direction;
     id = _id;
+}
+
+Car::Car(const Car& car){
+    posX = car.posX;
+    posY = car.posY;
+    size = car.size;
+    direction = car.direction;
+    id = car.id;
 }
 
 int Car::getPosX() const {
@@ -39,6 +55,18 @@ void Car::setPosX(int x){
 
 void Car::setPosY(int y){
     posY = y;
+}
+
+void Car::setSize(int s){
+    size = s;
+}
+
+void Car::setDirection(int d){
+    direction = d;
+}
+
+void Car::setId(int i){
+    id = i;
 }
 
 bool Car::operator==(const Car& other) const {

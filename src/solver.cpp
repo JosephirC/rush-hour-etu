@@ -28,50 +28,11 @@ bool Solver::checkContainsGrid(std::queue<Grid*> q, string s) {
     return false; 
 }
 
-<<<<<<< HEAD
-bool Solver::isWinningGrid(Grid* grid) {
-=======
 int Solver::isWinningGrid(Grid* grid) {
->>>>>>> 24b5974a2182ec8596f19fa3cb746c641b3fead6
     for(int j = 0; j < grid->getCarArray().size(); j++){
         if(grid->getCarArray()[j].getId() == 0 && grid->getCarArray()[j].getPosY() + grid->getCarArray()[j].getSize()-1 == grid->getExitY()){
             
             int k = 1;
-<<<<<<< HEAD
-
-            while (grid->getParent() != nullptr) { // pour afficher en svg les étapes de résolutions
-                std::string path = "./images_svg/path";
-                path.append(std::to_string(k));
-                path.append(".svg");
-                ofstream file(path);
-                file << grid->svgHeader() << grid->svgRectangle() << grid->svgFooter(); 
-
-                grid = grid->getParent();
-                k++;
-            }
-
-            // on rajoute le cas initial
-            std::string path = "./images_svg/path";
-            path.append(std::to_string(k));
-            path.append(".svg");
-            ofstream file(path);
-            file << grid->svgHeader() << grid->svgRectangle() << grid->svgFooter(); 
-
-            std::cout << "Gagnant en " << k-1 << " coups minimum !" <<  std::endl;
-            std::cout << "-> Voir le chemin gagnant dans ../images_svg/" <<  std::endl;
-            
-            return true;
-        }
-    }
-    return false;
-}
-
-void Solver::solve() {
-
-    bool win = false;
-
-    while (uncoveredGrids.size() > 0 && !win) {
-=======
 
             while (grid->getParent() != nullptr) { // pour afficher en svg les étapes de résolutions
                 std::string path = "./images_svg/path";
@@ -105,7 +66,6 @@ int Solver::solve() {
     int win = -1;
 
     while (uncoveredGrids.size() > 0 && win == -1) {
->>>>>>> 24b5974a2182ec8596f19fa3cb746c641b3fead6
 
         std::cout << "Number of grids covered : " << coveredGrids.size() << std::endl;
         std::cout << "Number of grids left to cover : " << uncoveredGrids.size() << std::endl;

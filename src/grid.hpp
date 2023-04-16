@@ -48,8 +48,6 @@ class Grid {
         int getSizeX() const;
 
         int getSizeY() const;
-
-        string getGridString();
         
         Grid* getParent() const;
 
@@ -58,6 +56,8 @@ class Grid {
         void changeCarPosition(int id, int newPosX, int newPosY);
 
         vector<Car> getCarArray() const;
+
+        void displayCarArray() const;
 
         void loadData(const string& filename);
         
@@ -68,6 +68,10 @@ class Grid {
         string svgFooter() const;
 
         vector<Grid*> getGridNeighbours();
+
+        bool operator==(const Grid& other) const;
+
+        Grid operator=(const Grid& grid);
 
         bool isInNeighbours(Grid* grid) const;
         

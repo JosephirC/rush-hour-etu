@@ -116,6 +116,7 @@ int main(int argc, char** argv){
 
     #ifdef PUZZLE_TEST
     {
+        srand(time(NULL));
         Puzzle puzz;
         //puzz.generateRandomGrid(6, 13);
         //Grid puzz_test = puzz.getPuzzleGrid();

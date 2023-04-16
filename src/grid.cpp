@@ -198,6 +198,25 @@ string Grid::getGridString() {
     return gridString;
 }
 
+void Grid::getGridCarId(int (&gridId)[6][6]) {
+    for (int i=0; i<6; i++) {
+        for (int j=0; j<6; j++) {
+            gridId[i][j] = gridCarId[i][j];
+        }
+    }
+}
+
+// int** Grid::getGridCarId() {
+//     int** ptr = new int*[6];
+//     for (int i = 0; i < 6; i++) {
+//         ptr[i] = new int[6];
+//         for (int j = 0; j < 6; j++) {
+//             ptr[i][j] = gridCarId[i][j];
+//         }
+//     }
+//     return ptr;
+// }
+
 void Grid::setWidth(int w){
     width = w;
 }
@@ -384,7 +403,7 @@ vector<Grid*> Grid::getGridNeighbours() {
 
     for (int i=0; i<carArray.size(); i++) {    
         
-        int n = 1;
+        int n = 1; // pour tester sur toute la ligne
 
         if (carArray[i].getDirection() == 1) { // Horizontal
             while (gridCarId[carArray[i].getPosX()][carArray[i].getPosY() - n] == -1 && (carArray[i].getPosY() - n) >= 0) { // Si la voiture a une case vide à sa gauche, elle peut aller à gauche

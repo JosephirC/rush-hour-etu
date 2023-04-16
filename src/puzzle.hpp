@@ -53,6 +53,8 @@ class Puzzle{
 
         Grid generateRandomGrid(int carMin, int carMax);
 
+        void randomCar(int x, int y, int direction, int size, int gridCarId[6][6]);
+
 };
 
 #endif

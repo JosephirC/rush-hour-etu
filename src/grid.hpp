@@ -50,6 +50,8 @@ class Grid {
         int getSizeX() const;
 
         int getSizeY() const;
+
+        void getGridCarId(int (&gridId)[6][6]);
         
         Grid* getParent() const;
 

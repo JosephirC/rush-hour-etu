@@ -84,39 +84,87 @@ void Puzzle::makeEmptyGrid(){
 
 }
 
+void Puzzle::randomCar(int x, int y, int direction, int size, int gridCarId[6][6]) { //  x=0, y=0, direction=0, size=2 par défaut
+   while (gridCarId[x][y] != -1 && y<6) {
+        y++;
+    }
+    if (gridCarId[x+1][y] != -1) {
+        direction = 1;
+        if (gridCarId[x][y+1] != -1) {
+            std::cout << "impossible" << std::endl;
+            randomCar(x+1, 0, 0, 2, gridCarId);
+        }
+        if (gridCarId[x][y+2] != -1) {
+            size = 3;
+        }
+        else {
+            size = 2;
+        }
+    }   
+
+    car.setPosX(x);
+    car.setPosY(y);
+    car.setDirection(direction);
+    car.setSize(size);
+}
+
 //RULE : always min = 6, max = 13
 Grid Puzzle::generateRandomGrid(int carMin, int carMax){
     
     numberOfCars = randomNumberOfCars(carMin, carMax);
+    std::cout << numberOfCars << std::endl;
 
     makeEmptyGrid();
 
     grid.displayGridId(); //test ok
 
+    int gridCarId[6][6];
+    grid.getGridCarId(gridCarId);
+
     for(int i = 0; i < numberOfCars; i++){
 
-        bool overlap = false;
+        bool overlap = true;
 
-        car.setPosX(randomCarsPos());
-        car.setPosY(randomCarsPos());
-        car.setSize(randomCarsSize());
-        car.setDirection(randomCarsDirection());
+
+        // car.setPosX(randomCarsPos());
+        // car.setPosY(randomCarsPos());
+        // car.setDirection(randomCarsDirection());
+        // car.setSize(randomCarsSize());
         car.setId(i);
 
-        
-        vector<Car> temp = grid.getCarArray();
+        // for(int h = 0; h < 6; h++){
+        //     for(int j = 0; j < 6; j++){
+        //         cout << "  " << gridCarId[h][j] << "  ";
+        //     } cout << endl;
+        // }
+        while (overlap) {
+            if (car.getDirection() == 1) {
+                if (gridCarId[car.getPosX()][car.getPosY()] == -1 && gridCarId[car.getPosX()][car.getPosY()+car.getSize()-1] == -1 && gridCarId[car.getPosX()][car.getPosY()+car.getSize()] == -1) {
+                    grid.addCar(car);
+                    overlap = false;
 
-        if(temp.empty()){
-            Car newCar(car);
-            grid.addCar(newCar);
+                }
+            }
+            else if (car.getDirection() == 0) {
+                if (gridCarId[car.getPosX()][car.getPosY()] == -1 && gridCarId[car.getPosX()+car.getSize()-1][car.getPosY()] == -1 && gridCarId[car.getPosX()+car.getSize()][car.getPosY()] == -1) // vertical
+                {
+                    grid.addCar(car);
+                    overlap = false;
+                }
+            }
+            else {
+                car.setPosX(randomCarsPos());
+                car.setPosY(randomCarsPos());
+                car.setSize(randomCarsSize());
+                car.setDirection(randomCarsDirection());
+                car.setId(i);
+            }
         }
 
-        if(!temp.empty() && temp[i].getPosX() != car.getPosX() && temp[i].getPosY() != car.getPosY()){
-
-            Car newCar(car);
-            grid.addCar(newCar);
-        }
     }
+
+    grid.displayGridId(); //test ok
+
     
     return grid;
 }

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "grid.hpp"
 #include "solver.hpp"
+#include "puzzle.hpp"
 
 #include <iostream>
 using namespace std;
@@ -152,14 +153,17 @@ SDL::~SDL () {
 
 
 void SDL::generateLvl(int difficulty) {
-    std::remove("./images_svg/*")
-    // generer des niveaux
-    // int k = solver.solve();
+    //std::remove("./images_svg/*");
 
-    nbImg = 15; // remplacer 15 par k
-    currentImg = nbImg;
+    Puzzle puzzle;
+    Grid grid = puzzle.generateRandomGrid(6,13);
+    // Solver solver(&grid);
+    // int n = solver.solve();
 
-    loadGridImg("");
+    // nbImg = n;
+    // currentImg = nbImg;
+
+    // loadGridImg("");
 }
 
 void SDL::loadGridImg(const string s) {

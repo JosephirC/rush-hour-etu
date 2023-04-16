@@ -1,6 +1,7 @@
 #include "car.hpp"
 #include "grid.hpp"
 #include "solver.hpp"
+#include "puzzle.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -10,6 +11,7 @@
 #define LOAD_SVG
 //#define GET_GRID_NEIGHBORS
 #define SOLVER_TEST
+#define PUZZLE_TEST
 
 int main(int argc, char** argv){
 
@@ -112,6 +114,15 @@ int main(int argc, char** argv){
         // solution.puzzle();
 
     }
+    #endif
+
+    #ifdef PUZZLE_TEST
+    {
+        Puzzle puzz;
+        //puzz.generateRandomGrid(6, 13);
+        //Grid puzz_test = puzz.getPuzzleGrid();
+        //puzz_test.displayGridId();
+    }   
     #endif
 
     return 0;

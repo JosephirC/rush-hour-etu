@@ -53,6 +53,22 @@ class Grid {
 
         string getGridString();
 
+        void setWidth(int w);
+
+        void setHeight(int h);
+
+        void setExitPosX(int eX);
+
+        void setExitPosY(int eY);
+
+        void setCarArray(vector<Car> car);
+
+        //void setGridCarId(int gridId[6][6]);
+
+        void setParent(Grid* p);
+
+        void setGridString(string s);
+
         void changeCarPosition(int id, int newPosX, int newPosY);
 
         vector<Car> getCarArray() const;

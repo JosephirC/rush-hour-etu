@@ -85,12 +85,12 @@ void Puzzle::makeEmptyGrid(){
 
 }
 
-int Puzzle::randCar(int &gridCarId[6][6]){ //gridCarId = -1 au debut et on l'update au fur et a mesure
+int Puzzle::randCar(int gridCarId[6][6]){ //gridCarId = -1 au debut et on l'update au fur et a mesure
 
     for(int i = 0; i < numberOfCars; i++){
 
         int direction = rand()%2;
-        int vector<int> line;
+        vector<int> line;
         bool putCar = false;
 
         if(direction == HORIZONTAL){ // horizontal
@@ -100,7 +100,7 @@ int Puzzle::randCar(int &gridCarId[6][6]){ //gridCarId = -1 au debut et on l'upd
             int size;
             while(gridCarId[x][yy] ==-1 && yy < WIDTH){ // cette boucle me permet de stocker les y qui sont vides
                 line.push_back(yy);
-                yy++
+                yy++;
             }
 
             //if(line.size() < 3){ // je n'ajoute une voiture que si j'ai au moins 3 cases vides dans la ligne que je teste
@@ -140,7 +140,7 @@ int Puzzle::randCar(int &gridCarId[6][6]){ //gridCarId = -1 au debut et on l'upd
             int size;
             while(gridCarId[xx][y] ==-1 && xx < HEIGHT){ // cette boucle me permet de stocker les y qui sont vides
                 line.push_back(xx);
-                xx++
+                xx++;
             }
 
             //if(line.size() < 3){ // je n'ajoute une voiture que si j'ai au moins 3 cases vides dans la ligne que je teste

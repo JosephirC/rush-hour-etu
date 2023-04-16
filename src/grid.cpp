@@ -136,14 +136,6 @@ string Grid::getGridString() {
     return gridString;
 }
 
-void Grid::displayCarArray() const {
-    cout << endl << "displayCarArray" << endl;
-    for(int i = 0; i < carArray.size(); i++){
-        cout << "Car --> Id = " << carArray[i].getId() << "  X = " << carArray[i].getPosX() << "  Y = " << carArray[i].getPosY() 
-        << "  Size = " << carArray[i].getCarSize() << "  Direction " << carArray[i].getDirection() << endl; 
-    }
-}
-
 void Grid::loadData(const string& filename){
     
     //Lire la premiere ligne (stocker les coordonnees pour sortir la voiture)

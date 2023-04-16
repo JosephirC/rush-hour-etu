@@ -28,7 +28,7 @@ bool Solver::checkContainsGrid(std::queue<Grid*> q, string s) {
     return false; 
 }
 
-bool Solver::isWinningGrid(Grid* grid) {
+int Solver::isWinningGrid(Grid* grid) {
     for(int j = 0; j < grid->getCarArray().size(); j++){
         if(grid->getCarArray()[j].getId() == 0 && grid->getCarArray()[j].getPosY() + grid->getCarArray()[j].getSize()-1 == grid->getExitY()){
             
@@ -55,17 +55,17 @@ bool Solver::isWinningGrid(Grid* grid) {
             std::cout << "Gagnant en " << k-1 << " coups minimum !" <<  std::endl;
             std::cout << "-> Voir le chemin gagnant dans ../images_svg/" <<  std::endl;
             
-            return true;
+            return k;
         }
     }
-    return false;
+    return -1;
 }
 
-void Solver::solve() {
+int Solver::solve() {
 
-    bool win = false;
+    int win = -1;
 
-    while (uncoveredGrids.size() > 0 && !win) {
+    while (uncoveredGrids.size() > 0 && win == -1) {
 
         std::cout << "Number of grids covered : " << coveredGrids.size() << std::endl;
         std::cout << "Number of grids left to cover : " << uncoveredGrids.size() << std::endl;
@@ -91,11 +91,26 @@ void Solver::solve() {
             } 
         }
     }
+
+    return win;
 }
 
-vector<Grid*> Solver::getCoveredGrids() const{
-    return coveredGrids;
+
+Grid* makeNewLvl(int difficulty) { // difficulty = nombre de coups à faire pour gagner ce niveau
+
+    Grid grid(6,6);
+    grid.initEmptyGrid();
+
+    // construire une nouvelle grid avec des nouvelles positions de voitures tel que quand on appelle la fonction solve() sur cette grille, elle trouve le plus court chemin >= difficulty
+
+
 }
+
+
+
+// vector<Grid*> Solver::getCoveredGrids() const{
+//     return coveredGrids;
+// }
 
 //fonction pour commencer la generation des puzzle
 // void Solver::solveALL() { 

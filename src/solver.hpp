@@ -12,7 +12,7 @@ class Solver {
 
         Solver(Grid* grid);
 
-        void solve();
+        int solve();
 
         void solvedGridsSVG(Grid* grid, string filenumber);
 
@@ -26,7 +26,7 @@ class Solver {
 
         void solveTest();
 
-        bool isWinningGrid(Grid* grid);
+        int isWinningGrid(Grid* grid);
 
         vector<Grid*> getWinningGrids();
 

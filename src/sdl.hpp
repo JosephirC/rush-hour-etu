@@ -40,9 +40,6 @@ class SDL {
 
     private :
 
-        //Jeu jeu;
-        //Plateau p;
-
         SDL_Window * window;
         SDL_Renderer * renderer;
 
@@ -50,16 +47,9 @@ class SDL {
         Image font_im;
         SDL_Color font_color;
 
-        Mix_Chunk * sound;
-        bool withSound;
-
-        // Image im_pacman;
-        // Image im_mur;
-        // Image im_pastille;
-        // Image im_fantome;
         Image im_car;
 
-        vector<Car> graphicCarArray;
+        //Grid grid;
 
         bool souris;
         bool touche;
@@ -70,9 +60,6 @@ class SDL {
         ~SDL ();
         void sdlBoucle ();
         void sdlAff ();
-        void drawMultipleHorLines(SDL_Renderer * renderer, int x, int y, int color, int gapSize);
-        void drawMultipleVerLines(SDL_Renderer * renderer, int x, int y, int color, int gapSize);
-        void copierTableau(vector<Car> tab);
 
 };
 

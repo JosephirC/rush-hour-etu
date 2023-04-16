@@ -15,7 +15,7 @@ int main(int argc, char** argv){
 
     Grid grid(6,6);
     grid.initEmptyGrid();
-    grid.loadData("./Sujet/puzzle.txt"); //pk j'ai 50 fils quand je le mets dans le constructeur *_*
+    grid.loadData("./Sujet/puzzle.txt");
 
     #ifdef CONSTRUCTOR_COPY
     {

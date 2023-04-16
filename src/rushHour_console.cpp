@@ -15,7 +15,7 @@ int main(int argc, char** argv){
 
     Grid grid(6,6);
     grid.initEmptyGrid();
-    grid.loadData("./Sujet/puzzle.txt"); //pk j'ai 50 fils quand je le mets dans le constructeur *_*
+    grid.loadData("./Sujet/puzzle.txt");
 
     #ifdef CONSTRUCTOR_COPY
     {
@@ -94,22 +94,22 @@ int main(int argc, char** argv){
         cout << endl << "SOLVER_TEST " << endl << endl;
    
         Solver solution(&grid);
-        //solution.solve();
+        solution.solve();
 
-        solution.solveTest();
+        //solution.solveTest();
 
 
-        vector<Grid*> winningGrids = solution.getWinningGrids();
+        //vector<Grid*> winningGrids = solution.getWinningGrids();
 
-        cout << "wining size" << winningGrids.size() << endl;
-        cout << "covered size " << solution.getCoveredGrids().size() << endl;
+        //cout << "wining size" << winningGrids.size() << endl;
+        //cout << "covered size " << solution.getCoveredGrids().size() << endl;
 
-        for(int i =0; i < winningGrids.size(); i++){
-            std::string filenumber = std::to_string(i);
-            solution.solvedGridsSVG(winningGrids[i], filenumber);
-        }
+        // for(int i =0; i < winningGrids.size(); i++){
+        //     std::string filenumber = std::to_string(i);
+        //     solution.solvedGridsSVG(winningGrids[i], filenumber);
+        // }
 
-        solution.puzzle();
+        // solution.puzzle();
 
     }
     #endif

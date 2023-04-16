@@ -2,19 +2,19 @@
 #DIR_SDL = -I /usr/include/SDL2
 SDL_LIB = -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
 
-all: bin/rush_hour_SVG bin/rush_hour_SDL 
+all: bin/rushHour_console bin/rushHour_SDL 
 
-bin/rush_hour_SVG: obj/rush_hour_SVG.o obj/car.o obj/grid.o obj/solver.o
-	g++ -g obj/rush_hour_SVG.o obj/car.o obj/grid.o obj/solver.o -o bin/rush_hour_SVG $(SDL_LIB)
+bin/rushHour_console: obj/rushHour_console.o obj/car.o obj/grid.o obj/solver.o
+	g++ -g obj/rushHour_console.o obj/car.o obj/grid.o obj/solver.o -o bin/rushHour_console $(SDL_LIB)
 
-bin/rush_hour_SDL: obj/rush_hour_SDL.o obj/car.o obj/grid.o obj/solver.o obj/sdl.o
-	g++ -g obj/rush_hour_SDL.o obj/car.o obj/grid.o obj/solver.o obj/sdl.o -o bin/rush_hour_SDL $(SDL_LIB)
+bin/rushHour_SDL: obj/rushHour_SDL.o obj/car.o obj/grid.o obj/solver.o obj/sdl.o
+	g++ -g obj/rushHour_SDL.o obj/car.o obj/grid.o obj/solver.o obj/sdl.o -o bin/rushHour_SDL $(SDL_LIB)
 
-obj/rush_hour_SVG.o: src/rush_hour_SVG.cpp src/car.hpp src/grid.hpp src/solver.hpp
-	g++ -g -c src/rush_hour_SVG.cpp -o obj/rush_hour_SVG.o $(DIR_SDL)
+obj/rushHour_console.o: src/rushHour_console.cpp src/car.hpp src/grid.hpp src/solver.hpp
+	g++ -g -c src/rushHour_console.cpp -o obj/rushHour_console.o $(DIR_SDL)
 
-obj/rush_hour_SDL.o: src/rush_hour_SDL.cpp src/car.hpp src/grid.hpp src/solver.hpp src/sdl.hpp
-	g++ -g -c src/rush_hour_SDL.cpp -o obj/rush_hour_SDL.o $(DIR_SDL)
+obj/rushHour_SDL.o: src/rushHour_SDL.cpp src/car.hpp src/grid.hpp src/solver.hpp src/sdl.hpp
+	g++ -g -c src/rushHour_SDL.cpp -o obj/rushHour_SDL.o $(DIR_SDL)
 
 obj/car.o: src/car.cpp
 	g++ -g -c src/car.cpp -o obj/car.o $(DIR_SDL)

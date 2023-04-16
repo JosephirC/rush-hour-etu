@@ -7,7 +7,7 @@
 
 //#define CONSTRUCTOR_COPY
 //#define GRID_DISPLAY
-//#define LOAD_SVG
+#define LOAD_SVG
 //#define GET_GRID_NEIGHBORS
 #define SOLVER_TEST
 
@@ -73,7 +73,7 @@ int main(int argc, char** argv){
      #ifdef LOAD_SVG
     {
         //Creation du .svg ---> Il faut faire une fonction pour cela !
-        ofstream file("./images_svg/test.svg");
+        ofstream file("./images_svg/testSVG.svg");
         file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
     }
     #endif

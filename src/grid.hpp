@@ -19,6 +19,7 @@ class Grid {
         int gridCarId[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
         Grid* parent;
         vector<Grid*> neighbours;
+        string gridString;
 
     public : 
 
@@ -26,9 +27,9 @@ class Grid {
 
         Grid(const Grid& grid); // constructeur par copie
 
-        Grid(const Grid* other); // constructeur par copie
+        //Grid(const Grid* other); // constructeur par copie
 
-        Grid(int sX, int sY);
+        Grid(int _width, int _height);
         
         void initEmptyGrid();
 
@@ -50,7 +51,9 @@ class Grid {
         
         Grid* getParent() const;
 
-        void changeCarPosition(Grid *temp, int id, int newPosX, int newPosY);
+        string getGridString();
+
+        void changeCarPosition(int id, int newPosX, int newPosY);
 
         vector<Car> getCarArray() const;
 

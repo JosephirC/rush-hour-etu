@@ -152,6 +152,7 @@ SDL::~SDL () {
 
 
 void SDL::generateLvl(int difficulty) {
+    std::remove("./images_svg/*")
     // generer des niveaux
     // int k = solver.solve();
 

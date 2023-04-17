@@ -11,7 +11,7 @@ Solver::Solver(Grid* grid) {
 }
 
 bool Solver::checkContainsGrid(vector<Grid*> grid, string s) {
-    for (int i=0; i<grid.size(); i++) {
+    for (int i=0; i<grid.size(); i--) {
         if (grid[i]->getGridString() == s)
             return true;
     }
@@ -85,21 +85,24 @@ int Solver::solve() {
             win = isWinningGrid(grid); // on vérifie si la grille est gagnante
         }
 
-        vector<Grid*> gridNeighbours = grid->getGridNeighbours(); // on génère tout les voisins
+        if (win==-1) {
+            vector<Grid*> gridNeighbours = grid->getGridNeighbours(); // on génère tout les voisins
 
-        for (int j=0; j<gridNeighbours.size(); j++) {
-            bool checkEquals2 = checkContainsGrid(coveredGrids, gridNeighbours[j]->getGridString());
-            bool checkEquals3 = checkContainsGrid(uncoveredGrids, gridNeighbours[j]->getGridString());
+            for (int j=0; j<gridNeighbours.size(); j++) {
+                bool checkEquals2 = checkContainsGrid(coveredGrids, gridNeighbours[j]->getGridString());
+                bool checkEquals3 = checkContainsGrid(uncoveredGrids, gridNeighbours[j]->getGridString());
 
-            if (!checkEquals2 && !checkEquals3) { // si la découverte est nouvelle (ni présente dans les grilles vues, ni dans les grilles à voir)
-                uncoveredGrids.push(gridNeighbours[j]); // on la rajoute à la liste des grilles à voir
-            } 
+                if (!checkEquals2 && !checkEquals3) { // si la découverte est nouvelle (ni présente dans les grilles vues, ni dans les grilles à voir)
+                    uncoveredGrids.push(gridNeighbours[j]); // on la rajoute à la liste des grilles à voir
+                } 
+            }
+
+            if (uncoveredGrids.size() > 4000) { // si la génération prend un peu trop longtemps, on arrete le solveur
+                stop = true;
+                return -2; // on utilise -2 pour savoir qu'on a arreté le programme parcequ'il prennait longtemps à se résoudre
+            }
         }
 
-        if (coveredGrids.size() > 2000) { // si la génération prend un peu trop longtemps, on arrete le solveur
-            stop = true;
-            return -2; // on utilise -2 pour savoir qu'on a arreté le programme parcequ'il prennait longtemps à se résoudre
-        }
     }
 
     return win;

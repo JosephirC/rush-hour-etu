@@ -6,12 +6,14 @@
 #include <fstream>
 #include <string>
 
+#include <unistd.h>
+
 
 //#define CONSTRUCTOR_COPY
 //#define GRID_DISPLAY
 #define LOAD_SVG
 //#define GET_GRID_NEIGHBORS
-#define SOLVER_TEST
+//#define SOLVER_TEST
 #define PUZZLE_TEST
 
 int main(int argc, char** argv){
@@ -117,10 +119,30 @@ int main(int argc, char** argv){
 
     #ifdef PUZZLE_TEST
     {
-        Puzzle puzz;
+        //Puzzle puzz;
         //puzz.generateRandomGrid(6, 13);
         //Grid puzz_test = puzz.getPuzzleGrid();
         //puzz_test.displayGridId();
+
+        srand(time(0));
+        Puzzle puzzle;
+        puzzle.makeEmptyGrid();
+        Grid grid = puzzle.getPuzzleGrid();
+        puzzle.generateRandomGrid(11,14);
+        
+        grid = puzzle.getPuzzleGrid();
+                
+
+        Solver sol(&grid);
+        int i = sol.solve();
+    
+        if(i==-1){
+            cout << "pas de solution " << endl;
+        }
+
+
+
+
     }   
     #endif
 

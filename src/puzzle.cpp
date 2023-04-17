@@ -164,12 +164,12 @@ int Puzzle::randomGrid(int nbCars) {
                         car.setDirection(direction);
                         car.setSize(size);
                         car.setId(i);
-                        grid.addCar(car);
+                        grid.addCar(car);                        
                         if (i==0) {
                             grid.setExitPosX(x);
                             grid.setExitPosY(5);
                         }
-                        
+
                         break;
                     }
                 }

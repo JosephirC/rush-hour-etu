@@ -105,7 +105,6 @@ int Solver::solve() {
     return win;
 }
 
-
 Grid* makeNewLvl(int difficulty) { // difficulty = nombre de coups à faire pour gagner ce niveau
 
     Grid grid(6,6);

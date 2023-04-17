@@ -167,7 +167,7 @@ void SDL::generateLvl() {
 
     Solver solver(&grid);
     int n = solver.solve();
-    int n1 = solver.solveState(stopSolve) // PAS FINI
+    int n1 = solver.solveState(stopSolve); // PAS FINI
     // j'ai pas encore fini edgar, mais ce que je voulais faire c'est d'ajouter un boutton S a SDL, quand on appuie sur ce boutton on stop la generation 
     //et la resolution du grid qu'on a genere car parfois je genere des grids qui ont un "coveredGrids" = 10000+ et ca prend bcp de temps, du coup 
     //je voulais utiliser cette fonction pour arrter la generation et apres on rappuis sur la fleche UP pour laisser tomber le grid qu'on etait en 

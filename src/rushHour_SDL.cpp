@@ -10,8 +10,6 @@ bool quit = false;
 
 int main(int argc, char** argv){
 
-    srand(time(0));
-
     Grid p(6,6);
 
     SDL sj;

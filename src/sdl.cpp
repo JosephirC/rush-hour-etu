@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <filesystem>
+#include <unistd.h>
 
 #include <iostream>
 using namespace std;
@@ -102,8 +103,6 @@ SDL::SDL (){
     SIZE_X = 600;
     SIZE_Y = 600;
 
-    stopSolve = false;
-
     // Initialisation de la SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         cout << "Erreur lors de l'initialisation de la SDL : " << SDL_GetError() << endl;
@@ -146,6 +145,9 @@ SDL::SDL (){
     font_color = {250,250,250};
 	font_im.setSurface(TTF_RenderText_Solid(font,"Niveau 1",font_color));
 	font_im.loadFromCurrentSurface(renderer);
+
+
+    //testLvl(grid);
 }
 
 SDL::~SDL () {
@@ -156,38 +158,35 @@ SDL::~SDL () {
     SDL_Quit();
 }
 
-
 void SDL::generateLvl() {
     // On reset le contenu du dossier images_svg
     std::filesystem::remove_all("./images_svg");
     std::filesystem::create_directory("./images_svg");
 
     Puzzle puzzle;
-    Grid grid = puzzle.generateRandomGrid(11,14);
+    Grid grid = puzzle.generateRandomGrid(6,13);
 
     Solver solver(&grid);
     int n = solver.solve();
 
-    // if (n<0) {
-    //     std::cout << "No solution to this grid :/" << std::endl;
-    //     //std::cout << "Generating new lvl..." << std::endl;
-    //     //generateLvl();
-    // }
-    if (n<5) {
-        std::cout << "Grid is too easy, generating new grid..." << std::endl;
-        //generateLvl();
+    if (n==-1) {
+        std::cout << "No solution to this grid :/" << std::endl;
+        std::cout << "Generating new lvl..." << std::endl;
+        sleep(1); 
+        generateLvl();
     }
-
-    std::string path = "./images_svg/";
-    path.append(std::to_string(n));
-    path.append(".svg");
-    ofstream file(path);
-    file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
+    if (n==-2) {
+        std::cout << "Solver is taking too long, stoping..." << std::endl;
+        std::cout << "Generating new lvl..." << std::endl;
+        generateLvl();
+    }
+    else if (n<4-1) {
+        std::cout << "Grid is too easy, generating new grid..." << std::endl;
+        generateLvl();
+    }
 
     nbImg = n;
     currentImg = n;
-
-    pressed = false;
 }
 
 void SDL::loadGridImg(const string s) {
@@ -206,8 +205,9 @@ void SDL::loadGridImg(const string s) {
     strcpy(char_path, path.c_str());
 
     gridImg.loadFromFile(char_path, renderer);
-    delete char_path;
     imgSet = true; 
+
+    delete char_path;
 }
 
 
@@ -217,9 +217,9 @@ void SDL::sdlAff () {
     SDL_RenderClear(renderer);
 
     // dessiner la grille si elle a été chargée
-    if (imgSet)
+    if (imgSet) {
         gridImg.draw(renderer, 100,100,400,400);
-
+    }
 
     // Ecrire un titre par dessus
     SDL_Rect positionTitre = {250,25,100,30};
@@ -247,22 +247,16 @@ void SDL::sdlBoucle () {
 			else if (events.type == SDL_KEYDOWN) {          
 				switch (events.key.keysym.scancode) {
 				case SDL_SCANCODE_UP:
-					generateLvl();
+                    generateLvl();
 					break;
                 case SDL_SCANCODE_DOWN:
 					loadGridImg("");
 					break;
                 case SDL_SCANCODE_RIGHT:
-                    if (imgSet) {
-                        imgSet = false;
-					    loadGridImg("next");
-                    }
+                    loadGridImg("next");
 					break;
                 case SDL_SCANCODE_LEFT:
-                    if (imgSet) {
-                        imgSet = false;
-					    loadGridImg("previous");
-                    }
+                    loadGridImg("previous");
 					break;
                 case SDL_SCANCODE_ESCAPE:
                     quit = true;

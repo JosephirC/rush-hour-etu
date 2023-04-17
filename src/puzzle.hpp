@@ -51,9 +51,7 @@ class Puzzle{
 
         int randomCarsDirection();
 
-        Position taxiExit();
-
-        void setNumberOfCars(int s);
+        void taxiExit();
 
         Grid getPuzzleGrid() const;
 
@@ -61,11 +59,9 @@ class Puzzle{
 
         Grid generateRandomGrid(int carMin, int carMax);
 
-        //int randomCar(int gridCarId[6][6]);
+        int randomCar(int gridCarId[6][6]);
 
         int randomGrid(int nbCars);
-
-        void puzzleToSVG(Puzzle p);
 
 };
 

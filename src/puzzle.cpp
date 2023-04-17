@@ -1,7 +1,7 @@
 #include "puzzle.hpp"
 #include <cstdlib>
-#include <fstream>
 #include <algorithm>
+#include <ctime>
 
 Puzzle::Puzzle(){
 
@@ -18,7 +18,15 @@ Puzzle::Puzzle(){
     carsDirection = 0;
     isSolvable = false;
 
-    //grid.initEmptyGrid();
+    for (int i=0; i<6; i++) {
+        for (int j=0; j<6; j++) {
+            std::string str_i = std::to_string(i);
+            std::string str_j = std::to_string(j);
+            std::string s = str_i + str_j;
+            freePositions.push_back(s);
+        }
+    }
+
 }
 
 Puzzle::~Puzzle(){
@@ -41,40 +49,31 @@ int Puzzle::randomCarsPos(){
     return rand() % 6;
 }
 
-Position Puzzle::taxiExit(){
-
-    Position exit;
+void Puzzle::taxiExit(){
     
     int randomSide = rand() % 2;
 
     if(taxiDirection == HORIZONTAL){
         if(randomSide == 0){ // Exit left
-            exit.x = taxiPosX;
-            exit.y = 0;
+            exitPosX = taxiPosX;
+            exitPosY = 0;
         }
         else{ // Exit right
-            exit.x = taxiPosX;
-            exit.y = taxiPosY + (WIDTH - taxiPosY - 1); 
+            exitPosX = taxiPosX;
+            exitPosY = taxiPosY + (WIDTH - taxiPosY - 1); 
         }
     }
 
     if(taxiDirection == VERTICAL){
         if(randomSide == 0){ // Exit up
-            exit.x = 0;
-            exit.y = taxiPosY;
+            exitPosX = 0;
+            exitPosY = taxiPosY;
         }
         else{ //Exit down 
-            exit.x = taxiPosX + (HEIGHT - taxiPosX - 1);
-            exit.y = taxiPosY;
+            exitPosX = taxiPosX + (VERTICAL - taxiPosX - 1);
+            exitPosY = taxiPosY;
         }
     }
-
-    return exit;
-}
-
-
-void Puzzle::setNumberOfCars(int s){
-    numberOfCars = s;
 }
 
 Grid Puzzle::getPuzzleGrid() const{
@@ -97,7 +96,7 @@ void Puzzle::makeEmptyGrid(){
 
 int Puzzle::randomGrid(int nbCars) {
 
-    // srand(time(0));
+    srand(time(0));
 
     int gridTest[6][6];
 
@@ -137,27 +136,6 @@ int Puzzle::randomGrid(int nbCars) {
                         car.setSize(size);
                         car.setId(i);
                         grid.addCar(car);
-
-                        // if (i==0) {
-
-                        //     taxiPosX = x;
-                        //     taxiPosY = y;
-                        //     //taxiSize = size;
-                        //     taxiDirection = direction;
-
-                        //     Position exit = taxiExit();
-
-                        //     exitPosX = exit.x;
-                        //     exitPosY = exit.y;
-
-
-                        //     grid.setExitPosX(exitPosX);
-                        //     grid.setExitPosY(exitPosY);
-
-                        //     std::cout << "pos voiture : " << x << ", " << y << std::endl;
-                        //     std::cout << "pos sortie : " << exitPosX << ", " << exitPosY << std::endl;
-                        // }
-
                         if (i==0) {
                             grid.setExitPosX(5);
                             grid.setExitPosY(y);
@@ -189,27 +167,7 @@ int Puzzle::randomGrid(int nbCars) {
                         car.setDirection(direction);
                         car.setSize(size);
                         car.setId(i);
-                        grid.addCar(car);
-                        // if (i==0) {
-
-                        //     taxiPosX = x;
-                        //     taxiPosY = y;
-                        //     //taxiSize = size;
-                        //     taxiDirection = direction;
-
-                        //     Position exit = taxiExit();
-
-                        //     exitPosX = exit.x;
-                        //     exitPosY = exit.y;
-
-
-                        //     grid.setExitPosX(exitPosX);
-                        //     grid.setExitPosY(exitPosY);
-
-                        //     std::cout << "pos voiture : " << x << ", " << y << std::endl;
-                        //     std::cout << "pos sortie : " << exitPosX << ", " << exitPosY << std::endl;
-                        // }
-                        
+                        grid.addCar(car);                        
                         if (i==0) {
                             grid.setExitPosX(x);
                             grid.setExitPosY(5);
@@ -236,13 +194,5 @@ Grid Puzzle::generateRandomGrid(int carMin, int carMax){
 
     randomGrid(numberOfCars);
 
-    grid.displayGridId(); //test ok
-
     return grid;
-}
-
-void Puzzle::puzzleToSVG(Puzzle p){
-
-    ofstream file("./puzzle/puzzle.svg");
-    file << p.grid.svgHeader() << p.grid.svgRectangle() << p.grid.svgFooter(); 
 }

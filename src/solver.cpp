@@ -96,7 +96,7 @@ int Solver::solve() {
             } 
         }
 
-        if (coveredGrids.size() > 3000) {
+        if (coveredGrids.size() > 1500) {
             stop = true;
             return -2;
         }

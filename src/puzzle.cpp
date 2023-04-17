@@ -139,9 +139,6 @@ int Puzzle::randomGrid(int nbCars) {
                         if (i==0) {
                             grid.setExitPosX(5);
                             grid.setExitPosY(y);
-
-                            std::cout << "pos voiture : " << x << ", " << y << std::endl;
-                            std::cout << "pos sortie : " << 5 << ", " << y << std::endl;
                         }
                         
                         break;
@@ -171,9 +168,6 @@ int Puzzle::randomGrid(int nbCars) {
                         if (i==0) {
                             grid.setExitPosX(x);
                             grid.setExitPosY(5);
-
-                            std::cout << "pos voiture : " << x << ", " << y << std::endl;
-                            std::cout << "pos sortie : " << x << ", " << 5 << std::endl;
                         }
                         
                         break;
@@ -188,7 +182,6 @@ int Puzzle::randomGrid(int nbCars) {
 Grid Puzzle::generateRandomGrid(int carMin, int carMax){
     
     numberOfCars = randomNumberOfCars(carMin, carMax);
-    std::cout << "nombre de voitures :" << numberOfCars << std::endl;
 
     makeEmptyGrid();
 

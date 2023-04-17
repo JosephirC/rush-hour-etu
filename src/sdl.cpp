@@ -164,7 +164,7 @@ void SDL::generateLvl() {
     std::filesystem::create_directory("./images_svg");
 
     Puzzle puzzle;
-    Grid grid = puzzle.generateRandomGrid(6,13);
+    Grid grid = puzzle.generateRandomGrid(6,12);
 
     Solver solver(&grid);
     int n = solver.solve();
@@ -172,16 +172,18 @@ void SDL::generateLvl() {
     if (n==-1) {
         std::cout << "No solution to this grid :/" << std::endl;
         std::cout << "Generating new lvl..." << std::endl;
-        sleep(1); 
+        // sleep(1); 
         generateLvl();
     }
     if (n==-2) {
         std::cout << "Solver is taking too long, stoping..." << std::endl;
         std::cout << "Generating new lvl..." << std::endl;
+        // sleep(1); 
         generateLvl();
     }
-    else if (n<4-1) {
+    else if (n<4+1) {
         std::cout << "Grid is too easy, generating new grid..." << std::endl;
+        // sleep(1); 
         generateLvl();
     }
 

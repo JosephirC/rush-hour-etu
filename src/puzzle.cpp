@@ -1,8 +1,11 @@
 #include "puzzle.hpp"
 #include <cstdlib>
-#include <fstream>
+#include <algorithm>
+#include <ctime>
 
 Puzzle::Puzzle(){
+
+    srand(time(0));
 
     taxiPosX = 0;
     taxiPosY = 0;
@@ -17,7 +20,15 @@ Puzzle::Puzzle(){
     carsDirection = 0;
     isSolvable = false;
 
-    //grid.initEmptyGrid();
+    for (int i=0; i<6; i++) {
+        for (int j=0; j<6; j++) {
+            std::string str_i = std::to_string(i);
+            std::string str_j = std::to_string(j);
+            std::string s = str_i + str_j;
+            freePositions.push_back(s);
+        }
+    }
+
 }
 
 Puzzle::~Puzzle(){
@@ -85,174 +96,172 @@ void Puzzle::makeEmptyGrid(){
 
 }
 
-int Puzzle::randCar(int gridCarId[6][6]){ //gridCarId = -1 au debut et on l'update au fur et a mesure
+int Puzzle::randomCar(int gridCarId[6][6]) {
 
-    for(int i = 0; i < numberOfCars; i++){
+    if (freePositions.size() < 2)
+        return 1;
 
-        int direction = rand()%2;
-        vector<int> line;
-        bool putCar = false;
+    int r = rand() % (freePositions.size()-1);
 
-        if(direction == HORIZONTAL){ // horizontal
-            int x = rand()%6;
-            int y;
-            int yy = 0;
-            int size;
-            while(gridCarId[x][yy] ==-1 && yy < WIDTH){ // cette boucle me permet de stocker les y qui sont vides
-                line.push_back(yy);
-                yy++;
+    string num = freePositions[r];
+    int x = std::stoi(std::string(1, num[0]));
+    int y = std::stoi(std::string(1, num[1]));
+
+
+    int direction;
+    int size;
+    std::string s_x;
+    std::string s_y;
+    std::string s;
+
+    direction = 0;
+
+    if (gridCarId[x+1][y] != -1 ) {
+            direction = 1;
+            if (gridCarId[x][y+1] != -1 ) {
+                s_x = std::to_string(x);
+                s_y = std::to_string(y);
+                s = s_x+s_y;
+                freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end()); // delete l'element égal aux coordonnées x,y 
+                return 0; // on ne peut pas placer de voiture ici, on rappelle la fonction pour changer de position
             }
-
-            //if(line.size() < 3){ // je n'ajoute une voiture que si j'ai au moins 3 cases vides dans la ligne que je teste
-                while(!putCar){
-                    if(!line.empty()){
-                        int n = rand() % line.size(); // je tire un y aleatoire de mon vector
-                        y = line[n];
-                        size = rand() % 2 + 2;
-
-                        if(gridCarId[x][y] == -1 && gridCarId[x][y + size - 1] == -1 && gridCarId[x][y + size] == -1){
-                            car.setPosX(x);
-                            car.setPosY(y);
-                            car.setDirection(direction);
-                            car.setSize(size);
-                            car.setId(i);
-                            grid.addCar(car);
-
-                            gridCarId[x][y] = i;
-                            gridCarId[x][y + size - 1] = i;
-                            gridCarId[x][y + size] = i;
-
-                            line.erase(line.begin() + n);
-                            putCar = true;
-
-                        }
-                        else{
-                            break;
-                        }
-                    }
-                }
-            //}
-        }
-        else if(direction == VERTICAL){ // horizontal
-            int x;
-            int y = rand()%6;
-            int xx = 0;
-            int size;
-            while(gridCarId[xx][y] ==-1 && xx < HEIGHT){ // cette boucle me permet de stocker les y qui sont vides
-                line.push_back(xx);
-                xx++;
+            if (gridCarId[x][y+1] == -1 && gridCarId[x][y+2] == -1 ) {
+                size = 3;
+                s_x = std::to_string(x);
+                s_y = std::to_string(y);
+                s = s_x+s_y;
+                freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end()); // delete l'element égal aux coordonnées x,y 
+                
+                s_x = std::to_string(x);
+                s_y = std::to_string(y+1);
+                s = s_x+s_y;
+                freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end());
+                
+                s_x = std::to_string(x);
+                s_y = std::to_string(y+2);
+                s = s_x+s_y;
+                freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end());
             }
-
-            //if(line.size() < 3){ // je n'ajoute une voiture que si j'ai au moins 3 cases vides dans la ligne que je teste
-                while(!putCar){
-                    if(!line.empty()){
-                        int n = rand() % line.size(); // je tire un y aleatoire de mon vector
-                        x = line[n];
-                        size = rand() % 2 + 2;
-
-                        if(gridCarId[x][y] == -1 && gridCarId[x + size - 1][y] == -1 && gridCarId[x + size][y] == -1){
-                            car.setPosX(x);
-                            car.setPosY(y);
-                            car.setDirection(direction);
-                            car.setSize(size);
-                            car.setId(i);
-                            grid.addCar(car);
-
-                            gridCarId[x][y] = i;
-                            gridCarId[x + size - 1][y] = i;
-                            gridCarId[x + size][y] = i;
-
-                            line.erase(line.begin() + n);
-                            putCar = true;
-
-                        }
-                        else{
-                            break;
-                        }
-                    }
-                }
-            //}
-        }
+            if (gridCarId[x][y+1] == -1 && gridCarId[x][y+2] != -1 ) {
+                size = 2;
+                s_x = std::to_string(x);
+                s_y = std::to_string(y);
+                s = s_x+s_y;
+                freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end()); // delete l'element égal aux coordonnées x,y 
+                
+                s_x = std::to_string(x);
+                s_y = std::to_string(y+1);
+                s = s_x+s_y;
+                freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end());
+            }
     }
-}
-
-
-void Puzzle::randomCar(int x, int y, int direction, int size, int gridCarId[6][6]) { //  x=0, y=0, direction=0, size=2 par défaut
-   while (gridCarId[x][y] != -1 && y<6) {
-        y++;
-    }
-    if (gridCarId[x+1][y] != -1) {
-        direction = 1;
-        if (gridCarId[x][y+1] != -1) {
-            std::cout << "impossible" << std::endl;
-            randomCar(x+1, 0, 0, 2, gridCarId);
-        }
-        if (gridCarId[x][y+2] != -1) {
+    if (gridCarId[x+1][y] == -1 && gridCarId[x+2][y] == -1 ) {
             size = 3;
+            s_x = std::to_string(x);
+            s_y = std::to_string(y);
+            s = s_x+s_y;
+            freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end()); // delete l'element égal aux coordonnées x,y 
+            
+            s_x = std::to_string(x+1);
+            s_y = std::to_string(y);
+            s = s_x+s_y;
+            freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end());
+            
+            s_x = std::to_string(x+2);
+            s_y = std::to_string(y);
+            s = s_x+s_y;
+            freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end());
         }
-        else {
+    if (gridCarId[x+1][y] == -1 && gridCarId[x+2][y] != -1 ) {
             size = 2;
-        }
-    }   
+            s_x = std::to_string(x);
+            s_y = std::to_string(y);
+            s = s_x+s_y;
+
+            freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end()); // delete l'element égal aux coordonnées x,y 
+            s_x = std::to_string(x+1);
+            s_y = std::to_string(y);
+            s = s_x+s_y;
+
+            freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end());
+    }
+        
 
     car.setPosX(x);
     car.setPosY(y);
     car.setDirection(direction);
     car.setSize(size);
+
+    return 1;  // succès
 }
 
 //RULE : always min = 6, max = 13
 Grid Puzzle::generateRandomGrid(int carMin, int carMax){
     
     numberOfCars = randomNumberOfCars(carMin, carMax);
-    std::cout << numberOfCars << std::endl;
+    std::cout << "nombre de voitures :" << numberOfCars << std::endl;
 
     makeEmptyGrid();
 
     grid.displayGridId(); //test ok
 
     int gridCarId[6][6];
-    grid.getGridCarId(gridCarId);
 
-    for(int i = 0; i < numberOfCars; i++){
+    car.setId(0);
+    car.setPosX(2);
+    car.setPosY(0);
+    car.setDirection(1);
+    car.setSize(2);   
+    freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), "20"), freePositions.end()); // delete l'element égal aux coordonnées x,y 
+    freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), "21"), freePositions.end()); // delete l'element égal aux coordonnées x,y 
 
-        bool overlap = true;
+
+    grid.setExitPosX(2);
+    grid.setExitPosY(5);
+    grid.addCar(car);
 
 
-        // car.setPosX(randomCarsPos());
-        // car.setPosY(randomCarsPos());
-        // car.setDirection(randomCarsDirection());
-        // car.setSize(randomCarsSize());
+    for(int i = 1; i < numberOfCars; i++){
+
+        grid.getGridCarId(gridCarId);
+        int test = randomCar(gridCarId);
+        while (test == 0) {
+            int test = randomCar(gridCarId);
+        }
         car.setId(i);
+
+        grid.addCar(car);
 
         // for(int h = 0; h < 6; h++){
         //     for(int j = 0; j < 6; j++){
         //         cout << "  " << gridCarId[h][j] << "  ";
         //     } cout << endl;
         // }
-        while (overlap) {
-            if (car.getDirection() == 1) {
-                if (gridCarId[car.getPosX()][car.getPosY()] == -1 && gridCarId[car.getPosX()][car.getPosY()+car.getSize()-1] == -1 && gridCarId[car.getPosX()][car.getPosY()+car.getSize()] == -1) {
-                    grid.addCar(car);
-                    overlap = false;
+        // cout << endl;
 
-                }
-            }
-            else if (car.getDirection() == 0) {
-                if (gridCarId[car.getPosX()][car.getPosY()] == -1 && gridCarId[car.getPosX()+car.getSize()-1][car.getPosY()] == -1 && gridCarId[car.getPosX()+car.getSize()][car.getPosY()] == -1) // vertical
-                {
-                    grid.addCar(car);
-                    overlap = false;
-                }
-            }
-            else {
-                car.setPosX(randomCarsPos());
-                car.setPosY(randomCarsPos());
-                car.setSize(randomCarsSize());
-                car.setDirection(randomCarsDirection());
-                car.setId(i);
-            }
-        }
+        // while (overlap) {
+        //     if (car.getDirection() == 1) {
+        //         if (gridCarId[car.getPosX()][car.getPosY()] == -1 && gridCarId[car.getPosX()][car.getPosY()+car.getSize()-1] == -1 && gridCarId[car.getPosX()][car.getPosY()+car.getSize()] == -1) {
+        //             grid.addCar(car);
+        //             overlap = false;
+
+        //         }
+        //     }
+        //     else if (car.getDirection() == 0) {
+        //         if (gridCarId[car.getPosX()][car.getPosY()] == -1 && gridCarId[car.getPosX()+car.getSize()-1][car.getPosY()] == -1 && gridCarId[car.getPosX()+car.getSize()][car.getPosY()] == -1) // vertical
+        //         {
+        //             grid.addCar(car);
+        //             overlap = false;
+        //         }
+        //     }
+        //     else {
+        //         car.setPosX(randomCarsPos());
+        //         car.setPosY(randomCarsPos());
+        //         car.setSize(randomCarsSize());
+        //         car.setDirection(randomCarsDirection());
+        //         car.setId(i);
+        //     }
+        // }
 
     }
 
@@ -260,27 +269,4 @@ Grid Puzzle::generateRandomGrid(int carMin, int carMax){
 
     
     return grid;
-}
-
-
-Grid Puzzle::generateRandomPuzzle(){
-    
-    makeEmptyGrid();
-
-    grid.displayGridId(); //test ok
-
-
-    //randomCar(grid.get)
-
-    // grid.displayGridId();
-
-    //     // on rajoute le cas initial
-    //     ofstream file("./puzzle/.svg");
-    //     file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
-
-
-
-    
-    return grid;
-
 }

@@ -5,6 +5,8 @@
 #include "grid.hpp"
 #include "solver.hpp"
 #include "puzzle.hpp"
+#include <fstream>
+#include <sstream>
 
 #include <iostream>
 using namespace std;
@@ -152,11 +154,16 @@ SDL::~SDL () {
 }
 
 
-void SDL::generateLvl(int difficulty) {
+void SDL::generateLvl() {
     //std::remove("./images_svg/*");
 
     Puzzle puzzle;
-    Grid grid = puzzle.generateRandomGrid(6,13);
+    Grid grid = puzzle.generateRandomGrid(6,7);
+
+    std::string path = "./images_svg/test3";
+    path.append(".svg");
+    ofstream file(path);
+    file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
     // Solver solver(&grid);
     // int n = solver.solve();
 
@@ -164,6 +171,7 @@ void SDL::generateLvl(int difficulty) {
     // currentImg = nbImg;
 
     // loadGridImg("");
+    pressed = false;
 }
 
 void SDL::loadGridImg(const string s) {
@@ -223,7 +231,7 @@ void SDL::sdlBoucle () {
 			else if (events.type == SDL_KEYDOWN) {          
 				switch (events.key.keysym.scancode) {
 				case SDL_SCANCODE_UP:
-					generateLvl(5);
+					generateLvl();
 					break;
                 case SDL_SCANCODE_RIGHT:
                     if (imgSet) {

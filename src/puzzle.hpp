@@ -3,6 +3,11 @@
 
 #include "solver.hpp"
 
+struct Position {
+    int x;
+    int y;
+};
+
 class Puzzle{
     private : 
 
@@ -27,6 +32,7 @@ class Puzzle{
         int carsDirection;
         //int exitDirection;
         bool isSolvable;
+        vector<string> freePositions;
         Grid grid;
         Car car;
 

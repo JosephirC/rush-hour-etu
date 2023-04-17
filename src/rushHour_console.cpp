@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 
+
 //#define CONSTRUCTOR_COPY
 //#define GRID_DISPLAY
 #define LOAD_SVG
@@ -116,7 +117,6 @@ int main(int argc, char** argv){
 
     #ifdef PUZZLE_TEST
     {
-        srand(time(NULL));
         Puzzle puzz;
         //puzz.generateRandomGrid(6, 13);
         //Grid puzz_test = puzz.getPuzzleGrid();

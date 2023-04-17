@@ -5,6 +5,9 @@
 #include "grid.hpp"
 #include "solver.hpp"
 #include "puzzle.hpp"
+#include <fstream>
+#include <sstream>
+#include <filesystem>
 
 #include <iostream>
 using namespace std;
@@ -152,18 +155,37 @@ SDL::~SDL () {
 }
 
 
-void SDL::generateLvl(int difficulty) {
-    //std::remove("./images_svg/*");
+void SDL::generateLvl() {
+    // On reset le contenu du dossier images_svg
+    std::filesystem::remove_all("./images_svg");
+    std::filesystem::create_directory("./images_svg");
 
     Puzzle puzzle;
-    Grid grid = puzzle.generateRandomGrid(6,13);
-    // Solver solver(&grid);
-    // int n = solver.solve();
+    Grid grid = puzzle.generateRandomGrid(11,14);
 
-    // nbImg = n;
-    // currentImg = nbImg;
+    Solver solver(&grid);
+    int n = solver.solve();
 
-    // loadGridImg("");
+    // if (n<0) {
+    //     std::cout << "No solution to this grid :/" << std::endl;
+    //     //std::cout << "Generating new lvl..." << std::endl;
+    //     //generateLvl();
+    // }
+    if (n<5) {
+        std::cout << "Grid is too easy, generating new grid..." << std::endl;
+        //generateLvl();
+    }
+
+    std::string path = "./images_svg/";
+    path.append(std::to_string(n));
+    path.append(".svg");
+    ofstream file(path);
+    file << grid.svgHeader() << grid.svgRectangle() << grid.svgFooter(); 
+
+    nbImg = n;
+    currentImg = n;
+
+    pressed = false;
 }
 
 void SDL::loadGridImg(const string s) {
@@ -223,7 +245,10 @@ void SDL::sdlBoucle () {
 			else if (events.type == SDL_KEYDOWN) {          
 				switch (events.key.keysym.scancode) {
 				case SDL_SCANCODE_UP:
-					generateLvl(5);
+					generateLvl();
+					break;
+                case SDL_SCANCODE_DOWN:
+					loadGridImg("");
 					break;
                 case SDL_SCANCODE_RIGHT:
                     if (imgSet) {

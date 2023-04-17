@@ -59,6 +59,7 @@ class SDL {
 
         bool souris;
         bool touche;
+        bool pressed = false; // si une touche est appuyée
 
         bool imgSet = false;
         int nbImg;
@@ -70,7 +71,7 @@ class SDL {
         ~SDL ();
         void sdlBoucle ();
         void sdlAff ();
-        void generateLvl(int difficulty);
+        void generateLvl();
         void loadGridImg(const string c);
 
 };

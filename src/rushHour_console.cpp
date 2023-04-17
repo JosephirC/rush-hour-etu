@@ -117,12 +117,17 @@ int main(int argc, char** argv){
 
     #ifdef PUZZLE_TEST
     {
-        Puzzle puzz;
-        //puzz.generateRandomGrid(6, 13);
-        //Grid puzz_test = puzz.getPuzzleGrid();
+
+        srand(time(0));
+        Puzzle puzzle;
+        puzzle.generateRandomGrid(11,14);
+        puzzle.puzzleToSVG(puzzle);
+
+
+        //Grid puzz_test = puzzle.getPuzzleGrid();
         //puzz_test.displayGridId();
-        puzz.setNumberOfCars(puzz.randomNumberOfCars(6,13));
-        puzz.generateRandomPuzzle();
+        //puzzle.setNumberOfCars(puzzle.randomNumberOfCars(6,13));
+        //puzzle.generateRandomPuzzle();
 
     }   
     #endif

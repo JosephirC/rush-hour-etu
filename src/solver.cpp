@@ -95,6 +95,42 @@ int Solver::solve() {
     return win;
 }
 
+int Solver::solveState(bool stop) {
+
+    while(stop == false){
+        int win = -1;
+
+        while (uncoveredGrids.size() > 0 && win == -1) {
+
+            std::cout << "Number of grids covered : " << coveredGrids.size() << std::endl;
+            std::cout << "Number of grids left to cover : " << uncoveredGrids.size() << std::endl;
+
+            Grid* grid = uncoveredGrids.front();
+            uncoveredGrids.pop();
+
+            bool checkEquals = checkContainsGrid(coveredGrids, grid->getGridString()); // on vérifie si cette grille n'a pas déjà été traitée
+            
+            if (!checkEquals) { // si cette grille voisine n'est pas dans les grilles covered, on la rajoute dans coveredGrids
+                coveredGrids.push_back(grid);
+                win = isWinningGrid(grid); // on vérifie si la grille est gagnante
+            }
+
+            vector<Grid*> gridNeighbours = grid->getGridNeighbours(); // on génère tout les voisins
+
+            for (int j=0; j<gridNeighbours.size(); j++) {
+                bool checkEquals2 = checkContainsGrid(coveredGrids, gridNeighbours[j]->getGridString());
+                bool checkEquals3 = checkContainsGrid(uncoveredGrids, gridNeighbours[j]->getGridString());
+
+                if (!checkEquals2 && !checkEquals3) {
+                    uncoveredGrids.push(gridNeighbours[j]);
+                } 
+            }
+        }
+
+        return win;
+    }
+    return 1;
+}
 
 Grid* makeNewLvl(int difficulty) { // difficulty = nombre de coups à faire pour gagner ce niveau
 

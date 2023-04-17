@@ -64,6 +64,8 @@ class SDL {
         bool imgSet = false;
         int nbImg;
         int currentImg;
+
+        bool stopSolve;
         
     public :
 

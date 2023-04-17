@@ -129,14 +129,13 @@ int main(int argc, char** argv){
         puzzle.makeEmptyGrid();
         Grid grid = puzzle.getPuzzleGrid();
         puzzle.generateRandomGrid(11,14);
-        puzzle.puzzleToSVG(puzzle);
+        
         grid = puzzle.getPuzzleGrid();
                 
 
         Solver sol(&grid);
-        int i = sol.solveDebug();
-        grid.displayGridId();
-
+        int i = sol.solve();
+    
         if(i==-1){
             cout << "pas de solution " << endl;
         }

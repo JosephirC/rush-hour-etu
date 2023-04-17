@@ -51,21 +51,16 @@ class SDL {
         Image font_im;
         SDL_Color font_color;
 
-        //Image im_car;
-
         Image gridImg;
-
-        //Grid grid;
 
         bool souris;
         bool touche;
-        bool pressed = false; // si une touche est appuyée
 
         bool imgSet = false;
         int nbImg;
         int currentImg;
 
-        bool stopSolve;
+        Grid gridTest;
         
     public :
 
@@ -75,6 +70,8 @@ class SDL {
         void sdlAff ();
         void generateLvl();
         void loadGridImg(const string c);
+        void testLvl(Grid grid);
+        Grid newLvl();
 
 };
 

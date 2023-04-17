@@ -253,10 +253,6 @@ void Grid::setGridString(string s){
     gridString = s;
 }
 
-void Grid::setGridCarId(int x, int y, int value){
-    gridCarId[x][y] = value;
-}
-
 void Grid::displayCarArray() const {
     cout << endl << "displayCarArray" << endl;
     for(int i = 0; i < carArray.size(); i++){
@@ -324,6 +320,7 @@ string Grid::svgHeader() const {
        << "\" height=\"" << height * TAILLE_CASE << "\" stroke=\"" 
        << STROKE_COLOR << "\" stroke-width=\"" << 15 * STROKE_WIDTH 
        << "\" fill=\"none\" />" << endl;
+       std::cout << "header fini" << std::endl;
     return ss.str();
 }
 
@@ -348,10 +345,14 @@ string Grid::svgRectangle() const {
            << "\" fill=\"" << FILL_COLOR << "\" />" << endl;
         }
     }
+       std::cout << "rectangle fini" << std::endl;
+
     return ss.str();
 }
 
 string Grid::svgFooter() const {
+       std::cout << "footer fini" << std::endl;
+
     return "</svg>";
 }
 

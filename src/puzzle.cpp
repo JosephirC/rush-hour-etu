@@ -114,74 +114,103 @@ int Puzzle::randomCar(int gridCarId[6][6]) {
     std::string s_y;
     std::string s;
 
-    direction = 0;
 
     if (gridCarId[x+1][y] != -1 ) {
             direction = 1;
             if (gridCarId[x][y+1] != -1 ) {
-                s_x = std::to_string(x);
-                s_y = std::to_string(y);
-                s = s_x+s_y;
-                freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end()); // delete l'element égal aux coordonnées x,y 
-                return 0; // on ne peut pas placer de voiture ici, on rappelle la fonction pour changer de position
+                std::cout << x << ", " << y << " : probleme" << std::endl;
+                randomCar(gridCarId); // on ne peut pas placer de voiture ici, on rappelle la fonction pour changer de position
+                return 1;
             }
-            if (gridCarId[x][y+1] == -1 && gridCarId[x][y+2] == -1 ) {
+            else if (gridCarId[x][y+1] == -1 && gridCarId[x][y+2] == -1 ) {
+                direction = 1;
+                std::cout << "point " << x << ", " << y << " : je supprime" << std::endl;
                 size = 3;
                 s_x = std::to_string(x);
                 s_y = std::to_string(y);
                 s = s_x+s_y;
+                std::cout << s << std::endl;
                 freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end()); // delete l'element égal aux coordonnées x,y 
                 
                 s_x = std::to_string(x);
                 s_y = std::to_string(y+1);
                 s = s_x+s_y;
+                std::cout << s << std::endl;
+
                 freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end());
                 
                 s_x = std::to_string(x);
                 s_y = std::to_string(y+2);
                 s = s_x+s_y;
+                std::cout << s << std::endl;
+
                 freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end());
             }
-            if (gridCarId[x][y+1] == -1 && gridCarId[x][y+2] != -1 ) {
+            else if (gridCarId[x][y+1] == -1 && gridCarId[x][y+2] != -1 ) {
+                direction = 1;
+                std::cout << "point " << x << ", " << y << " : je supprime" << std::endl;
+
                 size = 2;
                 s_x = std::to_string(x);
                 s_y = std::to_string(y);
                 s = s_x+s_y;
+                std::cout << s << std::endl;
+
                 freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end()); // delete l'element égal aux coordonnées x,y 
                 
                 s_x = std::to_string(x);
                 s_y = std::to_string(y+1);
                 s = s_x+s_y;
+                std::cout << s << std::endl;
+
                 freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end());
             }
     }
-    if (gridCarId[x+1][y] == -1 && gridCarId[x+2][y] == -1 ) {
+    else if (gridCarId[x+1][y] == -1 && gridCarId[x+2][y] == -1 ) {
+            direction = 0;
+
+            std::cout << "point " << x << ", " << y << " : je supprime" << std::endl;
+
             size = 3;
             s_x = std::to_string(x);
             s_y = std::to_string(y);
             s = s_x+s_y;
+                std::cout << s << std::endl;
+
             freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end()); // delete l'element égal aux coordonnées x,y 
             
             s_x = std::to_string(x+1);
             s_y = std::to_string(y);
             s = s_x+s_y;
+                std::cout << s << std::endl;
+
             freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end());
             
             s_x = std::to_string(x+2);
             s_y = std::to_string(y);
             s = s_x+s_y;
+                std::cout << s << std::endl;
+
             freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end());
         }
-    if (gridCarId[x+1][y] == -1 && gridCarId[x+2][y] != -1 ) {
+    else if (gridCarId[x+1][y] == -1 && gridCarId[x+2][y] != -1 ) {
+            direction = 0;
+
+            std::cout << "point " << x << ", " << y << " : je supprime" << std::endl;
+
             size = 2;
             s_x = std::to_string(x);
             s_y = std::to_string(y);
             s = s_x+s_y;
+                std::cout << s << std::endl;
+
 
             freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end()); // delete l'element égal aux coordonnées x,y 
             s_x = std::to_string(x+1);
             s_y = std::to_string(y);
             s = s_x+s_y;
+                std::cout << s << std::endl;
+
 
             freePositions.erase(std::remove(freePositions.begin(), freePositions.end(), s), freePositions.end());
     }

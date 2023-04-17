@@ -253,6 +253,10 @@ void Grid::setGridString(string s){
     gridString = s;
 }
 
+void Grid::setGridCarId(int x, int y, int value){
+    gridCarId[x][y] = value;
+}
+
 void Grid::displayCarArray() const {
     cout << endl << "displayCarArray" << endl;
     for(int i = 0; i < carArray.size(); i++){

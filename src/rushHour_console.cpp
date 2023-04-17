@@ -121,6 +121,9 @@ int main(int argc, char** argv){
         //puzz.generateRandomGrid(6, 13);
         //Grid puzz_test = puzz.getPuzzleGrid();
         //puzz_test.displayGridId();
+        puzz.setNumberOfCars(puzz.randomNumberOfCars(6,13));
+        puzz.generateRandomPuzzle();
+
     }   
     #endif
 

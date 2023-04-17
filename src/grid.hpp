@@ -73,6 +73,8 @@ class Grid {
 
         void setGridString(string s);
 
+        void setGridCarId(int x, int y, int value);
+
         void changeCarPosition(int id, int newPosX, int newPosY);
 
         vector<Car> getCarArray() const;

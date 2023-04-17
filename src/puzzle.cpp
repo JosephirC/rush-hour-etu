@@ -138,24 +138,32 @@ int Puzzle::randomGrid(int nbCars) {
                         car.setId(i);
                         grid.addCar(car);
 
+                        // if (i==0) {
+
+                        //     taxiPosX = x;
+                        //     taxiPosY = y;
+                        //     //taxiSize = size;
+                        //     taxiDirection = direction;
+
+                        //     Position exit = taxiExit();
+
+                        //     exitPosX = exit.x;
+                        //     exitPosY = exit.y;
+
+
+                        //     grid.setExitPosX(exitPosX);
+                        //     grid.setExitPosY(exitPosY);
+
+                        //     std::cout << "pos voiture : " << x << ", " << y << std::endl;
+                        //     std::cout << "pos sortie : " << exitPosX << ", " << exitPosY << std::endl;
+                        // }
+
                         if (i==0) {
-
-                            taxiPosX = x;
-                            taxiPosY = y;
-                            //taxiSize = size;
-                            taxiDirection = direction;
-
-                            Position exit = taxiExit();
-
-                            exitPosX = exit.x;
-                            exitPosY = exit.y;
-
-
-                            grid.setExitPosX(exitPosX);
-                            grid.setExitPosY(exitPosY);
+                            grid.setExitPosX(5);
+                            grid.setExitPosY(y);
 
                             std::cout << "pos voiture : " << x << ", " << y << std::endl;
-                            std::cout << "pos sortie : " << exitPosX << ", " << exitPosY << std::endl;
+                            std::cout << "pos sortie : " << 5 << ", " << y << std::endl;
                         }
                         
                         break;
@@ -182,26 +190,34 @@ int Puzzle::randomGrid(int nbCars) {
                         car.setSize(size);
                         car.setId(i);
                         grid.addCar(car);
+                        // if (i==0) {
+
+                        //     taxiPosX = x;
+                        //     taxiPosY = y;
+                        //     //taxiSize = size;
+                        //     taxiDirection = direction;
+
+                        //     Position exit = taxiExit();
+
+                        //     exitPosX = exit.x;
+                        //     exitPosY = exit.y;
+
+
+                        //     grid.setExitPosX(exitPosX);
+                        //     grid.setExitPosY(exitPosY);
+
+                        //     std::cout << "pos voiture : " << x << ", " << y << std::endl;
+                        //     std::cout << "pos sortie : " << exitPosX << ", " << exitPosY << std::endl;
+                        // }
+                        
                         if (i==0) {
-
-                            taxiPosX = x;
-                            taxiPosY = y;
-                            //taxiSize = size;
-                            taxiDirection = direction;
-
-                            Position exit = taxiExit();
-
-                            exitPosX = exit.x;
-                            exitPosY = exit.y;
-
-
-                            grid.setExitPosX(exitPosX);
-                            grid.setExitPosY(exitPosY);
+                            grid.setExitPosX(x);
+                            grid.setExitPosY(5);
 
                             std::cout << "pos voiture : " << x << ", " << y << std::endl;
-                            std::cout << "pos sortie : " << exitPosX << ", " << exitPosY << std::endl;
+                            std::cout << "pos sortie : " << x << ", " << 5 << std::endl;
                         }
-                        
+
                         break;
                     }
                 }

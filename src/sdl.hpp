@@ -75,7 +75,6 @@ class SDL {
         void sdlAff ();
         void generateLvl();
         void loadGridImg(const string c);
-
 };
 
 #endif

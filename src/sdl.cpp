@@ -167,13 +167,6 @@ void SDL::generateLvl() {
 
     Solver solver(&grid);
     int n = solver.solve();
-    int n1 = solver.solveState(stopSolve); // PAS FINI
-    // j'ai pas encore fini edgar, mais ce que je voulais faire c'est d'ajouter un boutton S a SDL, quand on appuie sur ce boutton on stop la generation 
-    //et la resolution du grid qu'on a genere car parfois je genere des grids qui ont un "coveredGrids" = 10000+ et ca prend bcp de temps, du coup 
-    //je voulais utiliser cette fonction pour arrter la generation et apres on rappuis sur la fleche UP pour laisser tomber le grid qu'on etait en 
-    //train de generer et de generer un nv grid dans sa place (en esperant que ca ne prend pas bcp de temps aussi a generer ou a resoudre). 
-    //Ou bien l'autre id que j'ai et que si notre coveredGrids arrive a 10000 tout simplement on ajoute une conditon qui dit que la recherche de 
-    //la solution est longue on va donc la skipper, mais je prefere la premiere solution, tu penses quoi ?
 
     // if (n<0) {
     //     std::cout << "No solution to this grid :/" << std::endl;

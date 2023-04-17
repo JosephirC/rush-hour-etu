@@ -17,8 +17,6 @@ class Solver {
 
         int solve();
 
-        int solveState(bool stop);
-
         void solvedGridsSVG(Grid* grid, string filenumber);
 
         bool checkContainsGrid(vector<Grid*> grid, string s);

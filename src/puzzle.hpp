@@ -61,6 +61,8 @@ class Puzzle{
 
         int randomCar(int gridCarId[6][6]);
 
+        int randomGrid(int nbCars);
+
 };
 
 #endif

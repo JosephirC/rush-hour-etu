@@ -30,7 +30,7 @@ bool Solver::checkContainsGrid(std::queue<Grid*> q, string s) {
 
 int Solver::isWinningGrid(Grid* grid) {
     for(int j = 0; j < grid->getCarArray().size(); j++){
-        if(grid->getCarArray()[j].getId() == 0) {
+        if(grid->getCarArray()[j].getId() == 0) { // on vérifie si la voiture a atteint la sortie en fonction de sa direction
             if ((grid->getCarArray()[j].getDirection() == 1 && grid->getCarArray()[j].getPosY() + grid->getCarArray()[j].getSize()-1 == grid->getExitY())
             || (grid->getCarArray()[j].getDirection() == 0 && grid->getCarArray()[j].getPosX() + grid->getCarArray()[j].getSize()-1 == grid->getExitX())) {
             
@@ -62,7 +62,7 @@ int Solver::isWinningGrid(Grid* grid) {
         }
         
     }
-    return -1;
+    return -1; // pas de solution trouvée
 }
 
 int Solver::solve() {
@@ -72,8 +72,8 @@ int Solver::solve() {
 
     while (uncoveredGrids.size() > 0 && win == -1 && !stop) {
 
-        std::cout << "Number of grids covered : " << coveredGrids.size() << std::endl;
-        std::cout << "Number of grids left to cover : " << uncoveredGrids.size() << std::endl;
+        std::cout << "Nombre de grilles vues : " << coveredGrids.size() << std::endl;
+        std::cout << "Nombre de grilles a decouvrir : " << uncoveredGrids.size() << std::endl;
 
         Grid* grid = uncoveredGrids.front();
         uncoveredGrids.pop();
@@ -91,26 +91,16 @@ int Solver::solve() {
             bool checkEquals2 = checkContainsGrid(coveredGrids, gridNeighbours[j]->getGridString());
             bool checkEquals3 = checkContainsGrid(uncoveredGrids, gridNeighbours[j]->getGridString());
 
-            if (!checkEquals2 && !checkEquals3) {
-                uncoveredGrids.push(gridNeighbours[j]);
+            if (!checkEquals2 && !checkEquals3) { // si la découverte est nouvelle (ni présente dans les grilles vues, ni dans les grilles à voir)
+                uncoveredGrids.push(gridNeighbours[j]); // on la rajoute à la liste des grilles à voir
             } 
         }
 
-        if (coveredGrids.size() > 1500) {
+        if (coveredGrids.size() > 2000) { // si la génération prend un peu trop longtemps, on arrete le solveur
             stop = true;
-            return -2;
+            return -2; // on utilise -2 pour savoir qu'on a arreté le programme parcequ'il prennait longtemps à se résoudre
         }
     }
 
     return win;
-}
-
-Grid* makeNewLvl(int difficulty) { // difficulty = nombre de coups à faire pour gagner ce niveau
-
-    Grid grid(6,6);
-    grid.initEmptyGrid();
-
-    // construire une nouvelle grid avec des nouvelles positions de voitures tel que quand on appelle la fonction solve() sur cette grille, elle trouve le plus court chemin >= difficulty
-
-
 }

@@ -47,17 +47,6 @@ Grid::Grid(const Grid& grid) { //constructeur par copie
     parent = grid.parent;
 }
 
-// Grid::Grid(const Grid* other) { // constructeur par copie
-//     width = other->width;
-//     height = other->height;
-//     exitPosX = other->exitPosX;
-//     exitPosY = other->exitPosY;
-//     carArray = other->carArray;
-//     memcpy(gridCarId, other->gridCarId, sizeof(gridCarId));
-//     parent = other->parent;
-//     neighbours = other->neighbours;
-// }
-
 Grid Grid::operator=(const Grid& grid) {
     this->width = grid.width;
     this->height = grid.height;
@@ -78,21 +67,6 @@ Grid Grid::operator=(const Grid& grid) {
 
     return *this;
 }
-
-// Grid Grid::operator=(const Grid& other) {
-//     if (this != &other) {
-//         width = other.width;
-//         height = other.height;
-//         exitPosX = other.exitPosX;
-//         exitPosY = other.exitPosY;
-//         carArray = other.carArray;
-//         parent = other.parent;
-//         for (auto neighbor : other.neighbours) {
-//             neighbours.push_back(new Grid(*neighbor));
-//         }
-//     }
-//     return *this;
-// }
 
 // fonction pour debug (visualiser dans la console)
 void Grid::initEmptyGrid(){
@@ -206,17 +180,6 @@ void Grid::getGridCarId(int (&gridId)[6][6]) {
     }
 }
 
-// int** Grid::getGridCarId() {
-//     int** ptr = new int*[6];
-//     for (int i = 0; i < 6; i++) {
-//         ptr[i] = new int[6];
-//         for (int j = 0; j < 6; j++) {
-//             ptr[i][j] = gridCarId[i][j];
-//         }
-//     }
-//     return ptr;
-// }
-
 void Grid::setWidth(int w){
     width = w;
 }
@@ -236,14 +199,6 @@ void Grid::setExitPosY(int eY){
 void Grid::setCarArray(vector<Car> car){
     carArray = car;
 }
-
-// void Grid::setGridCarId(int gridId[6][6]){
-//     for(int i = 0; i < 6; i++){
-//         for(int j = 0; j < 6; j++){
-//             gridCarId[i][j] = gridId[i][j];
-//         }
-//     }
-// }
 
 void Grid::setParent(Grid* p){
     parent = p;
@@ -351,42 +306,41 @@ string Grid::svgFooter() const {
     return "</svg>";
 }
 
-bool Grid::operator==(const Grid& other) const {
+// bool Grid::operator==(const Grid& other) const {
     
-    if(this->width != other.width && this->height != other.height)
-        return false;
+//     if(this->width != other.width && this->height != other.height)
+//         return false;
 
-    if(this->exitPosX != other.exitPosX && this->exitPosY != other.exitPosY)
-        return false;
+//     if(this->exitPosX != other.exitPosX && this->exitPosY != other.exitPosY)
+//         return false;
 
-    for(int i = 0; i < this->carArray.size(); i++){
-        if(this->carArray[i].getPosX() != other.carArray[i].getPosX() && this->carArray[i].getPosY() != other.carArray[i].getPosY() 
-            && this->carArray[i].getCarSize() != other.carArray[i].getCarSize() && this->carArray[i].getDirection() != other.carArray[i].getDirection() 
-            && this->carArray[i].getId() != other.carArray[i].getId()){
-                return false;
-        }   
-    }
+//     for(int i = 0; i < this->carArray.size(); i++){
+//         if(this->carArray[i].getPosX() != other.carArray[i].getPosX() && this->carArray[i].getPosY() != other.carArray[i].getPosY() 
+//             && this->carArray[i].getCarSize() != other.carArray[i].getCarSize() && this->carArray[i].getDirection() != other.carArray[i].getDirection() 
+//             && this->carArray[i].getId() != other.carArray[i].getId()){
+//                 return false;
+//         }   
+//     }
 
-    for(int i = 0; i < this->width; i++){
-        for(int j = 0; j < this->height; j++){
-            if(this->gridCarId[i][j] != other.gridCarId[i][j])
-                return false;
-        }
-    }
+//     for(int i = 0; i < this->width; i++){
+//         for(int j = 0; j < this->height; j++){
+//             if(this->gridCarId[i][j] != other.gridCarId[i][j])
+//                 return false;
+//         }
+//     }
 
-    if(this->parent != other.parent){
-        return false;
-    }
+//     if(this->parent != other.parent){
+//         return false;
+//     }
 
-    return true;
-}
+//     return true;
+// }
 
 void Grid::changeCarPosition(int id, int newPosX, int newPosY) {
     carArray[id].setPosX(newPosX);
     carArray[id].setPosY(newPosY);
     gridString = gridToString();
 }
-
 
 bool Grid::isInNeighbours(Grid* grid) const {
     for (int i=0; i<neighbours.size(); i++) {
@@ -397,7 +351,6 @@ bool Grid::isInNeighbours(Grid* grid) const {
     }
     return false;
 }
-
 
 vector<Grid*> Grid::getGridNeighbours() {
 
@@ -466,5 +419,3 @@ vector<Grid*> Grid::getGridNeighbours() {
     
     return neighbours;
 }
-
-

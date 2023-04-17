@@ -132,7 +132,6 @@ int main(int argc, char** argv){
         
         grid = puzzle.getPuzzleGrid();
                 
-
         Solver sol(&grid);
         int i = sol.solve();
     

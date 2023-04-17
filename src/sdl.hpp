@@ -4,7 +4,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
 #include "grid.hpp"
 
 struct Case {
@@ -34,7 +33,7 @@ public:
 
 
 /**
-    La classe gerant le jeu avec un affichage SDL
+    La classe gerant l'affichage SDL
 */
 class SDL {
 
@@ -53,9 +52,6 @@ class SDL {
 
         Image gridImg;
 
-        bool souris;
-        bool touche;
-
         bool imgSet = false;
         int nbImg;
         int currentImg;
@@ -70,8 +66,6 @@ class SDL {
         void sdlAff ();
         void generateLvl();
         void loadGridImg(const string c);
-        void testLvl(Grid grid);
-        Grid newLvl();
 
 };
 

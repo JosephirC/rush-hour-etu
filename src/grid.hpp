@@ -17,7 +17,7 @@ class Grid {
         int exitPosX, exitPosY; // position de sortie
         vector<Car> carArray; // tableau des voitures de la grille
         int gridCarId[6][6]; // grille avec pour chaque case l'id de la voiture qui l'occupe
-        Grid* parent;
+        Grid* parent; // pointeur vers la grille parent de cette grille
         vector<Grid*> neighbours; // liste des voisins de cette grille
         string gridString; // cette grille sous forme de chaine de caractères (0015110320123 par exemple)
 
@@ -28,8 +28,6 @@ class Grid {
         Grid();
 
         Grid(const Grid& grid); // constructeur par copie
-
-        //Grid(const Grid* other); // constructeur par copie
 
         Grid(int _width, int _height);
         
@@ -67,8 +65,6 @@ class Grid {
 
         void setCarArray(vector<Car> car);
 
-        //void setGridCarId(int gridId[6][6]);
-
         void setParent(Grid* p);
 
         void setGridString(string s);
@@ -89,7 +85,7 @@ class Grid {
 
         vector<Grid*> getGridNeighbours();
 
-        bool operator==(const Grid& other) const;
+        // bool operator==(const Grid& other) const;
 
         Grid operator=(const Grid& grid);
 

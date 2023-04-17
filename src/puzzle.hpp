@@ -16,23 +16,6 @@ class Puzzle{
         const int WIDTH = 6;
         const int HEIGHT = 6;
 
-        // Taxi (Winning Car)
-        int taxiPosX; 
-        int taxiPosY;
-        int taxiSize;
-        int taxiDirection;
-
-        int exitPosX;
-        int exitPosY;
-
-        int numberOfCars;
-        int carsPosX;
-        int carsPosY;
-        int carsSize;
-        int carsDirection;
-        //int exitDirection;
-        bool isSolvable;
-        vector<string> freePositions;
         Grid grid;
         Car car;
 
@@ -42,7 +25,7 @@ class Puzzle{
 
         ~Puzzle();
 
-        //generer un nombre de voitures aleatoires entre le min et le max (ca aide pour faire des niveaux dans sdl)
+        //generer un nombre de voitures aleatoires entre le min et le max
         int randomNumberOfCars(int min, int max); 
 
         int randomCarsPos();
@@ -51,17 +34,13 @@ class Puzzle{
 
         int randomCarsDirection();
 
-        void taxiExit();
-
         Grid getPuzzleGrid() const;
 
         void makeEmptyGrid();
 
         Grid generateRandomGrid(int carMin, int carMax);
 
-        int randomCar(int gridCarId[6][6]);
-
-        int randomGrid(int nbCars);
+        void randomGrid(int nbCars);
 
 };
 

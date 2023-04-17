@@ -4,29 +4,6 @@
 #include <ctime>
 
 Puzzle::Puzzle(){
-
-    taxiPosX = 0;
-    taxiPosY = 0;
-    taxiSize = 0;
-    taxiDirection = 0;
-
-    exitPosX = 0;
-    exitPosY = 0;
-
-    numberOfCars = 0;
-    carsSize = 0;
-    carsDirection = 0;
-    isSolvable = false;
-
-    for (int i=0; i<6; i++) {
-        for (int j=0; j<6; j++) {
-            std::string str_i = std::to_string(i);
-            std::string str_j = std::to_string(j);
-            std::string s = str_i + str_j;
-            freePositions.push_back(s);
-        }
-    }
-
 }
 
 Puzzle::~Puzzle(){
@@ -49,33 +26,6 @@ int Puzzle::randomCarsPos(){
     return rand() % 6;
 }
 
-void Puzzle::taxiExit(){
-    
-    int randomSide = rand() % 2;
-
-    if(taxiDirection == HORIZONTAL){
-        if(randomSide == 0){ // Exit left
-            exitPosX = taxiPosX;
-            exitPosY = 0;
-        }
-        else{ // Exit right
-            exitPosX = taxiPosX;
-            exitPosY = taxiPosY + (WIDTH - taxiPosY - 1); 
-        }
-    }
-
-    if(taxiDirection == VERTICAL){
-        if(randomSide == 0){ // Exit up
-            exitPosX = 0;
-            exitPosY = taxiPosY;
-        }
-        else{ //Exit down 
-            exitPosX = taxiPosX + (VERTICAL - taxiPosX - 1);
-            exitPosY = taxiPosY;
-        }
-    }
-}
-
 Grid Puzzle::getPuzzleGrid() const{
     return grid;
 }
@@ -83,18 +33,17 @@ Grid Puzzle::getPuzzleGrid() const{
 void Puzzle::makeEmptyGrid(){
     grid.setWidth(WIDTH);
     grid.setHeight(HEIGHT);
-    grid.setExitPosX(exitPosX);
-    grid.setExitPosY(exitPosY);
+    grid.setExitPosX(0);
+    grid.setExitPosY(0);
     grid.setParent(nullptr);
     grid.setGridString(" ");
     grid.initEmptyGrid();
-
     vector<Car> c;
     grid.setCarArray(c);
 
 }
 
-int Puzzle::randomGrid(int nbCars) {
+void Puzzle::randomGrid(int nbCars) {
 
     srand(time(0));
 
@@ -178,10 +127,10 @@ int Puzzle::randomGrid(int nbCars) {
     }
 }
 
-//RULE : always min = 6, max = 13
+// pas plus de 13 voitures dans la grille, ou ça devient impossible de toutes les faire rentrer sinon
 Grid Puzzle::generateRandomGrid(int carMin, int carMax){
     
-    numberOfCars = randomNumberOfCars(carMin, carMax);
+    int numberOfCars = randomNumberOfCars(carMin, carMax);
 
     makeEmptyGrid();
 

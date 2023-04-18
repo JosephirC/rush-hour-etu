@@ -294,10 +294,10 @@ string Grid::svgRectangle() const {
            << "\" fill=\"" << "green" << "\" />" << endl;
 
             if(car.getDirection() == 0){ // Vertical
-                ss << "<line x1=\"" << x - 5 << "\" y1=\"" << 595 << "\" x2=\"" << x + width + 5 << "\" y2=\"" << 595 << "\" stroke=\"white\" stroke-width=\"20\" />" << endl;
+                ss << "<line x1=\"" << x - 5 << "\" y1=\"" << 595 << "\" x2=\"" << x + width + 5 << "\" y2=\"" << 595 << "\" stroke=\"white\" stroke-width=\"10\" />" << endl;
             }
             if(car.getDirection() == 1){ // Horizontal
-                ss << "<line x1=\"" << x - 5 << "\" y1=\"" << 595 << "\" x2=\"" << x + width + 5 << "\" y2=\"" << 595 << "\" stroke=\"white\" stroke-width=\"20\" />" << endl;
+                ss << "<line x1=\"" << 595 << "\" y1=\"" << y - 5 << "\" x2=\"" << 595 << "\" y2=\"" << y + height + 5 << "\" stroke=\"white\" stroke-width=\"10\" />" << endl;
             }
            
         }

@@ -13,8 +13,42 @@
 //#define LOAD_SVG
 //#define GET_GRID_NEIGHBORS
 //#define SOLVER_TEST
-//#define PUZZLE_TEST
-#define SOLVE_PROJECT
+#define PUZZLE_TEST
+//#define SOLVE_PROJECT
+
+
+bool solveLvl(Grid grid) {
+    Solver solver(&grid);
+    int n = solver.solve();
+
+    if (n==-1) {
+        std::cout << "Cette grille n'a pas de solution :/" << std::endl;
+        std::cout << "Generation d'un nouveau niveau..." << std::endl;
+        return false;
+    }
+    if (n==-2) {
+        std::cout << "Le solveur prend trop de temps, generation d'un nouveau niveau..." << std::endl;
+        return false;
+    }
+    else if (n<3) {
+        std::cout << "La grille est trop facile, generation d'un nouveau niveau..." << std::endl;
+        return false;
+    }
+    else {
+        return true;
+    }   
+}
+
+void generateLvl() {
+    
+    Puzzle puzzle;
+    Grid grid = puzzle.generateRandomGrid(6,12);
+
+    while (!(solveLvl(grid))) {
+        generateLvl();
+    }
+
+}
 
 int main(int argc, char* argv[]){
 
@@ -93,40 +127,45 @@ int main(int argc, char* argv[]){
         }
 
         srand(time(0));
-        Puzzle puzzle;
-        puzzle.makeEmptyGrid();
-        Grid grid = puzzle.getPuzzleGrid();
-        puzzle.generateRandomGrid(11,13);
+        generateLvl();
+        // Puzzle puzzle;
+        // puzzle.makeEmptyGrid();
+        // Grid grid = puzzle.getPuzzleGrid();
+        // puzzle.generateRandomGrid(11,13);
         
-        grid = puzzle.getPuzzleGrid();
+        // grid = puzzle.getPuzzleGrid();
 
-        Solver solver(&grid);
+        // Solver solver(&grid);
 
-        solver.setNbrOfMoves(numberOfMoves);
+        // solver.setNbrOfMoves(numberOfMoves);
 
-        int i = solver.solve();
+        // int i = solver.solve();
     
-        if( i== -1){
-            cout << "pas de solution " << endl;
-        }
+        // if( i== -1){
+        //     cout << "pas de solution " << endl;
+        // }
 
-        if (i == -2) {
-            std::cout << endl << "Solver is taking too long, stoping..." << std::endl;
-            std::cout << "Generating new lvl..." << std::endl;
-            sleep(2);
+        // if (i == -2) {
+        //     std::cout << endl << "Solver is taking too long, stoping..." << std::endl;
+        //     std::cout << "Generating new lvl..." << std::endl;
+        //     //sleep(2);
 
-            // On reset le contenu du dossier images_svg
-            std::filesystem::remove_all("./images_svg");
-            std::filesystem::create_directory("./images_svg");
+        //     // On reset le contenu du dossier images_svg
+        //     std::filesystem::remove_all("./images_svg");
+        //     std::filesystem::create_directory("./images_svg");
 
-            puzzle.generateRandomGrid(11,13);
-        }
+        //     puzzle.generateRandomGrid(11,13);
+        // }
 
-        if(i < numberOfMoves){
-            std::cout << "Grid is too easy, generating new grid..." << std::endl;
-            sleep(2);
-            puzzle.generateRandomGrid(11,13);
-        }
+        // if(i < numberOfMoves){
+        //     std::cout << "Grid is too easy, generating new grid..." << std::endl;
+        //     //sleep(2);
+        //     puzzle.generateRandomGrid(11,13);
+        // }
+
+    
+
+
 
     }   
     #endif

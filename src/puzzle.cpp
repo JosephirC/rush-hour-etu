@@ -4,10 +4,6 @@
 #include <ctime>
 
 Puzzle::Puzzle(){
-<<<<<<< HEAD
-    rechooseNumCars = false;
-=======
->>>>>>> 7289a3cb6e38f4cd25477d34893cd7d98f2701dc
 }
 
 Puzzle::~Puzzle(){
@@ -121,11 +117,7 @@ void Puzzle::randomGrid(int nbCars) {
                         grid.addCar(car);                        
                         if (i==0) {
                             grid.setExitPosX(x);
-<<<<<<< HEAD
                             grid.setExitPosY(WIDTH - 1);
-=======
-                            grid.setExitPosY(5);
->>>>>>> 7289a3cb6e38f4cd25477d34893cd7d98f2701dc
                         }
 
                         break;
@@ -136,39 +128,10 @@ void Puzzle::randomGrid(int nbCars) {
     }
 }
 
-void Puzzle::idealNumCars(int numCars){
-
-    int gridSize = WIDTH * HEIGHT;
-    int gridCapacity = gridSize + 3;
-    int numGridCars = std::ceil(gridCapacity / 3);
-
-    cout << "numcars : " << numCars << ", numgridCars : " << numGridCars << endl;
-
-    if(numCars > numGridCars){
-        std::cout << "Hard to fit " << numCars << " in a " << gridSize << " gridd.." << endl;
-        std::cout << "Please choose a number of cars between " <<  numGridCars - 4 << " and " << numGridCars << endl; 
-        rechooseNumCars = true;
-    }
-
-    int occupiedGridSize = 0;
-
-    for(int i = 0; i < allCarsSize.size(); i++){
-        occupiedGridSize += allCarsSize[i];
-    }
-
-}
-
 // pas plus de 13 voitures dans la grille, ou ça devient impossible de toutes les faire rentrer sinon
 Grid Puzzle::generateRandomGrid(int carMin, int carMax){
     
     int numberOfCars = randomNumberOfCars(carMin, carMax);
-
-    idealNumCars(numberOfCars);
-
-    if(rechooseNumCars){
-        rechooseNumCars = false;
-        generateRandomGrid(carMin, carMax);
-    }
 
     makeEmptyGrid();
 

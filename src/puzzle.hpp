@@ -45,9 +45,6 @@ class Puzzle{
 
         void randomGrid(int nbCars);
 
-        void idealNumCars(int numCars);
-
-
 };
 
 #endif

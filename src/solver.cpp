@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <set>
+#include <filesystem>
 
 Solver::Solver(Grid* grid) {
     uncoveredGrids.push(grid);
@@ -12,7 +13,7 @@ Solver::Solver(Grid* grid) {
 }
 
 bool Solver::checkContainsGrid(vector<Grid*> grid, string s) {
-    for (int i=0; i<grid.size(); i--) {
+    for (int i=0; i<grid.size(); i++) {
         if (grid[i]->getGridString() == s)
             return true;
     }
@@ -68,6 +69,10 @@ int Solver::isWinningGrid(Grid* grid) {
 
 int Solver::solve() {
 
+    // On reset le contenu du dossier images_svg
+    std::filesystem::remove_all("./images_svg");
+    std::filesystem::create_directory("./images_svg");
+
     int win = -1;
     bool stop = false;
 
@@ -98,7 +103,7 @@ int Solver::solve() {
                 } 
             }
 
-            if (uncoveredGrids.size() > 4000) { // si la génération prend un peu trop longtemps, on arrete le solveur
+            if (uncoveredGrids.size() > 300) { // si la génération prend un peu trop longtemps, on arrete le solveur
                 stop = true;
                 return -2; // on utilise -2 pour savoir qu'on a arreté le programme parcequ'il prennait longtemps à se résoudre
             }

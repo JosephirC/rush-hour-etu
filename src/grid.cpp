@@ -292,6 +292,11 @@ string Grid::svgRectangle() const {
             ss << "<rect x=\"" << x << "\" y=\"" << y 
            << "\" width=\"" << width << "\" height=\"" << height 
            << "\" fill=\"" << "green" << "\" />" << endl;
+
+            if(car.getDirection() == 0){ // Vertical
+                ss << "<line x1=\"" << x - 5 << "\" y1=\"" << width << "\" x2=\"" << x + width + 5 << "\" y2=\"" << width << "\" stroke=\"white\" stroke-width=\"20\" />" << endl;
+            }
+           
         }
         else {
             ss << "<rect x=\"" << x << "\" y=\"" << y 

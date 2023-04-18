@@ -34,7 +34,7 @@ Pour généré des grilles aléatoires, nous avons choisi un nombre aléatoire d
 
 ## Compilation 
 
-Tout d'abord, il faut créé les dossiers bin, obj et images_svg pour stocker le fichier exécutable, les fichiers objets et les images SVG générés. Ensuite tout simplement taper sur votre terminal Linux la commande *make* qui va vous compiler notre code. 
+Tout d'abord, il faut créer les dossiers bin, obj et images_svg pour stocker le fichier exécutable, les fichiers objets et les images SVG générés. Ensuite tout simplement taper sur votre terminal Linux la commande *make* qui va vous compiler notre code. 
 
 Nous avons deux main, *rushHour_console* et *rushHour_SDL*. La première main nous permet de debuger notre code dans la console et on ne génére qu'une seule grille à la fois dans le block *PUZZLE_TEST*. Quand vous tester le block *PUZZLE_TEST* veuillez ajouter un argument, c'est le nombre de coup minimum que vous pouvez avoir pour résoudre la grille (nous recommendons 3 comme nombre de coups minimum). Pour les autres blocks de test vous n'avez pas besoin d'ajouter un argument pour compiler *rushHour_console*. La deuxième main nous permet de faire un affichage graphique à l'aide de SDL et d'afficher tout d'abord la solution du Puzzle et d'ensuite génénré des grilles aléatoires et visualiser leurs résolution.
 
@@ -49,7 +49,6 @@ Sur la fenêtre SDL,
 - Taper sur flèche de droite pour afficher l'image suivante. 
 - Taper sur la flèche de gauche pour afficher l'image précedente.
 - Taper sur la flèche de haut pour généré une nouvelle grille qui peut se résoudre en respectant nos contraintes.
-- Taper sur la flèche du bas pour afficher la nouvelle grille aléatoire.
 
 
 ## Contraintes
@@ -58,5 +57,14 @@ Sur la fenêtre SDL,
 
 - Il est aussi possible de modifer sur le main le nombre de voitures minimum et maximum à générer sur une grille de taille 6 x 6. Pour une grille de cette taille on recommande entre 6 et 13 voitures. Sinon, on risque d'avoir un bug où on ne peut pas placer toutes les voitures sur la grille car il n'y a pas assez de places vides.
 
+##  Améliorations possible
 
-##  
+Afin d'optimiser la vitesse de la fonction solve(), nous avons pensé à utiliser des threads, mais nous n'avons pas eu le temps de s'y pencher vraiment.
+Utiliser une hashmap à la place d'un vecteur de Grid* pour coveredGrids (dans la classe Solver) serait bien plus rapide, complexité O(1) pour rechercher un élément.
+Générer des grilles solvables prend du temps car actuellement on se base sur l'aléatoire pour créer une grille, il vaudrait mieux créer une grille en partant d'une solution gagnante et remonter ensuite.
+
+
+##  Problèmes connus
+
+Nous avons essayé de faire au mieux possible la gestion mémoire de SDL (notemment en utilisant le code du module Image de LIFAP4 pour la gestion des Images/SDL), mais il se peut que valgrind détecte quelques erreurs mémoires des fois.
+Il arrive que le programme plante, il faut donc fermer le terminal qui a lancé le programme et le réouvrir pour fermer la fenêtre SDL

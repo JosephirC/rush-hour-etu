@@ -23,12 +23,21 @@ class Grid {
 
     public : 
 
+        /** @brief Destructeur de Grid */
         ~Grid();
 
+        /** @brief Constructeur de Grid */
         Grid();
 
-        Grid(const Grid& grid); // constructeur par copie
+        /** @brief Constructeur par copie de Grid
+            @param const Grid& grid : grille à copier
+        */
+        Grid(const Grid& grid);
 
+        /** @brief Constructeur de Grid avec des paramètres
+            @param int _width : largeur de la grille
+            @param int _height : hauteur de la grille
+        */
         Grid(int _width, int _height);
         
         void initEmptyGrid();

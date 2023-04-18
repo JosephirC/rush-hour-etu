@@ -45,10 +45,6 @@ int Car::getId() const{
     return id;
 }
 
-int Car::getSize() const {
-    return size;
-}
-
 void Car::setPosX(int x){
     posX = x;
 }

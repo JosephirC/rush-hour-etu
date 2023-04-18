@@ -61,7 +61,6 @@ void Puzzle::randomGrid(int nbCars) {
 
             int direction = randomCarsDirection();
             int size = randomCarsSize();
-            allCarsSize.push_back(size);
             int x = randomCarsPos();
             int y = randomCarsPos();
 

@@ -15,16 +15,16 @@ class Car {
         Car();
 
         /** @brief Constructeur de Car avec des paramètres
-            @param int _posX : position x de la voiture
-            @param int _posY : position y de la voiture
-            @param int _size : taille de la voiture
-            @param int _direction : direction de la voiture
-            @param int _id : numéro d'identification de la voiture
+            @param _posX : position x de la voiture
+            @param _posY : position y de la voiture
+            @param _size : taille de la voiture
+            @param _direction : direction de la voiture
+            @param _id : numéro d'identification de la voiture
         */
         Car(int _posX, int _posY, int _size, int _direction, int _id);
 
         /** @brief Constructeur par copie de Car
-            @param const Car& car : voiture à copier
+            @param car : voiture à copier
         */
         Car(const Car& car);
 
@@ -54,27 +54,27 @@ class Car {
         int getId() const;
 
         /** @brief Mutateur de la position X de la voiture
-            @param int x : nouvelle position X de la voiture
+            @param x : nouvelle position X de la voiture
         */
         void setPosX(int x);
 
         /** @brief Mutateur de la position Y de la voiture
-            @param int y : nouvelle position Y de la voiture
+            @param y : nouvelle position Y de la voiture
         */
         void setPosY(int y);
 
         /** @brief Mutateur de la taille de la voiture
-            @param int s : nouvelle taille de la voiture
+            @param s : nouvelle taille de la voiture
         */
         void setSize(int s);
         
         /** @brief Mutateur de la direction de la voiture
-            @param int d : nouvelle direction de la voiture
+            @param d : nouvelle direction de la voiture
         */
         void setDirection(int d);
 
         /** @brief Mutateur du numéro d'identification de la voiture
-            @param int i : nouvel id de la voiture
+            @param i : nouvel id de la voiture
         */
         void setId(int i);
 

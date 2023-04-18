@@ -47,27 +47,6 @@ Grid::Grid(const Grid& grid) { //constructeur par copie
     parent = grid.parent;
 }
 
-Grid Grid::operator=(const Grid& grid) {
-    this->width = grid.width;
-    this->height = grid.height;
-    this->exitPosX = grid.exitPosX;
-    this->exitPosY = grid.exitPosY;
-    for (int i=0; i<grid.carArray.size(); i++) {
-        this->carArray.push_back(grid.carArray[i]);
-    }
-    for(int i = 0; i < this->width; i++){
-        for(int j = 0; j < this->height; j++){
-            this->gridCarId[i][j] = grid.gridCarId[i][j];
-        }
-    }
-    for (int i=0; i<grid.neighbours.size(); i++) {
-        this->neighbours.push_back(grid.neighbours[i]);
-    }
-    this->parent = grid.parent;
-
-    return *this;
-}
-
 // fonction pour debug (visualiser dans la console)
 void Grid::initEmptyGrid(){
 

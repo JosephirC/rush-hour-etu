@@ -80,9 +80,7 @@ class SDL {
         int currentImg;
 
         int nbMoves;
-
-        Grid gridTest;
-        
+                
     public :
 
         SDL (Grid grid, int nbM);

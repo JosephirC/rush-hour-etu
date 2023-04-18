@@ -234,8 +234,8 @@ void SDL::loadGridImg(const string s) {
 
 
 void SDL::sdlAff () {
-	//Remplir l'écran de noir
-    SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
+	//Remplir l'écran de blanc
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderClear(renderer);
 
     // dessiner la grille si elle a été chargée

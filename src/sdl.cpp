@@ -66,6 +66,19 @@ void Image::loadFromFile (const char* filename, SDL_Renderer * renderer) {
     }
 }
 
+void Image::checkFrees() {
+    if (m_surface != nullptr) {
+        SDL_FreeSurface(m_surface);
+    }
+    if (m_texture != nullptr) {
+        SDL_DestroyTexture(m_texture);
+    }
+
+    m_surface = nullptr;
+    m_texture = nullptr;
+    m_hasChanged = false;
+}
+
 void Image::loadFromCurrentSurface (SDL_Renderer * renderer) {
     m_texture = SDL_CreateTextureFromSurface(renderer,m_surface);
     if (m_texture == nullptr) {
@@ -211,8 +224,10 @@ void SDL::loadGridImg(const string s) {
     char* char_path = new char[path.length() + 1];
     strcpy(char_path, path.c_str());
 
+    gridImg.checkFrees();
     gridImg.loadFromFile(char_path, renderer);
     imgSet = true; 
+    
 
     delete char_path;
 }

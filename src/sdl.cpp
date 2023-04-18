@@ -160,7 +160,7 @@ SDL::SDL (Grid _grid){
             SDL_Quit(); 
             exit(1);
 	}
-    font_color = {250,250,250};
+    font_color = {0,0,0};
 	font_im.setSurface(TTF_RenderText_Solid(font,"Generation de grille RushHour",font_color));
 	font_im.loadFromCurrentSurface(renderer);
 

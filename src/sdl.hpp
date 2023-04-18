@@ -129,8 +129,8 @@ class SDL {
 
         /** 
          * @brief Constructeur SDL qui prend une grille et le nombre de mouvement minimum pour resoudre la grille en parametre
-         * @param Grid grid La grille qu'on veut afficher sur SDL
-         * @param int nbM Le nombre de mouvement minimum pour resoudre la grille
+         * @param grid : La grille qu'on veut afficher sur SDL
+         * @param nbM : Le nombre de mouvement minimum pour resoudre la grille
         **/
         SDL (Grid grid, int nbM);
 
@@ -148,13 +148,13 @@ class SDL {
 
         /** 
          * @brief Resolution de la grille sur SDL
-         * @param Grid grid grille a resoudre
+         * @param grid : grille a resoudre
         **/
         void solveLvl(Grid grid);
 
         /** 
          * @brief Permet de naviguer les images qu'on a generer pour une grille
-         * @param const string c Pour afficher l'image precedente et suivante **/
+         * @param c : Pour afficher l'image precedente et suivante **/
         void loadGridImg(const string c);
 };
 #endif

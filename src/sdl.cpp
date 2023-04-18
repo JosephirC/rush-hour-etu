@@ -166,8 +166,7 @@ SDL::SDL (Grid _grid, int nbM){
 	font_im.setSurface(TTF_RenderText_Solid(font,"Generation de grille RushHour",font_color));
 	font_im.loadFromCurrentSurface(renderer);
 
-    gridTest = _grid;
-    solveLvl(gridTest);
+    solveLvl(_grid);
 }
 
 SDL::~SDL () {

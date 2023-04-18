@@ -102,7 +102,7 @@ int Solver::solve() {
                 } 
             }
 
-            if (uncoveredGrids.size() > 300) { // si la génération prend un peu trop longtemps, on arrete le solveur
+            if (uncoveredGrids.size() > 200 /*|| coveredGrids.size() > 1500*/) { // si la génération prend un peu trop longtemps, on arrete le solveur
                 stop = true;
                 return -2; // on utilise -2 pour savoir qu'on a arreté le programme parcequ'il prennait longtemps à se résoudre
             }

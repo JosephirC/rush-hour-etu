@@ -184,7 +184,7 @@ void SDL::solveLvl(Grid grid) {
         std::cout << "Le solveur prend trop de temps, generation d'un nouveau niveau..." << std::endl;
         generateLvl();
     }
-    else if (n<4) {
+    else if (n<3) {
         std::cout << "La grille est trop facile, generation d'un nouveau niveau..." << std::endl;
         generateLvl();
     }

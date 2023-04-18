@@ -19,175 +19,44 @@ Chaque déplacement de véhicule compte pour un coup, quelle que soit la longueu
 du déplacement. La qualité de votre solution dépend donc du nombre de coups
 nécessaires depuis la situation initiale pour faire sortir le véhicule.
 
-## Modélisation
 
-La recherche d'une solution au jeu Rush Hour peut être modélisée sous la forme
-d'un parcours de graphe. Dans ce graphe, les sommets sont des situations de jeu.
-Les arêtes sont des coups. Les deux images qui suivent représentent deux
-situations de jeu, et donc deux sommets du graphe. Il est possible de passer
-d'une situation à l'autre en déplaçant le long véhicule du haut, elles sont donc
-reliées par une arête dans le graphe.
+## Principe
 
-![Situation depart](Sujet/rush_hour_situation_start.png)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-![Situation fin](Sujet/rush_hour_situation_end.png)
+Pour résoudre le jeu *Rush Hour* nous avons décidé d'implementer dans notre programme un algorithme de parcours en largeur (BFS). Grâce à cette algorithme, nous sommes capables de générer toutes les grilles (situation de jeu) possibles à partir d'une grille initiale. Pour trouver le plus court chemin, nous avons décidé d'arrêter le parcours dès qu'une grille gagnante apparaît. 
 
-Votre première tâche pour ce projet consiste à élaborer une structure de données
-sous la forme d'une classe pour représenter les situations de jeu, munies de 
-méthodes pour accéder de façon pratique aux situations de jeu adjacentes.
+Dans notre classe Solver nous avons créé une fonction *solve()* qui va à partir d'une grille initial stockée sur queue (FIFO) vérifié à chaque itération si notre première grille dans la queue existre déjà dans notre tableau dynamique (vector) de grille, si c'est le cas, on passe à l'itération suivante. Sinon, on génére tous les voisins possibles et on retire notre grille courante de la queue et on l'ajoute dans notre tableau dynamique et puis pour chaque voisin généré, on vérifie aussi si cette nouvelle grille est dans notre tableau dynamique et notre queue pour éviter les doublons et pour optimiser notre algorithme. Pour parcourir nos grilles nous avons stocké pour chaque grille voisine généré le parent pour qu'on puisse trouver le plus court chemin possible. En premier temps, nous avons comparé la grille courante à toutes les grilles avec un *operator==* et notre solveur mettait environ 2 minutes et 40 secondes pour résoudre la grille du Puzzle donné. Nous avons donc décidé d'optimiser l'algorithme en transformant les grilles à des strings qu'on peut comparer beaucoup plus rapidement et notre solveur met maintenant environ 1 à 2 secondes pour résoudre le Puzzle.
 
-Il ne s'agit pas ici de *construire le graphe complet* ni de le *stocker*, mais
-simplement de pouvoir le *parcourir*.
 
-Pour vous aider dans l'élaboration de votre structure de données, vous pourrez
-utiliser le fait que :
+Pour affichier les différentes étapes de résolution, nous avons transformer nos grilles à des images SVG pour mieux visualiser les déplacements. Nous avons aussi décidé d'utiliser SDL Pour mieux facilier la visualisation des étapes de résolution. En plus, on peut généré des grilles aléatoires et les résoudre avec notre solveur.
 
-* les véhicules ne sont que de taille deux ou trois
-* il n'y a jamais plus de 16 véhicules
-* il n'y a toujours qu'un véhicule à sortir
+Pour généré des grilles aléatoires, nous avons choisi un nombre aléatoire de voiture à mettre sur la grille, nous avons choisi aussi aléatoirement les positions, la taille et la direction de chaque voiture. L'algorithme tourne en boucle pour placer le nombre de voitures donné. 
 
-La situation initiale du problème résolu plus haut :
 
-![Situation initiale](Sujet/rush_hour_initial.png)
+## Compilation 
 
-pourra être décrite par [le fichier suivant](Sujet/puzzle.txt) :
+Tout d'abord, il faut créé les dossiers bin, obj et images_svg pour stocker le fichier exécutable, les fichiers objets et les images SVG générés. Ensuite tout simplement taper sur votre terminal Linux la commande *make* qui va vous compiler notre code. 
 
-```
-2 5
-2 0 2 1
-0 0 2 0
-0 2 3 0
-0 3 3 1
-1 3 2 0
-1 4 2 1
-2 5 2 0
-3 0 2 1
-4 0 2 0
-4 3 2 0
-4 4 2 0
-4 5 2 0
-5 1 2 1
-```
-La première ligne correspond à la position de la sortie (ligne 2 colonne 5, on
-commence la numérotation à 0), la seconde ligne est la position du véhicule à
-sortir (ligne 2, colonne 0, longueur 2, horizontal), les lignes suivantes sont
-les autres véhicules, toujours avec le format ligne, colonne, longueur,
-horizontal (1) ou vertical (0). Dans le cas d'un véhicule horizontal, la
-position donnée est celle de la case la plus à gauche, dans le cas d'un véhicule
-vertical, la position donnée est celle de la case la plus haute.
+Nous avons deux main, *rushHour_console* et *rushHour_SDL*. La première main nous permet de debuger notre code dans la console et on ne génére qu'une seule grille à la fois dans le block *PUZZLE_TEST*. Quand vous tester le block *PUZZLE_TEST* veuillez ajouter un argument, c'est le nombre de coup minimum que vous pouvez avoir pour résoudre la grille (nous recommendons 3 comme nombre de coups minimum). Pour les autres blocks de test vous n'avez pas besoin d'ajouter un argument pour compiler *rushHour_console*. La deuxième main nous permet de faire un affichage graphique à l'aide de SDL et d'afficher tout d'abord la solution du Puzzle et d'ensuite génénré des grilles aléatoires et visualiser leurs résolution.
 
-Pour favoriser les échanges, vous pouvez munir votre classe d'un constructeur
-prenant un fichier en paramètre, au format décrit ci-dessus, ainsi que d'une
-fonction pour exporter votre situation de jeu sous la forme d'un fichier
-similaire.
 
-## Parcours
+## SDL
 
-Une fois les situations de jeu représentables, il s'agit maintenant d'instancier
-la situation de jeu initiale, et de parcourir le graphe pour trouver une
-situation de jeu gagnante, ainsi que les coups permettant de l'atteindre.
-Idéalement, le nombre de coups à jouer pour atteindre cette situation de jeu
-gagnante devra être minimal. Dans le cas de l'exemple fourni ci-dessus, le code
-de votre responsable d'UE a donné une solution en 14 coups. Il est nécessaire de
-réaliser un parcours de graphe bien choisi. Il n'est pas ici nécessaire de
-générer tout le graphe, mais seulement de partir de la situation de départ, de
-lister les situations atteignables en déplaçant des véhicules, et de les ajouter
-à votre structure de données gérant les situations de jeu encore à traiter,
-selon le type de parcours choisi.
+Si vous n'avez pas SDL installé sur votre machine, veuillez copier coller la commande suivante pour installer les packages nécessaires pour compiler notre code.
 
-Les situations de jeu sont donc découvertes petit à petit, attention cependant à
-faire en sorte que votre exploration n'étudie qu'une fois chaque situation de
-jeu, et se rendre compte que certaines situations ont déjà été explorées. Sans
-cette attention, votre exploration risquera de tourner en rond entre des
-situations de jeu, ou d'en explorer beaucoup trop.
+*sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev*
 
-## Élaboration de nouveaux puzzles
+Sur la fenêtre SDL, 
+- Taper sur flèche de droite pour afficher l'image suivante. 
+- Taper sur la flèche de gauche pour afficher l'image précedente.
+- Taper sur la flèche de haut pour généré une nouvelle grille qui peut se résoudre en respectant nos contraintes.
+- Taper sur la flèche du bas pour afficher la nouvelle grille aléatoire.
 
-Une fois la résolution programmée, et le parcours du graphe compris,
-consacrez-vous à la création de nouveaux puzzles. Cette fois, il s'agit de
-fournir une situation de départ qui soit intéressante à jouer. La difficulté du
-puzzle correspondra au nombre de coups minimal pour le résoudre, et votre but
-sera ici de trouver des stratégies pour créer les puzzles les plus difficiles
-possibles.
 
-## Conditions de rendu
+## Contraintes
 
-Le travail est a réaliser autant que possible en binôme. Les monômes ne seront
-acceptés qu'exceptionnellement, à discuter avec votre encadrant de TP. Les
-membres du binôme devront être dans le même groupe de TP, et seront évalués par
-leur encadrant de TP. Le travail doit être rendu pour la dernière séance de TP
-de l'année qui aura lieu le mercredi 10 avril. Cette dernière séance de TP sera
-intégralement dédiée à votre évaluation.
+- Nous avons remarqué que pour résoudre Puzzle, nous avons au maximum environ 160 grilles à decouvrir sur notre queue. Nous avons donc mis en place une contrainte qui relance la résolution d'une nouvelles grille aléatoire quand on dépasse 200 grilles à decouvrir.
 
-Vous devrez rendre votre travail sous la forme d'une archive `zip` ou `tar.gz`.
-Si vous utilisez d'autres formats d'archives, vous le faites à vos risques et
-périls. Dans cette archive, un fichier readme devra indiquer la procédure pour
-compiler votre code si elle n'est pas standard, et le fonctionnement des
-exécutables générés. Pour simplifier le travail de vos examinateurs, supposez
-qu'ils sont incompétents dans l'utilisation de vos outils (cmake, codeblocks,
-visual studio, ...). Fournissez une archive munie d'un `Makefile`. Si vous
-utilisez des dépendances autres que la librairie standard, mentionnez les
-clairement, et assurez vous qu'elle ne seront pas compliquées à installer.
+- Il est aussi possible de modifer sur le main le nombre de voitures minimum et maximum à générer sur une grille de taille 6 x 6. Pour une grille de cette taille on recommande entre 6 et 13 voitures. Sinon, on risque d'avoir un bug où on ne peut pas placer toutes les voitures sur la grille car il n'y a pas assez de places vides.
 
-Le code que vous rendrez devra être votre production propre. Si vous reprenez
-des portions de code, quelle qu'en soit la source et la taille (vos camarades,
-stackoverflow ou autre site d'entraide), vous devrez en mentionner la provenance
-précise, faute de quoi votre travail sera considéré comme une fraude. Notez que
-lors du rendu, l'ensemble des codes seront analysés par des outils permettant de
-détecter des similarités, et qu'il ne suffit pas de renommer les variables pour
-les berner.
 
-Vous êtes autorisés à utilisé l'intégralité de la librairie standard, en
-particulier les conteneurs (`vector`, `list`, `stack`, `queue`,
-`priority_queue`, `set`, `map`, `unordered_set`, `unordered_map`, ...) et les
-algorithmes (`sort`, `shuffle`, `binary_search`, ...).
-
-## Évaluation
-
-L'évaluation se passera en deux temps, un oral, puis une relecture de votre
-travail.
-
-### Oral
-
-Le jour du rendu, en séance avec votre encadrant, il vous fournira un horaire de
-passage pour un oral de démonstration.  Pendant cet oral, vous ferez brièvement
-la démonstration de vos résultats, puis vous serez interrogés sur le code que
-vous avez rendu. Votre correcteur aura ici plusieurs objectifs :
-
-* déterminer à quel point vous avez compris le sujet
-* déterminer jusqu'où vous avez abordé le sujet
-* déterminer si vous êtes capables de commenter vos choix et de les analyser
-* déterminer si vous êtes bien l'auteur du code rendu
-* déterminer si les contributions dans le binôme sont équilibrées
-
-### Relecture
-
-La relecture de votre code sera ensuite faite sans vous. Chaque correcteur sera
-muni d'une grille pour évaluer les points suivants :
-
-* votre code compile facilement
-* les exécutables, lancés selon les instructions du readme, sont fonctionnels
-* les exécutables permettent de tester l'intégralité de votre code
-* les exécutables permettent de tester les points d'évaluation qui suivent
-* le programme permet de charger une situation de jeu initiale
-* le programme permet de trouver une solution 
-* la solution trouvée est la plus courte
-* le parcours de graphe est réalisé correctement
-* les structures de données sont pertinentes en terme d'espace mémoire
-* les fonctions et méthodes sont pertinentes en terme d'espace et de complexité
-* la gestion de la mémoire est propre et sans fuites
-  * un outil de détection de type valgrind a été utilisé pour s'en assurer
-  * si des problèmes persistent, ils sont identifiés dans le readme
-  * les problèmes sont mentionnés lors de l'oral et discutés
-* le code est clair et bien structuré
-  * nommage clair des fonctions et variables
-  * bon découpage des fonctions pour éviter la duplication de code
-  * pas de fonctions trop longues
-  * pas de lignes de code trop longues
-  * indentation claire
-
-Il est toujours difficile de donner un barème précis a priori, sans se bloquer
-ensuite la possibilité de pouvoir adapter la notation en fonction des travaux
-rendus et de la difficulté perçue du sujet. Il est néanmoins possible d'affirmer
-que pour obtenir la moyenne, il sera nécessaire d'avoir au moins abordé la
-partie résolution.
+##  

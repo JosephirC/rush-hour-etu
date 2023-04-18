@@ -6,11 +6,6 @@
 #include <SDL2/SDL_image.h>
 #include "grid.hpp"
 
-struct Case {
-    int x;
-    int y;
-};
-
 //! \brief Pour gérer une image avec SDL2
 class Image {
 

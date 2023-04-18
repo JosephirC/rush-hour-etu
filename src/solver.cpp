@@ -32,8 +32,8 @@ bool Solver::checkContainsGrid(std::queue<Grid*> q, string s) {
 int Solver::isWinningGrid(Grid* grid) {
     for(int j = 0; j < grid->getCarArray().size(); j++){
         if(grid->getCarArray()[j].getId() == 0) { // on vérifie si la voiture a atteint la sortie en fonction de sa direction
-            if ((grid->getCarArray()[j].getDirection() == 1 && grid->getCarArray()[j].getPosY() + grid->getCarArray()[j].getSize()-1 == grid->getExitY())
-            || (grid->getCarArray()[j].getDirection() == 0 && grid->getCarArray()[j].getPosX() + grid->getCarArray()[j].getSize()-1 == grid->getExitX())) {
+            if ((grid->getCarArray()[j].getDirection() == 1 && grid->getCarArray()[j].getPosY() + grid->getCarArray()[j].getCarSize()-1 == grid->getExitY())
+            || (grid->getCarArray()[j].getDirection() == 0 && grid->getCarArray()[j].getPosX() + grid->getCarArray()[j].getCarSize()-1 == grid->getExitX())) {
             
             int k = 1;
 

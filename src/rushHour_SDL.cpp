@@ -3,17 +3,12 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
 
-SDL_Event event;
-bool quit = false;
+int main(int argc, char* argv[]){
 
-int main(int argc, char** argv){
-
-    Grid p(6,6);
-
-    SDL sj;
-	sj.sdlBoucle();
+    srand(time(0));
+    SDL sdl;
+	sdl.sdlBoucle();
 
     return 0;
 }

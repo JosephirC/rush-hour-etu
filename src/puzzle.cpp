@@ -4,29 +4,7 @@
 #include <ctime>
 
 Puzzle::Puzzle(){
-
-    taxiPosX = 0;
-    taxiPosY = 0;
-    taxiSize = 0;
-    taxiDirection = 0;
-
-    exitPosX = 0;
-    exitPosY = 0;
-
-    numberOfCars = 0;
-    carsSize = 0;
-    carsDirection = 0;
-    isSolvable = false;
-
-    for (int i=0; i<6; i++) {
-        for (int j=0; j<6; j++) {
-            std::string str_i = std::to_string(i);
-            std::string str_j = std::to_string(j);
-            std::string s = str_i + str_j;
-            freePositions.push_back(s);
-        }
-    }
-
+    rechooseNumCars = false;
 }
 
 Puzzle::~Puzzle(){
@@ -49,33 +27,6 @@ int Puzzle::randomCarsPos(){
     return rand() % 6;
 }
 
-void Puzzle::taxiExit(){
-    
-    int randomSide = rand() % 2;
-
-    if(taxiDirection == HORIZONTAL){
-        if(randomSide == 0){ // Exit left
-            exitPosX = taxiPosX;
-            exitPosY = 0;
-        }
-        else{ // Exit right
-            exitPosX = taxiPosX;
-            exitPosY = taxiPosY + (WIDTH - taxiPosY - 1); 
-        }
-    }
-
-    if(taxiDirection == VERTICAL){
-        if(randomSide == 0){ // Exit up
-            exitPosX = 0;
-            exitPosY = taxiPosY;
-        }
-        else{ //Exit down 
-            exitPosX = taxiPosX + (VERTICAL - taxiPosX - 1);
-            exitPosY = taxiPosY;
-        }
-    }
-}
-
 Grid Puzzle::getPuzzleGrid() const{
     return grid;
 }
@@ -83,18 +34,17 @@ Grid Puzzle::getPuzzleGrid() const{
 void Puzzle::makeEmptyGrid(){
     grid.setWidth(WIDTH);
     grid.setHeight(HEIGHT);
-    grid.setExitPosX(exitPosX);
-    grid.setExitPosY(exitPosY);
+    grid.setExitPosX(0);
+    grid.setExitPosY(0);
     grid.setParent(nullptr);
     grid.setGridString(" ");
     grid.initEmptyGrid();
-
     vector<Car> c;
     grid.setCarArray(c);
 
 }
 
-int Puzzle::randomGrid(int nbCars) {
+void Puzzle::randomGrid(int nbCars) {
 
     srand(time(0));
 
@@ -112,6 +62,7 @@ int Puzzle::randomGrid(int nbCars) {
 
             int direction = randomCarsDirection();
             int size = randomCarsSize();
+            allCarsSize.push_back(size);
             int x = randomCarsPos();
             int y = randomCarsPos();
 
@@ -137,11 +88,8 @@ int Puzzle::randomGrid(int nbCars) {
                         car.setId(i);
                         grid.addCar(car);
                         if (i==0) {
-                            grid.setExitPosX(5);
+                            grid.setExitPosX(HEIGHT - 1);
                             grid.setExitPosY(y);
-
-                            std::cout << "pos voiture : " << x << ", " << y << std::endl;
-                            std::cout << "pos sortie : " << 5 << ", " << y << std::endl;
                         }
                         
                         break;
@@ -170,10 +118,7 @@ int Puzzle::randomGrid(int nbCars) {
                         grid.addCar(car);                        
                         if (i==0) {
                             grid.setExitPosX(x);
-                            grid.setExitPosY(5);
-
-                            std::cout << "pos voiture : " << x << ", " << y << std::endl;
-                            std::cout << "pos sortie : " << x << ", " << 5 << std::endl;
+                            grid.setExitPosY(WIDTH - 1);
                         }
 
                         break;
@@ -184,11 +129,39 @@ int Puzzle::randomGrid(int nbCars) {
     }
 }
 
-//RULE : always min = 6, max = 13
+void Puzzle::idealNumCars(int numCars){
+
+    int gridSize = WIDTH * HEIGHT;
+    int gridCapacity = gridSize + 3;
+    int numGridCars = std::ceil(gridCapacity / 3);
+
+    cout << "numcars : " << numCars << ", numgridCars : " << numGridCars << endl;
+
+    if(numCars > numGridCars){
+        std::cout << "Hard to fit " << numCars << " in a " << gridSize << " gridd.." << endl;
+        std::cout << "Please choose a number of cars between " <<  numGridCars - 4 << " and " << numGridCars << endl; 
+        rechooseNumCars = true;
+    }
+
+    int occupiedGridSize = 0;
+
+    for(int i = 0; i < allCarsSize.size(); i++){
+        occupiedGridSize += allCarsSize[i];
+    }
+
+}
+
+// pas plus de 13 voitures dans la grille, ou ça devient impossible de toutes les faire rentrer sinon
 Grid Puzzle::generateRandomGrid(int carMin, int carMax){
     
-    numberOfCars = randomNumberOfCars(carMin, carMax);
-    std::cout << "nombre de voitures :" << numberOfCars << std::endl;
+    int numberOfCars = randomNumberOfCars(carMin, carMax);
+
+    idealNumCars(numberOfCars);
+
+    if(rechooseNumCars){
+        rechooseNumCars = false;
+        generateRandomGrid(carMin, carMax);
+    }
 
     makeEmptyGrid();
 

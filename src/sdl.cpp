@@ -9,8 +9,8 @@
 #include <sstream>
 #include <filesystem>
 #include <unistd.h>
-
 #include <iostream>
+
 using namespace std;
 
 float temps () {
@@ -24,8 +24,12 @@ Image::Image () : m_surface(nullptr), m_texture(nullptr), m_hasChanged(false) {
 
 Image::~Image()
 {
-    SDL_FreeSurface(m_surface);
-    SDL_DestroyTexture(m_texture);
+    if (m_surface != nullptr) {
+        SDL_FreeSurface(m_surface);
+    }
+    if (m_texture != nullptr) {
+        SDL_DestroyTexture(m_texture);
+    }
 
     m_surface = nullptr;
     m_texture = nullptr;
@@ -50,12 +54,14 @@ void Image::loadFromFile (const char* filename, SDL_Renderer * renderer) {
     }
 
     SDL_Surface * surfaceCorrectPixelFormat = SDL_ConvertSurfaceFormat(m_surface,SDL_PIXELFORMAT_ARGB8888,0);
-    SDL_FreeSurface(m_surface);
+    if (m_surface != nullptr) {
+        SDL_FreeSurface(m_surface);
+    }
     m_surface = surfaceCorrectPixelFormat;
 
     m_texture = SDL_CreateTextureFromSurface(renderer,surfaceCorrectPixelFormat);
     if (m_texture == NULL) {
-        cout << "Error: problem to create the texture of "<< filename<< endl;
+        cout << "Error: problem when creating the texture of "<< filename<< endl;
         SDL_Quit();
         exit(1);
     }
@@ -64,7 +70,7 @@ void Image::loadFromFile (const char* filename, SDL_Renderer * renderer) {
 void Image::loadFromCurrentSurface (SDL_Renderer * renderer) {
     m_texture = SDL_CreateTextureFromSurface(renderer,m_surface);
     if (m_texture == nullptr) {
-        cout << "Error: problem to create the texture from surface " << endl;
+        cout << "Error: problem when creating the texture from surface " << endl;
         SDL_Quit();
         exit(1);
     }
@@ -96,7 +102,7 @@ void Image::setSurface(SDL_Surface * surf) {
     m_surface = surf;
 }
 
-// ============= CLASS SDLJEU =============== //
+// ============= CLASS SDL =============== //
 
 SDL::SDL (){
 
@@ -143,11 +149,8 @@ SDL::SDL (){
             exit(1);
 	}
     font_color = {250,250,250};
-	font_im.setSurface(TTF_RenderText_Solid(font,"Niveau 1",font_color));
+	font_im.setSurface(TTF_RenderText_Solid(font,"Generation de grille RushHour",font_color));
 	font_im.loadFromCurrentSurface(renderer);
-
-
-    //testLvl(grid);
 }
 
 SDL::~SDL () {
@@ -164,29 +167,30 @@ void SDL::generateLvl() {
     std::filesystem::create_directory("./images_svg");
 
     Puzzle puzzle;
-    Grid grid = puzzle.generateRandomGrid(6,13);
+    Grid grid = puzzle.generateRandomGrid(10,12);
 
     Solver solver(&grid);
     int n = solver.solve();
 
     if (n==-1) {
-        std::cout << "No solution to this grid :/" << std::endl;
-        std::cout << "Generating new lvl..." << std::endl;
-        sleep(1); 
+        std::cout << "Cette grille n'a pas de solution :/" << std::endl;
+        std::cout << "Generation d'un nouveau niveau..." << std::endl;
         generateLvl();
     }
     if (n==-2) {
-        std::cout << "Solver is taking too long, stoping..." << std::endl;
-        std::cout << "Generating new lvl..." << std::endl;
+        std::cout << "Le solveur prend trop de temps, generation d'un nouveau niveau..." << std::endl;
         generateLvl();
     }
-    else if (n<4-1) {
-        std::cout << "Grid is too easy, generating new grid..." << std::endl;
+    else if (n<3) {
+        std::cout << "La grille est trop facile, generation d'un nouveau niveau..." << std::endl;
         generateLvl();
     }
-
-    nbImg = n;
-    currentImg = n;
+    else {
+        imgSet = true;
+        nbImg = n;
+        currentImg = n;
+        loadGridImg("");
+    }   
 }
 
 void SDL::loadGridImg(const string s) {
@@ -198,8 +202,8 @@ void SDL::loadGridImg(const string s) {
     }
 
     string path = "./images_svg/";
-    path.append(std::to_string(currentImg)); // remplacer 15 par k
-    path.append(".svg"); // remplacer 15 par k
+    path.append(std::to_string(currentImg));
+    path.append(".svg");
 
     char* char_path = new char[path.length() + 1];
     strcpy(char_path, path.c_str());
@@ -222,9 +226,8 @@ void SDL::sdlAff () {
     }
 
     // Ecrire un titre par dessus
-    SDL_Rect positionTitre = {250,25,100,30};
+    SDL_Rect positionTitre = {100,25,400,30};
     SDL_RenderCopy(renderer,font_im.getTexture(),nullptr,&positionTitre);
-
 }
 
 void SDL::sdlBoucle () {
@@ -247,16 +250,16 @@ void SDL::sdlBoucle () {
 			else if (events.type == SDL_KEYDOWN) {          
 				switch (events.key.keysym.scancode) {
 				case SDL_SCANCODE_UP:
+                    imgSet = false;
                     generateLvl();
 					break;
-                case SDL_SCANCODE_DOWN:
-					loadGridImg("");
-					break;
                 case SDL_SCANCODE_RIGHT:
-                    loadGridImg("next");
+                    if (imgSet)
+                        loadGridImg("next");
 					break;
                 case SDL_SCANCODE_LEFT:
-                    loadGridImg("previous");
+                    if (imgSet)
+                        loadGridImg("previous");
 					break;
                 case SDL_SCANCODE_ESCAPE:
                     quit = true;

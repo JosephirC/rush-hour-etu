@@ -11,30 +11,23 @@ class Solver {
         vector<Grid*> coveredGrids;
         std::queue<Grid*> uncoveredGrids;
 
+        int nbrOfMoves; 
+
     public:
 
         Solver(Grid* grid);
 
         int solve();
 
-        void solvedGridsSVG(Grid* grid, string filenumber);
-
         bool checkContainsGrid(vector<Grid*> grid, string s);
 
         bool checkContainsGrid(std::queue<Grid*> q, string s);
 
-        vector<Grid*> getCoveredGrids() const;
-
-        void solveALL();
-
-        void solveTest();
-
         int isWinningGrid(Grid* grid);
 
-        vector<Grid*> getWinningGrids();
+        int getNbrOfMoves() const;
 
-        void puzzle();
-
+        void setNbrOfMoves(int n);
 };
 
 #endif

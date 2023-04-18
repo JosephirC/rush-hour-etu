@@ -6,29 +6,50 @@
 #include <SDL2/SDL_image.h>
 #include "grid.hpp"
 
-struct Case {
-    int x;
-    int y;
-};
-
 //! \brief Pour gérer une image avec SDL2
 class Image {
 
 private:
 
+    /** < @param SDL_Surface m_surface Surface SDL */
     SDL_Surface * m_surface;
+    
+    /** @param SDL_Texture m_texture Texture SDL */
     SDL_Texture * m_texture;
+    
+    /** @param bool m_hasChanged Etat d'image */
     bool m_hasChanged;
+    
+    /** @param int nbrMoves Nombre de deplacements minimum pour gagner */
     int nbrMoves;
 
 public:
+
+    /** < @brief Constructeur d'Image */
     Image () ;
+
+    /** < @brief Destructeur d'Image */
     ~Image();
-    void loadFromFile (const char* filename, SDL_Renderer * renderer);
+
+    /**
+
+    @brief Charge une image à partir d'un fichier.
+    @param filename Le nom du fichier à charger.
+    @param renderer Le SDL_Renderer sur lequel afficher l'image.
+    */
+    void loadFromFile (const char* filename, SDL_Renderer* renderer);
+
+
     void loadFromCurrentSurface (SDL_Renderer * renderer);
     void draw (SDL_Renderer * renderer, int x, int y, int w=-1, int h=-1);
     SDL_Texture * getTexture() const;
     void setSurface(SDL_Surface * surf);
+
+    /**
+    @brief Detruit l'image courante pour charger l'image suivante.
+    @param filename Le nom du fichier à charger.
+    @param renderer Le SDL_Renderer sur lequel afficher l'image.
+    */
     void checkFrees();
 };
 

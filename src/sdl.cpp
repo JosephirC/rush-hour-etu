@@ -116,10 +116,12 @@ void Image::setSurface(SDL_Surface * surf) {
 
 // ============= CLASS SDL =============== //
 
-SDL::SDL (Grid _grid){
+SDL::SDL (Grid _grid, int nbM){
 
     SIZE_X = 600;
     SIZE_Y = 600;
+
+    nbMoves = nbM;
 
     // Initialisation de la SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -190,15 +192,15 @@ void SDL::solveLvl(Grid grid) {
 
     if (n==-1) {
         std::cout << "Cette grille n'a pas de solution :/" << std::endl;
-        std::cout << "Generation d'un nouveau niveau..." << std::endl;
         generateLvl();
     }
     if (n==-2) {
-        std::cout << "Le solveur prend trop de temps, generation d'un nouveau niveau..." << std::endl;
+        std::cout << "Le solveur prend trop de temps" << std::endl;
+        std::cout << "Arret du programme..." << std::endl;
         generateLvl();
     }
-    else if (n<3) {
-        std::cout << "La grille est trop facile, generation d'un nouveau niveau..." << std::endl;
+    else if (n<=nbMoves) {
+        std::cout << "La grille est trop facile..." << std::endl;
         generateLvl();
     }
     else {

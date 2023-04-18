@@ -96,7 +96,7 @@ int main(int argc, char* argv[]){
 
         int numberOfMoves = std::atoi(argv[1]);
 
-        if(numberOfMoves < 4){
+        if(numberOfMoves < 3){
             std::cerr << endl << "Grids with " << numberOfMoves << " number of moves are too easy to solve.." << endl << "Please choose a positive number of moves higher than 3." << std::endl;
             return 1;
         }
@@ -114,7 +114,7 @@ int main(int argc, char* argv[]){
             std::cout << "Le solveur prend trop de temps" << std::endl;
             std::cout << "Arret du programme..." << std::endl;
         }
-        else if (n<3) {
+        else if (n<=numberOfMoves) {
             std::cout << "La grille est trop facile..." << std::endl;
         }  
     }   

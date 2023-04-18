@@ -9,11 +9,23 @@ int main(int argc, char* argv[]){
     
     srand(time(0));
 
+    if (argc < 2) {
+        std::cerr << endl << "Please specify an argument." << endl << "Choose the minimum number of moves to solve a puzzle." << std::endl;
+        return 1;
+    }
+
+    int numberOfMoves = std::atoi(argv[1]);
+
+    if(numberOfMoves < 3){
+        std::cerr << endl << "Grids with " << numberOfMoves << " number of moves are too easy to solve.." << endl << "Please choose a positive number of moves higher than 3." << std::endl;
+        return 1;
+    }
+
     Grid grid(6,6);
     grid.initEmptyGrid();
     grid.loadData("./Sujet/puzzle.txt");
 
-    SDL sj(grid);
+    SDL sj(grid, numberOfMoves);
 	sj.sdlBoucle();
 
     return 0;

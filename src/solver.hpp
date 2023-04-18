@@ -11,6 +11,8 @@ class Solver {
         vector<Grid*> coveredGrids;
         std::queue<Grid*> uncoveredGrids;
 
+        int nbrOfMoves; 
+
     public:
 
         Solver(Grid* grid);
@@ -22,6 +24,10 @@ class Solver {
         bool checkContainsGrid(std::queue<Grid*> q, string s);
 
         int isWinningGrid(Grid* grid);
+
+        int getNbrOfMoves() const;
+
+        void setNbrOfMoves(int n);
 };
 
 #endif

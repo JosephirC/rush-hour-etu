@@ -19,6 +19,9 @@ class Puzzle{
         Grid grid;
         Car car;
 
+        bool rechooseNumCars;
+        vector<int> allCarsSize;
+
     public : 
 
         Puzzle();

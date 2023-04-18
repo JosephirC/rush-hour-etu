@@ -61,6 +61,7 @@ void Puzzle::randomGrid(int nbCars) {
 
             int direction = randomCarsDirection();
             int size = randomCarsSize();
+            allCarsSize.push_back(size);
             int x = randomCarsPos();
             int y = randomCarsPos();
 
@@ -86,7 +87,7 @@ void Puzzle::randomGrid(int nbCars) {
                         car.setId(i);
                         grid.addCar(car);
                         if (i==0) {
-                            grid.setExitPosX(5);
+                            grid.setExitPosX(HEIGHT - 1);
                             grid.setExitPosY(y);
                         }
                         
@@ -116,7 +117,7 @@ void Puzzle::randomGrid(int nbCars) {
                         grid.addCar(car);                        
                         if (i==0) {
                             grid.setExitPosX(x);
-                            grid.setExitPosY(5);
+                            grid.setExitPosY(WIDTH - 1);
                         }
 
                         break;

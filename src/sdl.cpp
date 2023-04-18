@@ -7,7 +7,6 @@
 #include "puzzle.hpp"
 #include <fstream>
 #include <sstream>
-#include <filesystem>
 #include <unistd.h>
 #include <iostream>
 
@@ -165,9 +164,6 @@ SDL::~SDL () {
 }
 
 void SDL::generateLvl() {
-    // On reset le contenu du dossier images_svg
-    std::filesystem::remove_all("./images_svg");
-    std::filesystem::create_directory("./images_svg");
 
     Puzzle puzzle;
     Grid grid = puzzle.generateRandomGrid(10,12);

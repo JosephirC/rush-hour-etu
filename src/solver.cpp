@@ -5,9 +5,11 @@
 #include <fstream>
 #include <sstream>
 #include <set>
+#include <filesystem>
 
 Solver::Solver(Grid* grid) {
     uncoveredGrids.push(grid);
+    nbrOfMoves = 0;
 }
 
 bool Solver::checkContainsGrid(vector<Grid*> grid, string s) {
@@ -67,6 +69,10 @@ int Solver::isWinningGrid(Grid* grid) {
 
 int Solver::solve() {
 
+    // On reset le contenu du dossier images_svg
+    std::filesystem::remove_all("./images_svg");
+    std::filesystem::create_directory("./images_svg");
+
     int win = -1;
     bool stop = false;
 
@@ -106,4 +112,13 @@ int Solver::solve() {
     }
 
     return win;
+}
+
+
+int Solver::getNbrOfMoves() const{
+    return nbrOfMoves;
+}
+
+void Solver::setNbrOfMoves(int n){
+    nbrOfMoves = n;
 }

@@ -28,7 +28,7 @@ int main(int argc, char* argv[]){
 
     Solver solver(&grid);
     solver.setNbrOfMoves(numberOfMoves);
-    SDL sj(grid);
+    SDL sj(grid, numberOfMoves);
 	sj.sdlBoucle();
 
     return 0;

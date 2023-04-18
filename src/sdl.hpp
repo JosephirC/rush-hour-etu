@@ -19,6 +19,7 @@ private:
     SDL_Surface * m_surface;
     SDL_Texture * m_texture;
     bool m_hasChanged;
+    int nbrMoves;
 
 public:
     Image () ;
@@ -57,11 +58,13 @@ class SDL {
         int nbImg;
         int currentImg;
 
+        int nbMoves;
+
         Grid gridTest;
         
     public :
 
-        SDL (Grid grid);
+        SDL (Grid grid, int nbM);
         ~SDL ();
         void sdlBoucle ();
         void sdlAff ();

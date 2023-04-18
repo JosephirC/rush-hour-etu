@@ -189,24 +189,23 @@ void SDL::generateLvl() {
 void SDL::solveLvl(Grid grid) {
     Solver solver(&grid);
     int n = solver.solve();
-    int nbrMoves = solver.getNbrOfMoves();
 
     if (n==-1) {
         std::cout << "Cette grille n'a pas de solution :/" << std::endl;
+        std::cout << "Generation d'une nouvelle grille..." << std::endl;
+        //sleep(1);
         generateLvl();
     }
     if (n==-2) {
         std::cout << "Le solveur prend trop de temps" << std::endl;
-        std::cout << "Arret du programme..." << std::endl;
+        std::cout << "Generation d'une nouvelle grille..." << std::endl;
+        //sleep(1);
         generateLvl();
     }
-<<<<<<< HEAD
-    else if (n<nbrMoves) {
-        std::cout << "La grille est trop facile, generation d'un nouveau niveau..." << std::endl;
-=======
     else if (n<=nbMoves) {
         std::cout << "La grille est trop facile..." << std::endl;
->>>>>>> 4c38bc03b8e2a58a3d436cde8366e6fe7a0c307b
+        std::cout << "Generation d'une nouvelle grille..." << std::endl;
+        //sleep(1);
         generateLvl();
     }
     else {

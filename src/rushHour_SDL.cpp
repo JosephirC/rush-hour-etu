@@ -1,5 +1,4 @@
 #include "sdl.hpp"
-#include "solver.hpp"
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
@@ -26,8 +25,6 @@ int main(int argc, char* argv[]){
     grid.initEmptyGrid();
     grid.loadData("./Sujet/puzzle.txt");
 
-    Solver solver(&grid);
-    solver.setNbrOfMoves(numberOfMoves);
     SDL sj(grid, numberOfMoves);
 	sj.sdlBoucle();
 

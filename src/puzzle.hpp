@@ -16,11 +16,8 @@ class Puzzle{
         const int WIDTH = 6;
         const int HEIGHT = 6;
 
-        Grid grid;
-        Car car;
-
-        bool rechooseNumCars;
-        vector<int> allCarsSize;
+        Grid grid; // grille qui va etre modifiée puis retournée quand valide
+        Car car; // voiture "tempon" pour push différentes voitures dans la grid
 
     public : 
         /** @brief Constructeur de Puzzle 

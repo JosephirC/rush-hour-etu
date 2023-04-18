@@ -274,7 +274,7 @@ string Grid::svgHeader() const {
     ss << "<rect x=\"0\" y=\"0\" width=\"" << width * TAILLE_CASE 
        << "\" height=\"" << height * TAILLE_CASE << "\" stroke=\"" 
        << STROKE_COLOR << "\" stroke-width=\"" << 15 * STROKE_WIDTH 
-       << "\" fill=\"none\" />" << endl;
+       << "\" fill=\"white\" />" << endl;
     return ss.str();
 }
 
@@ -294,7 +294,10 @@ string Grid::svgRectangle() const {
            << "\" fill=\"" << "green" << "\" />" << endl;
 
             if(car.getDirection() == 0){ // Vertical
-                ss << "<line x1=\"" << x - 5 << "\" y1=\"" << width << "\" x2=\"" << x + width + 5 << "\" y2=\"" << width << "\" stroke=\"white\" stroke-width=\"20\" />" << endl;
+                ss << "<line x1=\"" << x - 5 << "\" y1=\"" << 595 << "\" x2=\"" << x + width + 5 << "\" y2=\"" << 595 << "\" stroke=\"white\" stroke-width=\"20\" />" << endl;
+            }
+            if(car.getDirection() == 1){ // Horizontal
+                ss << "<line x1=\"" << x - 5 << "\" y1=\"" << 595 << "\" x2=\"" << x + width + 5 << "\" y2=\"" << 595 << "\" stroke=\"white\" stroke-width=\"20\" />" << endl;
             }
            
         }

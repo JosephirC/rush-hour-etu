@@ -6,7 +6,11 @@
 
 int main(int argc, char** argv){
 
-    SDL sj;
+    Grid grid(6,6);
+    grid.initEmptyGrid();
+    grid.loadData("./Sujet/puzzle.txt");
+
+    SDL sj(grid);
 	sj.sdlBoucle();
 
     return 0;

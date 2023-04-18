@@ -11,10 +11,11 @@
 
 //#define CONSTRUCTOR_COPY
 //#define GRID_DISPLAY
-#define LOAD_SVG
+//#define LOAD_SVG
 //#define GET_GRID_NEIGHBORS
 //#define SOLVER_TEST
-#define PUZZLE_TEST
+//#define PUZZLE_TEST
+#define SOLVE_PROJECT
 
 int main(int argc, char** argv){
 
@@ -143,6 +144,15 @@ int main(int argc, char** argv){
 
 
     }   
+    #endif
+
+    #ifdef SOLVE_PROJECT
+    {
+        cout << "SOLVE_PROJECT" << endl;
+
+        Solver solution(&grid);
+        solution.solve();
+    }
     #endif
 
     return 0;

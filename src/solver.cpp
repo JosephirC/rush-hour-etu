@@ -11,7 +11,7 @@ Solver::Solver(Grid* grid) {
 }
 
 bool Solver::checkContainsGrid(vector<Grid*> grid, string s) {
-    for (int i=0; i<grid.size(); i--) {
+    for (int i=0; i<grid.size(); i++) {
         if (grid[i]->getGridString() == s)
             return true;
     }
@@ -97,7 +97,7 @@ int Solver::solve() {
                 } 
             }
 
-            if (uncoveredGrids.size() > 4000) { // si la génération prend un peu trop longtemps, on arrete le solveur
+            if (uncoveredGrids.size() > 300) { // si la génération prend un peu trop longtemps, on arrete le solveur
                 stop = true;
                 return -2; // on utilise -2 pour savoir qu'on a arreté le programme parcequ'il prennait longtemps à se résoudre
             }

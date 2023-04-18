@@ -306,36 +306,6 @@ string Grid::svgFooter() const {
     return "</svg>";
 }
 
-// bool Grid::operator==(const Grid& other) const {
-    
-//     if(this->width != other.width && this->height != other.height)
-//         return false;
-
-//     if(this->exitPosX != other.exitPosX && this->exitPosY != other.exitPosY)
-//         return false;
-
-//     for(int i = 0; i < this->carArray.size(); i++){
-//         if(this->carArray[i].getPosX() != other.carArray[i].getPosX() && this->carArray[i].getPosY() != other.carArray[i].getPosY() 
-//             && this->carArray[i].getCarSize() != other.carArray[i].getCarSize() && this->carArray[i].getDirection() != other.carArray[i].getDirection() 
-//             && this->carArray[i].getId() != other.carArray[i].getId()){
-//                 return false;
-//         }   
-//     }
-
-//     for(int i = 0; i < this->width; i++){
-//         for(int j = 0; j < this->height; j++){
-//             if(this->gridCarId[i][j] != other.gridCarId[i][j])
-//                 return false;
-//         }
-//     }
-
-//     if(this->parent != other.parent){
-//         return false;
-//     }
-
-//     return true;
-// }
-
 void Grid::changeCarPosition(int id, int newPosX, int newPosY) {
     carArray[id].setPosX(newPosX);
     carArray[id].setPosY(newPosY);

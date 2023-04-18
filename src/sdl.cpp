@@ -104,7 +104,7 @@ void Image::setSurface(SDL_Surface * surf) {
 
 // ============= CLASS SDL =============== //
 
-SDL::SDL (){
+SDL::SDL (Grid _grid){
 
     SIZE_X = 600;
     SIZE_Y = 600;
@@ -151,6 +151,9 @@ SDL::SDL (){
     font_color = {250,250,250};
 	font_im.setSurface(TTF_RenderText_Solid(font,"Generation de grille RushHour",font_color));
 	font_im.loadFromCurrentSurface(renderer);
+
+    gridTest = _grid;
+    solveLvl(gridTest);
 }
 
 SDL::~SDL () {
@@ -169,6 +172,10 @@ void SDL::generateLvl() {
     Puzzle puzzle;
     Grid grid = puzzle.generateRandomGrid(10,12);
 
+    solveLvl(grid);
+}
+
+void SDL::solveLvl(Grid grid) {
     Solver solver(&grid);
     int n = solver.solve();
 
@@ -181,7 +188,7 @@ void SDL::generateLvl() {
         std::cout << "Le solveur prend trop de temps, generation d'un nouveau niveau..." << std::endl;
         generateLvl();
     }
-    else if (n<3) {
+    else if (n<4) {
         std::cout << "La grille est trop facile, generation d'un nouveau niveau..." << std::endl;
         generateLvl();
     }

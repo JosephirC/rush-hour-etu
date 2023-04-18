@@ -60,13 +60,13 @@ class SDL {
         
     public :
 
-        SDL ();
+        SDL (Grid grid);
         ~SDL ();
         void sdlBoucle ();
         void sdlAff ();
         void generateLvl();
+        void solveLvl(Grid grid);
         void loadGridImg(const string c);
-
 };
 
 #endif

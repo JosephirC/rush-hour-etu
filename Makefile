@@ -5,7 +5,7 @@ SDL_LIB = -lSDL2 -lSDL2_ttf -lSDL2_image
 all: bin/rushHour_console bin/rushHour_SDL 
 
 bin/rushHour_console: obj/rushHour_console.o obj/car.o obj/grid.o obj/solver.o obj/puzzle.o
-	g++ -g obj/rushHour_console.o obj/car.o obj/grid.o obj/solver.o obj/puzzle.o -o bin/rushHour_console $(SDL_LIB)
+	g++ -g obj/rushHour_console.o obj/car.o obj/grid.o obj/solver.o obj/puzzle.o -o bin/rushHour_console
 
 bin/rushHour_SDL: obj/rushHour_SDL.o obj/car.o obj/grid.o obj/solver.o obj/puzzle.o obj/sdl.o
 	g++ -g obj/rushHour_SDL.o obj/car.o obj/grid.o obj/solver.o obj/puzzle.o obj/sdl.o -o bin/rushHour_SDL $(SDL_LIB)

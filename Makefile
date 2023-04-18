@@ -1,6 +1,6 @@
 # L'inclusion ne change rien ? 
 #DIR_SDL = -I /usr/include/SDL2
-SDL_LIB = -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer
+SDL_LIB = -lSDL2 -lSDL2_ttf -lSDL2_image
 
 all: bin/rushHour_console bin/rushHour_SDL 
 

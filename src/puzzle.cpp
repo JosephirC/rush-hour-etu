@@ -4,7 +4,10 @@
 #include <ctime>
 
 Puzzle::Puzzle(){
+<<<<<<< HEAD
     rechooseNumCars = false;
+=======
+>>>>>>> 7289a3cb6e38f4cd25477d34893cd7d98f2701dc
 }
 
 Puzzle::~Puzzle(){
@@ -118,7 +121,11 @@ void Puzzle::randomGrid(int nbCars) {
                         grid.addCar(car);                        
                         if (i==0) {
                             grid.setExitPosX(x);
+<<<<<<< HEAD
                             grid.setExitPosY(WIDTH - 1);
+=======
+                            grid.setExitPosY(5);
+>>>>>>> 7289a3cb6e38f4cd25477d34893cd7d98f2701dc
                         }
 
                         break;

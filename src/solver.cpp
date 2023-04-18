@@ -12,7 +12,7 @@ Solver::Solver(Grid* grid) {
 }
 
 bool Solver::checkContainsGrid(vector<Grid*> grid, string s) {
-    for (int i=0; i<grid.size(); i++) {
+    for (int i=0; i<grid.size(); i--) {
         if (grid[i]->getGridString() == s)
             return true;
     }

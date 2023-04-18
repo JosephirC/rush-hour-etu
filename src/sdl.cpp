@@ -66,19 +66,6 @@ void Image::loadFromFile (const char* filename, SDL_Renderer * renderer) {
     }
 }
 
-void Image::checkFrees() {
-    if (m_surface != nullptr) {
-        SDL_FreeSurface(m_surface);
-    }
-    if (m_texture != nullptr) {
-        SDL_DestroyTexture(m_texture);
-    }
-
-    m_surface = nullptr;
-    m_texture = nullptr;
-    m_hasChanged = false;
-}
-
 void Image::loadFromCurrentSurface (SDL_Renderer * renderer) {
     m_texture = SDL_CreateTextureFromSurface(renderer,m_surface);
     if (m_texture == nullptr) {
@@ -112,6 +99,19 @@ SDL_Texture * Image::getTexture() const {
 
 void Image::setSurface(SDL_Surface * surf) {
     m_surface = surf;
+}
+
+void Image::checkFrees() {
+    if (m_surface != nullptr) {
+        SDL_FreeSurface(m_surface);
+    }
+    if (m_texture != nullptr) {
+        SDL_DestroyTexture(m_texture);
+    }
+
+    m_surface = nullptr;
+    m_texture = nullptr;
+    m_hasChanged = false;
 }
 
 // ============= CLASS SDL =============== //

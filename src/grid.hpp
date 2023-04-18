@@ -88,6 +88,11 @@ class Grid {
         */
         void getGridCarId(int (&gridId)[6][6]);
         
+        /** @brief Accesseur du vecteur de voitures
+            @return le vecteur de voitures
+        */
+        vector<Car> getCarArray() const;
+
         /** @brief Retourne la grille parent à cette grille
             @return Grid* : un pointeur vers la grille parent
         */
@@ -133,18 +138,6 @@ class Grid {
         */
         void setGridString(string s);
 
-        /** @brief Mutateur de la position d'une voiture
-            @param id : id de la voiture qu'on souhaite déplacer
-            @param newPosX : nouvelle position X de la voiture qu'on souhaite déplacer
-            @param newPosY : nouvelle position Y de la voiture qu'on souhaite déplacer
-        */
-        void changeCarPosition(int id, int newPosX, int newPosY);
-
-        /** @brief Accesseur du vecteur de voitures
-            @return le vecteur de voitures
-        */
-        vector<Car> getCarArray() const;
-
         /** @brief Affichage du vecteur de voitures pour débugguer
         */
         void displayCarArray() const;
@@ -169,16 +162,22 @@ class Grid {
         */
         string svgFooter() const;
 
+        /** @brief Mutateur de la position d'une voiture
+            @param id : id de la voiture qu'on souhaite déplacer
+            @param newPosX : nouvelle position X de la voiture qu'on souhaite déplacer
+            @param newPosY : nouvelle position Y de la voiture qu'on souhaite déplacer
+        */
+        void changeCarPosition(int id, int newPosX, int newPosY);
+
+        /** @brief Vérifie si la grille passée en paramètre est dans la liste des voisins 
+          * @return true si la grille passée en paramètre est déjà un voisin
+        */
+        bool isInNeighbours(Grid* grid) const;
+
         /** @brief Genere tout les voisins de la grille
          * @return un vecteur de pointeur vers des grilles
         */
         vector<Grid*> getGridNeighbours();
-
-        /** @brief Vérifie si la grille passée en paramètre est dans la liste des voisins 
-         * @return true si la grille passée en paramètre est déjà un voisin
-        */
-        bool isInNeighbours(Grid* grid) const;
-        
 };
 
 #endif

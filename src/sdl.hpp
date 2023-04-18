@@ -137,12 +137,6 @@ class SDL {
         /** @brief Destructeur SDL **/
         ~SDL ();
 
-        /** @brief Boucle SDL **/
-        void sdlBoucle ();
-
-        /** @brief  Contient tous les affichages SDL **/
-        void sdlAff ();
-
         /** @brief Generation d'un niveau **/
         void generateLvl();
 
@@ -156,5 +150,11 @@ class SDL {
          * @brief Permet de naviguer les images qu'on a generer pour une grille
          * @param c : Pour afficher l'image precedente et suivante **/
         void loadGridImg(const string c);
+
+        /** @brief  Contient tous les affichages SDL **/
+        void sdlAff ();
+
+        /** @brief Boucle SDL **/
+        void sdlBoucle ();
 };
 #endif

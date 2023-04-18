@@ -53,7 +53,7 @@ void Car::setPosY(int y){
     posY = y;
 }
 
-void Car::setSize(int s){
+void Car::setCarSize(int s){
     size = s;
 }
 

@@ -59,18 +59,16 @@ class Puzzle{
         */
         void makeEmptyGrid();
 
+        /** @brief Génère une grille random avec un nombre de voitures compris entre carMin et carMax
+         *  @param nbCars : nombre de voitures dans la grille à générer
+        */
+        void randomGrid(int nbCars);
+
         /** @brief Fonction qui va appeler la fonction randomGrid pour générer une grille random
         /** @param carMin : nombre minimum de voitures
         /** @param carMax : nombre maximum de voitures
         /** @return La grille random génerée
         */
         Grid generateRandomGrid(int carMin, int carMax);
-
-        /** @brief Génère une grille random avec un nombre de voitures compris entre carMin et carMax
-         *  @param nbCars : nombre de voitures dans la grille à générer
-        */
-        void randomGrid(int nbCars);
-
 };
-
 #endif

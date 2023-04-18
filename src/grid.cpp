@@ -139,6 +139,14 @@ int Grid::getSizeY() const {
     return height;
 }
 
+void Grid::getGridCarId(int (&gridId)[6][6]) {
+    for (int i=0; i<6; i++) {
+        for (int j=0; j<6; j++) {
+            gridId[i][j] = gridCarId[i][j];
+        }
+    }
+}
+
 Grid* Grid::getParent() const {
     return parent;
 }
@@ -149,14 +157,6 @@ vector<Car> Grid::getCarArray() const {
 
 string Grid::getGridString() {
     return gridString;
-}
-
-void Grid::getGridCarId(int (&gridId)[6][6]) {
-    for (int i=0; i<6; i++) {
-        for (int j=0; j<6; j++) {
-            gridId[i][j] = gridCarId[i][j];
-        }
-    }
 }
 
 void Grid::setWidth(int w){

@@ -66,7 +66,7 @@ class Car {
         /** @brief Mutateur de la taille de la voiture
             @param s : nouvelle taille de la voiture
         */
-        void setSize(int s);
+        void setCarSize(int s);
         
         /** @brief Mutateur de la direction de la voiture
             @param d : nouvelle direction de la voiture

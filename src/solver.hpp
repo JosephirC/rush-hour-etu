@@ -17,11 +17,6 @@ class Solver {
         */
         Solver(Grid* grid);
 
-        /** @brief Fonction qui résout la grille
-         *  @return Un entier qui représente le nombre de coups pour résoudre la grille (ou -1 si la grille n'a pas de solution, -2 si on arrete la grille manuellement)
-        */
-        int solve();
-
         /** @brief vérifie si une grille (donnée en paramètre sous forme de string) est présente dans un vecteur de grilles
          *  @param grid : vecteur de grilles
          *  @param s : grille sous forme de string
@@ -41,6 +36,11 @@ class Solver {
          *  @return le nombre de coups pour résoudre la grille (ou -1 si la grille n'a pas de solution)
         */
         int isWinningGrid(Grid* grid);
+        
+        /** @brief Fonction qui résout la grille
+         *  @return Un entier qui représente le nombre de coups pour résoudre la grille (ou -1 si la grille n'a pas de solution, -2 si on arrete la grille manuellement)
+        */
+        int solve();
 };
 
 #endif

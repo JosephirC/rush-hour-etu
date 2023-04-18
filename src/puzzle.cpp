@@ -82,7 +82,7 @@ void Puzzle::randomGrid(int nbCars) {
                         car.setPosX(x);
                         car.setPosY(y);
                         car.setDirection(direction);
-                        car.setSize(size);
+                        car.setCarSize(size);
                         car.setId(i);
                         grid.addCar(car);
                         if (i==0) {
@@ -111,7 +111,7 @@ void Puzzle::randomGrid(int nbCars) {
                         car.setPosX(x);
                         car.setPosY(y);
                         car.setDirection(direction);
-                        car.setSize(size);
+                        car.setCarSize(size);
                         car.setId(i);
                         grid.addCar(car);                        
                         if (i==0) {

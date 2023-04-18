@@ -9,7 +9,6 @@
 
 Solver::Solver(Grid* grid) {
     uncoveredGrids.push(grid);
-    nbrOfMoves = 0;
 }
 
 bool Solver::checkContainsGrid(vector<Grid*> grid, string s) {
@@ -112,13 +111,4 @@ int Solver::solve() {
     }
 
     return win;
-}
-
-
-int Solver::getNbrOfMoves() const{
-    return nbrOfMoves;
-}
-
-void Solver::setNbrOfMoves(int n){
-    nbrOfMoves = n;
 }

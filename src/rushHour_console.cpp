@@ -114,11 +114,7 @@ int main(int argc, char* argv[]){
             std::cout << "Le solveur prend trop de temps" << std::endl;
             std::cout << "Arret du programme..." << std::endl;
         }
-<<<<<<< HEAD
-        else if (n < numberOfMoves) {
-=======
         else if (n<=numberOfMoves) {
->>>>>>> 4c38bc03b8e2a58a3d436cde8366e6fe7a0c307b
             std::cout << "La grille est trop facile..." << std::endl;
         }  
     }   
